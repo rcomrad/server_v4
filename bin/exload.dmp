@@ -1,0 +1,20 @@
+problem
+	Swiper;swiper;lcmp.exe;5;1;1000;100
+
+END
+
+competition_problem
+	Swiper;1;1
+END
+
+competition
+	Очный тур;2023-04-21 15:00:00;2023-04-22 18:55:00
+END
+
+user_competition
+	25;1
+END
+
+user
+	submitor;123;Tester;Testerovich;1;128
+END

@@ -84,7 +84,7 @@ core::Server::Server()
     (
         []()
         {
-            file::FileRouter::process("exload.dmprar");
+            file::FileRouter::process("exload.dmp");
 
             return "5";
         });

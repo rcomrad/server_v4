@@ -81,7 +81,7 @@ file::File::getLines(const std::string& aFileName) noexcept
     {
         if (temp[i] == '\n' || temp[i] == '\0')
         {
-            if (i - last > 1)
+            if (i - last > 0)
             {
                 result.emplace_back(temp.substr(last, i - last));
             }
