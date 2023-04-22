@@ -30,7 +30,7 @@ std::shared_ptr<proc::Process>
 checker(const std::string& aFileName) const noexcept
 {
     std::shared_ptr<proc::Process> result = std::make_shared<proc::Process>();
-    result->setComand(aFileName);
+    result->setComand({aFileName});
     return result;
 }
 
