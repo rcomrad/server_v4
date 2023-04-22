@@ -45,11 +45,11 @@ get::ProblemHandler::getProblem(int aProblemID, int aUserID) noexcept
 
     auto probJ          = getTableAsList(problem)[0];
     probJ["submission"] = getTableAsList(submissions);
-    probJ["legend"]     = file::File::getAllWithBr(
-        problemPath + problem[0].nickname + "/legend.txt");
-    probJ["input_format"] = file::File::getAllWithBr(
+    probJ["legend"] = file::File::getAllData(problemPath + problem[0].nickname +
+                                             "/legend.txt");
+    probJ["input_format"] = file::File::getAllData(
         problemPath + problem[0].nickname + "/input_format.txt");
-    probJ["output_format"] = file::File::getAllWithBr(
+    probJ["output_format"] = file::File::getAllData(
         problemPath + problem[0].nickname + "/output_format.txt");
 
     crow::json::wvalue::list tests;

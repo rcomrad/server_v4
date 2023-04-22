@@ -26,6 +26,14 @@ test::Tester::Tester(uint8_t aThreadCount) noexcept
 
 //--------------------------------------------------------------------------------
 
+std::shared_ptr<proc::Process>
+checker(const std::string& aFileName) const noexcept
+{
+    std::shared_ptr<proc::Process> result = std::make_shared<proc::Process>();
+    result->setComand(aFileName);
+    return result;
+}
+
 void
 test::Tester::run(data::Table<data::Submission>&& aSubmission) noexcept
 {
@@ -59,8 +67,9 @@ test::Tester::run(data::Table<data::Submission>&& aSubmission) noexcept
 
     auto workDir =
         file::Path::getInstance().getPath("working_directory").value();
-    auto solProc   = prepareFile(submissionPath, workDir + "sus_solution");
-    auto checkProc = prepareFile(checkerPath, workDir + "sus_checker");
+    auto solProc = prepareFile(submissionPath, workDir + "sus_solution");
+    // auto checkProc = prepareFile(checkerPath, workDir + "sus_checker");
+    auto checkProc = checker(checkerPath);
 
     if (!mIsmIsCorapted)
     {
