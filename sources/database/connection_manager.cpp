@@ -23,6 +23,7 @@ data::SmartConnection::~SmartConnection() noexcept
 data::SmartConnection
 data::ConnectionManager::getUserConnection() noexcept
 {
+
     return SmartConnection(data::ConnectionType::USER);
 }
 
@@ -42,6 +43,11 @@ data::ConnectionManager::ConnectionManager() noexcept
               core::ProgramState::getInstance().getValue(core::Value::DB_THRD),
               data::ConnectionType::USER)}
 {
+
+    std::cout << "count: "
+              << core::ProgramState::getInstance().getValue(
+                     core::Value::DB_THRD)
+              << "\n";
     // auto& state              = core::ProgramState::getInstance();
     // uint16_t connectionCount = state.getDatabaseConnectionCount();
 

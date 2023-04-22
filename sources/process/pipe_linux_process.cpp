@@ -73,6 +73,14 @@ proc::PipeLinuxProcess::create() noexcept
     makeParameters();
     WRITE_LOG("Creating_process_with_name:", mRawParameters[0]);
 
+    for (int i = 0; i < mRawParameters.size() - 1; ++i)
+    {
+        for (int j = 0; mRawParameters[i][j]; ++j)
+            std::cout << mRawParameters[i][j];
+        std::cout << " ";
+    }
+    std::cout << "\n";
+
     mChildPID = fork();
     if (mChildPID == -1)
     {

@@ -11,6 +11,8 @@ data::ConnectionPool::ConnectionPool(uint16_t aPoolSize,
 std::optional<data::DatabaseConnection>
 data::ConnectionPool::tryGetConnection() noexcept
 {
+    std::cout << "before_lock_size: " << mConnections.size() << "\n";
+
     const std::lock_guard<std::mutex> lock(mGetMutex);
     const std::lock_guard<std::mutex> lock2(mPushMutex);
     std::optional<data::DatabaseConnection> res = {};
