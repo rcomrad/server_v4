@@ -27,7 +27,7 @@ test::Tester::Tester(uint8_t aThreadCount) noexcept
 //--------------------------------------------------------------------------------
 
 std::shared_ptr<proc::Process>
-checker(const std::string& aFileName) const noexcept
+checker(const std::string& aFileName) noexcept
 {
     std::shared_ptr<proc::Process> result = std::make_shared<proc::Process>();
     result->setComand({aFileName});
