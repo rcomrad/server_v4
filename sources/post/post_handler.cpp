@@ -1,5 +1,7 @@
 #include "post_handler.hpp"
 
+#include "domain/date_and_time.hpp"
+
 #include "database/connection_manager.hpp"
 
 #include "file/path.hpp"
@@ -22,8 +24,8 @@ post::PostHandler::uploadFile(crow::multipart::message& aMsg,
     {
         auto connection = data::ConnectionManager::getUserConnection();
         auto table      = connection.val.getData<data::File>();
-        filePath =
-            aPathPrefix + std::to_string(table[0].num++) + "-" + fileName;
+        filePath        = aPathPrefix + std::to_string(table[0].num++) + "-" +
+                   dom::DateAndTime::getCurentTime() + "-" + fileName;
         connection.val.update<data::File>(table);
     }
 

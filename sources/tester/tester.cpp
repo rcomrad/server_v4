@@ -99,7 +99,7 @@ test::Tester::run(data::Table<data::Submission>&& aSubmission) noexcept
         mFinalVerdict = Test::TestVerdict::CE;
     }
 
-    if (mFinalVerdict != Test::TestVerdict::OK) aSubmission[0].test = ttt;
+    if (mFinalVerdict != Test::TestVerdict::OK) aSubmission[0].test = ttt - 1;
     submission.verdict = verdictTostring(mFinalVerdict);
     {
         auto connection = data::ConnectionManager::getUserConnection();
