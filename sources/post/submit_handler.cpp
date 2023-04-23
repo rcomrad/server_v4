@@ -2,6 +2,8 @@
 
 #include <boost/date_time/gregorian/gregorian.hpp>
 
+#include "domain/date_and_time.hpp"
+
 #include "database/connection_manager.hpp"
 
 #include "core/program_state.hpp"
@@ -27,6 +29,7 @@ post::SubmitHandler::process(const crow::request& aReq) noexcept
     submition.back().verdict  = "NUN";
     submition.back().test     = -1;
     submition.back().source_name =
+        dom::DateAndTime::getCurentTime() +
         uploadFile(msg, file::Path::getInstance().getPath("submition").value());
 
     {
