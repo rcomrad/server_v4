@@ -3,6 +3,7 @@ problem
 	Swiper;swiper;lcmp.exe;5;1;1000;100
 	Внеберляндская жизнь;life;ncmp.exe;9;1;1000;100
 	Зазеркалье;labirint;ncmp.exe;6;1;1000;100
+	Счёты;abacus;rcmp4.exe;6;1;1000;100
 END
 
 competition_problem
@@ -10,10 +11,12 @@ competition_problem
 	Swiper;1;2
 	Внеберляндская жизнь;1;3
 	Зазеркалье;1;4
+	Счёты;1;5
 	Разминка;2;1
 	Swiper;2;2
 	Внеберляндская жизнь;2;3
 	Зазеркалье;2;4
+	Счёты;2;5
 END
 
 competition
