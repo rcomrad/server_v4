@@ -1,5 +1,5 @@
 problem
-	Разминка;triangle;lcmp.exe;16;0;1000;100
+	Разминка;triangle;lcmp.exe;16;1;1000;100
 	Swiper;swiper;lcmp.exe;5;1;1000;100
 	Внеберляндская жизнь;life;ncmp.exe;9;1;1000;100
 	Зазеркалье;labirint;ncmp.exe;6;1;1000;100
