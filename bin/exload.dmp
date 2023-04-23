@@ -10,17 +10,195 @@ competition_problem
 	Swiper;1;2
 	Внеберляндская жизнь;1;3
 	Зазеркалье;1;4
+	Разминка;2;1
+	Swiper;2;2
+	Внеберляндская жизнь;2;3
+	Зазеркалье;2;4
 END
 
 competition
-	Очный тур;2023-04-21 15:00:00;2023-04-22 18:55:00
-END
-
-user_competition
-	1;1
+	Тестер;2023-04-21 15:00:00;2023-04-22 18:55:00
+	Очный тур;2023-04-23 15:00:00;2023-04-23 18:55:00
 END
 
 user
 	submitor;123;Tester;Testerovich;512;1
+	Acnonios-Vesuvius;aEfUVU;Tester;Testerovich;512;1
+	Agricola-Ulpius;1nsLs4;Tester;Testerovich;512;1
+	Agrippa-Cornelius;2hccb5;Tester;Testerovich;512;1
+	Agrippa-Postumius;mvnVGL;Tester;Testerovich;512;1
+	Agrippa-Sertorius;gJTsKa;Tester;Testerovich;512;1
+	Albinus-Flavius;YqysSr;Tester;Testerovich;512;1
+	Albinus-Tullius;VxWYWA;Tester;Testerovich;512;1
+	Albinus-Vitellius;NZZ99m;Tester;Testerovich;512;1
+	Albus-Cornelius;SqEh7y;Tester;Testerovich;512;1
+	Albus-Julius;etdsrd;Tester;Testerovich;512;1
+	Albus-Rabirius;cc6XFv;Tester;Testerovich;512;1
+	Appius-Nigidius;puWksm;Tester;Testerovich;512;1
+	Appius-Plinius;bV5RxD;Tester;Testerovich;512;1
+	Appius-Salvius;UmC6UF;Tester;Testerovich;512;1
+	Appius-Sempronius;KY7pcs;Tester;Testerovich;512;1
+	Appius-Vitellius;M15G2z;Tester;Testerovich;512;1
+	Aratus-Junius;YqLnwK;Tester;Testerovich;512;1
+	Aratus-Licinius;5hy4Nz;Tester;Testerovich;512;1
+	Aratus-Livius;wbaLZB;Tester;Testerovich;512;1
+	Aratus-Pompeius;nNBrmv;Tester;Testerovich;512;1
+	Aristomides-Julius;LrxkaX;Tester;Testerovich;512;1
+	Aristomides-Junius;a4MDmB;Tester;Testerovich;512;1
+	Aristomides-Nigidius;ThReLG;Tester;Testerovich;512;1
+	Aristomides-Sertorius;vGy9gQ;Tester;Testerovich;512;1
+	Aulus-Lucius;rces19;Tester;Testerovich;512;1
+	Aulus-Vesuvius;GAKhpV;Tester;Testerovich;512;1
+	Auspex-Fulvius;LYt727;Tester;Testerovich;512;1
+	Auspex-Lucius;wgUgLh;Tester;Testerovich;512;1
+	Auspex-Scribonius;ea2T37;Tester;Testerovich;512;1
+	Barbatus-Domitius;mmXVs3;Tester;Testerovich;512;1
+	Bibulus-Aufidius;Gxr4X8;Tester;Testerovich;512;1
+	Bibulus-Clodius;3EveeQ;Tester;Testerovich;512;1
+	Brutus-Fulvius;gGa8TN;Tester;Testerovich;512;1
+	Brutus-Gabinius;Th7MbG;Tester;Testerovich;512;1
+	Brutus-Horatius;7fRM7V;Tester;Testerovich;512;1
+	Brutus-Lucius;mSuWgd;Tester;Testerovich;512;1
+	Brutus-Manlius;Uctw7R;Tester;Testerovich;512;1
+	Caelus-Aurelius;7DnqHx;Tester;Testerovich;512;1
+	Caelus-Flavius;KfcA3e;Tester;Testerovich;512;1
+	Caelus-Scribonius;3c2Z7G;Tester;Testerovich;512;1
+	Caelus-Vesuvius;4nBk6g;Tester;Testerovich;512;1
+	Caelus-Vinicius;8dHcFx;Tester;Testerovich;512;1
+	Caelus-﻿Aemilius;SRDSLp;Tester;Testerovich;512;1
+	Caesar-Domitius;aBy8wZ;Tester;Testerovich;512;1
+	Caesar-Junius;bfx2pQ;Tester;Testerovich;512;1
+	Caesar-Ulpius;3eXZdV;Tester;Testerovich;512;1
+	Caesar-Viridius;xnKRLZ;Tester;Testerovich;512;1
+	Calvinus-Cassius;Q96t4E;Tester;Testerovich;512;1
+	Calvinus-Julius;aR8XeZ;Tester;Testerovich;512;1
+	Calvinus-Junius;T7LChd;Tester;Testerovich;512;1
+	Calvinus-Vesuvius;vE6uR4;Tester;Testerovich;512;1
+	Calvus-Atius;fzXGhV;Tester;Testerovich;512;1
+	Calvus-Fulvius;5EbxKD;Tester;Testerovich;512;1
+	Cato-Pompeius;QAX461;Tester;Testerovich;512;1
+	Catulus-Aufidius;ZARwc5;Tester;Testerovich;512;1
+	Catulus-Pompeius;36vMqk;Tester;Testerovich;512;1
+	Catulus-Sertorius;cHUWES;Tester;Testerovich;512;1
+	Catulus-﻿Aemilius;LM8kfe;Tester;Testerovich;512;1
+	Cicero-Caecilius;fpnxJP;Tester;Testerovich;512;1
+	Cicero-Furius;Mp4CCJ;Tester;Testerovich;512;1
+	Cicero-Gabinius;BpFYNC;Tester;Testerovich;512;1
+	Cicero-Pompeius;m3pfnZ;Tester;Testerovich;512;1
+	Cicero-Sempronius;Jzywse;Tester;Testerovich;512;1
+	Cicero-Ulpius;wVS1Sy;Tester;Testerovich;512;1
+	Cicero-Vinicius;VGgH5b;Tester;Testerovich;512;1
+	Damasus-Horatius;C76RDm;Tester;Testerovich;512;1
+	Damasus-Junius;Ba55Sd;Tester;Testerovich;512;1
+	Damasus-Tullius;264fXk;Tester;Testerovich;512;1
+	Decius-Ulpius;xwCshd;Tester;Testerovich;512;1
+	Dentatus-Galerius;Bcdpg2;Tester;Testerovich;512;1
+	Dentatus-Lucius;aCPbRk;Tester;Testerovich;512;1
+	Donatus-Clodius;1mPfQ7;Tester;Testerovich;512;1
+	Draco-Pompeius;Mkhc8s;Tester;Testerovich;512;1
+	Emeritus-Clodius;C7b3sy;Tester;Testerovich;512;1
+	Emeritus-Flavius;SFWqpD;Tester;Testerovich;512;1
+	Ephron-Cassius;FuwFuf;Tester;Testerovich;512;1
+	Ephron-Claudius;SJ3nUb;Tester;Testerovich;512;1
+	Ephron-Marius;TqGFYw;Tester;Testerovich;512;1
+	Ephron-Pompeius;wuengV;Tester;Testerovich;512;1
+	Ephron-Vitellius;3c1BkT;Tester;Testerovich;512;1
+	Euclid-Lucius;nSa7GW;Tester;Testerovich;512;1
+	Euclid-Silius;L51Ntz;Tester;Testerovich;512;1
+	Eudicus-Nigidius;T6Q4KM;Tester;Testerovich;512;1
+	Eudicus-Viridius;B23XrB;Tester;Testerovich;512;1
+	Eugenius-Titius;TE5tHM;Tester;Testerovich;512;1
+	Euphemius-Atilius;5X9NB4;Tester;Testerovich;512;1
+
 END
 
+user_competition
+	1;1
+	2;1
+	2;2
+	2;3
+	2;4
+	2;5
+	2;6
+	2;7
+	2;8
+	2;9
+	2;10
+	2;11
+	2;12
+	2;13
+	2;14
+	2;15
+	2;16
+	2;17
+	2;18
+	2;19
+	2;20
+	2;21
+	2;22
+	2;23
+	2;24
+	2;25
+	2;26
+	2;27
+	2;28
+	2;29
+	2;30
+	2;31
+	2;32
+	2;33
+	2;34
+	2;35
+	2;36
+	2;37
+	2;38
+	2;39
+	2;40
+	2;41
+	2;42
+	2;43
+	2;44
+	2;45
+	2;46
+	2;47
+	2;48
+	2;49
+	2;50
+	2;51
+	2;52
+	2;53
+	2;54
+	2;55
+	2;56
+	2;57
+	2;58
+	2;59
+	2;60
+	2;61
+	2;62
+	2;63
+	2;64
+	2;65
+	2;66
+	2;67
+	2;68
+	2;69
+	2;70
+	2;71
+	2;72
+	2;73
+	2;74
+	2;75
+	2;76
+	2;77
+	2;78
+	2;79
+	2;80
+	2;81
+	2;82
+	2;83
+	2;84
+	2;85
+	2;86
+	2;87
+END
