@@ -19,13 +19,14 @@ post::PostHandler::uploadFile(crow::multipart::message& aMsg,
     // TODO: filename
     auto fileName = aMsg.get_part_by_name("filename").body;
     auto file     = aMsg.get_part_by_name("file").body;
+    auto userid   = aMsg.get_part_by_name("user_id").body;
 
     std::string filePath;
     {
         auto connection = data::ConnectionManager::getUserConnection();
         auto table      = connection.val.getData<data::File>();
         filePath        = aPathPrefix + std::to_string(table[0].num++) + "-" +
-                   dom::DateAndTime::getCurentTime() + "-" + fileName;
+                   dom::DateAndTime::getCurentTime() + "-" + userid + fileName;
         connection.val.update<data::File>(table);
     }
 

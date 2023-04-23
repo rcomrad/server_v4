@@ -41,7 +41,7 @@ proc::PipeLinuxProcess::~PipeLinuxProcess() noexcept
         if (i != NULL) delete[] i;
     }
 
-    std::cout << "kill: " << kill(mChildPID, SIGKILL) << "\n";
+    // std::cout << "kill: " << kill(mChildPID, SIGKILL) << "\n";
     // std::cout << "kill: " << kill(-mChildPID, SIGKILL) << "\n";
 
     wait(NULL);
@@ -73,13 +73,13 @@ proc::PipeLinuxProcess::create() noexcept
     makeParameters();
     WRITE_LOG("Creating_process_with_name:", mRawParameters[0]);
 
-    for (int i = 0; i < mRawParameters.size() - 1; ++i)
-    {
-        for (int j = 0; mRawParameters[i][j]; ++j)
-            std::cout << mRawParameters[i][j];
-        std::cout << " ";
-    }
-    std::cout << "\n";
+    // for (int i = 0; i < mRawParameters.size() - 1; ++i)
+    // {
+    //     for (int j = 0; mRawParameters[i][j]; ++j)
+    //         std::cout << mRawParameters[i][j];
+    //     std::cout << " ";
+    // }
+    // std::cout << "\n";
 
     mChildPID = fork();
     if (mChildPID == -1)
@@ -99,7 +99,7 @@ proc::PipeLinuxProcess::create() noexcept
     }
     else
     {
-        std::cout << "chiled_id : " << mChildPID << "\n";
+        // std::cout << "chiled_id : " << mChildPID << "\n";
         close(mPipeA[0]);
         close(mPipeB[1]);
     }
@@ -141,8 +141,8 @@ proc::PipeLinuxProcess::runWithLimits() noexcept
         auto dur = timeLocal2 - timeLocal;
         if (dur.seconds() > 6) break;
     }
-    std::cout << "kill " << mRawParameters[0] << ": "
-              << kill(mChildPID, SIGKILL) << "\n";
+    // std::cout << "kill " << mRawParameters[0] << ": "
+    //           << kill(mChildPID, SIGKILL) << "\n";
     // std::cout << "kill " << mRawParameters[0] << ": "
     //           << kill(-mChildPID, SIGKILL) << "\n";
 
@@ -152,15 +152,15 @@ proc::PipeLinuxProcess::runWithLimits() noexcept
     timeUsage += resourseUsage.ru_stime.tv_usec;
     timeUsage /= 1000;
 
-    WRITE_LOG("status:", status);
-    WRITE_LOG("WIFEXITED:", WIFEXITED(status));
-    WRITE_LOG("WEXITSTATUS:", WEXITSTATUS(status));
-    WRITE_LOG("WIFSIGNALED:", WIFSIGNALED(status));
-    WRITE_LOG("WTERMSIG:", WTERMSIG(status));
-    WRITE_LOG("WIFSTOPPED:", WIFSTOPPED(status));
+    // WRITE_LOG("status:", status);
+    // WRITE_LOG("WIFEXITED:", WIFEXITED(status));
+    // WRITE_LOG("WEXITSTATUS:", WEXITSTATUS(status));
+    // WRITE_LOG("WIFSIGNALED:", WIFSIGNALED(status));
+    // WRITE_LOG("WTERMSIG:", WTERMSIG(status));
+    // WRITE_LOG("WIFSTOPPED:", WIFSTOPPED(status));
 
-    WRITE_LOG("time_usage:", timeUsage);
-    END_LOG_BLOCK("memory_usage:", memoryUsage);
+    // WRITE_LOG("time_usage:", timeUsage);
+    // END_LOG_BLOCK("memory_usage:", memoryUsage);
 
     if (WIFEXITED(status))
     {
