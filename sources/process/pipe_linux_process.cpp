@@ -160,7 +160,7 @@ proc::PipeLinuxProcess::runWithLimits() noexcept
     // WRITE_LOG("WIFSTOPPED:", WIFSTOPPED(status));
 
     // WRITE_LOG("time_usage:", timeUsage);
-    // END_LOG_BLOCK("memory_usage:", memoryUsage);
+    END_LOG_BLOCK("memory_usage:", memoryUsage);
 
     if (WIFEXITED(status))
     {
