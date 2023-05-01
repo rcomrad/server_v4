@@ -46,7 +46,7 @@ test::Tester::run(data::Table<data::Submission>&& aSubmission) noexcept
         problemTable    = connection.val.getData<data::Problem>(
             "id=" + data::wrap(submission.problem_id));
         submission.verdict = "GG";
-        connection.val.update(submission);
+        connection.val.update(aSubmission);
     }
 
     auto& problem = problemTable[0];
