@@ -65,8 +65,9 @@ public:
 
     virtual std::optional<Limits> runWithLimits() noexcept = 0;
 
-    virtual void writeData(const std::string& aMessage) noexcept = 0;
-    virtual void readData(std::string& aMessage) noexcept        = 0;
+    virtual void writeData(const std::string& aMessage,
+                           bool aWithEnd = false) noexcept = 0;
+    virtual void readData(std::string& aMessage) noexcept  = 0;
 
 protected:
     uint64_t mTimeLimit;
