@@ -277,7 +277,8 @@ void
 proc::PipeLinuxProcess::writeData(const std::string& aMessage,
                                   bool aWithEnd) noexcept
 {
-    write(mPipeA[1], aMessage.c_str(), aMessage.size() + (aWithEnd ? 1 : 0));
+    write(mPipeA[1], aMessage.c_str(), aMessage.size());
+    if (aWithEnd) write(mPipeA[1], "\0", 1);
 }
 
 //--------------------------------------------------------------------------------
