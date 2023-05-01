@@ -205,7 +205,7 @@ user_competition
 	87;2
 END
 
-submission						
+submission
 	1;	5;	2023-04-23 14:30:24;	NUN;	-1;	/home/rcomrad/data/submition/1-2023-4-23 14:30:24-some.cpp
 	1;	5;	2023-04-23 14:31:10;	NUN;	1;	/home/rcomrad/data/submition/2-2023-4-23 14:31:10-some.cpp
 	1;	5;	2023-04-23 14:31:43;	NUN;	1;	/home/rcomrad/data/submition/3-2023-4-23 14:31:43-some.cpp
@@ -818,5 +818,4 @@ submission
 	70;	5;	2023-04-23 19:01:17;	NUN;	1;	/home/rcomrad/data/submition/610-2023-4-23 19:1:17-70some.py
 	8;	4;	2023-04-23 19:45:31;	NUN;	-1;	/home/rcomrad/data/submition/611-2023-4-23 19:45:31-8some.py
 	8;	4;	2023-04-23 20:09:41;	NUN;	-1;	/home/rcomrad/data/submition/612-2023-4-23 20:9:41-8some.py
-END						
-						
+END
