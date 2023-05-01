@@ -37,7 +37,7 @@ checker(const std::string& aFileName) noexcept
 void
 test::Tester::run(data::Table<data::Submission>&& aSubmission) noexcept
 {
-    submission.verdict = "GG";
+    aSubmission.verdict = "GG";
     {
         auto connection = data::ConnectionManager::getUserConnection();
         connection.val.update(aSubmission);
