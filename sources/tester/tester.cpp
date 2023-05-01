@@ -37,6 +37,12 @@ checker(const std::string& aFileName) noexcept
 void
 test::Tester::run(data::Table<data::Submission>&& aSubmission) noexcept
 {
+    submission.verdict = "GG";
+    {
+        auto connection = data::ConnectionManager::getUserConnection();
+        connection.val.update(aSubmission);
+    }
+
     mIsmIsCorapted = false;
 
     auto& submission = aSubmission[0];
