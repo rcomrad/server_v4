@@ -33,7 +33,7 @@ public:
 
     virtual void IORedirection() noexcept;
     void readData(std::string& result) noexcept final override;
-    void writeData(const std::string& aMessage) noexcept final override;
+    void writeData(const std::string& aMessage, bool aWithEnd = false) noexcept final override;
 
 private:
     std::vector<std::string> mParameters;

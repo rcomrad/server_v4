@@ -274,9 +274,9 @@ proc::PipeLinuxProcess::readData(std::string& result) noexcept
 //--------------------------------------------------------------------------------
 
 void
-proc::PipeLinuxProcess::writeData(const std::string& aMessage) noexcept
+proc::PipeLinuxProcess::writeData(const std::string& aMessage, bool aWithEnd) noexcept
 {
-    write(mPipeA[1], aMessage.c_str(), aMessage.size());
+    write(mPipeA[1], aMessage.c_str(), aMessage.size() + aWithEnd ? 1 : 0);
 }
 
 //--------------------------------------------------------------------------------
