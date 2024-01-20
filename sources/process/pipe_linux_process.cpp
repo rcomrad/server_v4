@@ -15,7 +15,7 @@
 #    include <unistd.h>
 #    include <wait.h>
 
-#    include "domain/log.hpp"
+#    include "base_module/log.hpp"
 
 //--------------------------------------------------------------------------------
 
@@ -71,12 +71,12 @@ proc::PipeLinuxProcess::create() noexcept
     // kill(-mChildPID, SIGKILL);
     IORedirection();
     makeParameters();
-    dom::writeInfo("Creating_process_with_name:", mRawParameters[0]);
+    base::Log::writeInfo("Creating_process_with_name:", mRawParameters[0]);
 
     mChildPID = fork();
     if (mChildPID == -1)
     {
-        dom::writeError("PipeProcess", 10, "Linux", "Can't_create_process");
+        base::Log::writeError("PipeProcess", 10, "Linux", "Can't_create_process");
     }
     else if (!mChildPID)
     {
@@ -102,7 +102,7 @@ proc::PipeLinuxProcess::create() noexcept
 bool
 proc::PipeLinuxProcess::run() noexcept
 {
-    dom::writeInfo("Runing_simple_process");
+    base::Log::writeInfo("Runing_simple_process");
     wait(NULL);
     return true;
 }
@@ -111,7 +111,7 @@ proc::PipeLinuxProcess::run() noexcept
 std::optional<proc::Limits>
 proc::PipeLinuxProcess::runWithLimits() noexcept
 {
-    dom::writeInfo("Runing_process_with_time_and_memory_evaluation");
+    base::Log::writeInfo("Runing_process_with_time_and_memory_evaluation");
 
     std::optional<Limits> result = {};
 
@@ -144,15 +144,15 @@ proc::PipeLinuxProcess::runWithLimits() noexcept
     timeUsage += resourseUsage.ru_stime.tv_usec;
     timeUsage /= 1000;
 
-    dom::writeInfo("status:", status);
-    dom::writeInfo("WIFEXITED:", WIFEXITED(status));
-    dom::writeInfo("WEXITSTATUS:", WEXITSTATUS(status));
-    dom::writeInfo("WIFSIGNALED:", WIFSIGNALED(status));
-    dom::writeInfo("WTERMSIG:", WTERMSIG(status));
-    dom::writeInfo("WIFSTOPPED:", WIFSTOPPED(status));
+    base::Log::writeInfo("status:", status);
+    base::Log::writeInfo("WIFEXITED:", WIFEXITED(status));
+    base::Log::writeInfo("WEXITSTATUS:", WEXITSTATUS(status));
+    base::Log::writeInfo("WIFSIGNALED:", WIFSIGNALED(status));
+    base::Log::writeInfo("WTERMSIG:", WTERMSIG(status));
+    base::Log::writeInfo("WIFSTOPPED:", WIFSTOPPED(status));
 
-    dom::writeInfo("time_usage:", timeUsage);
-    dom::writeInfo("memory_usage:", memoryUsage);
+    base::Log::writeInfo("time_usage:", timeUsage);
+    base::Log::writeInfo("memory_usage:", memoryUsage);
 
     if (WIFEXITED(status))
     {
@@ -170,7 +170,7 @@ proc::PipeLinuxProcess::runWithLimits() noexcept
 void
 proc::PipeLinuxProcess::IORedirection() noexcept
 {
-    dom::writeInfo("Rederecting_input_and_output_to_pipe");
+    base::Log::writeInfo("Rederecting_input_and_output_to_pipe");
 
     close(mPipeA[0]);
     close(mPipeA[1]);
@@ -286,7 +286,7 @@ proc::PipeLinuxProcess::writeData(const std::string& aMessage) noexcept
 void
 proc::PipeLinuxProcess::makeParameters() noexcept
 {
-    dom::writeInfo("makeParameters entry");
+    base::Log::writeInfo("makeParameters entry");
     for (auto i : mRawParameters)
     {
         if (i != NULL) delete[] i;
@@ -301,7 +301,7 @@ proc::PipeLinuxProcess::makeParameters() noexcept
     }
     mRawParameters.emplace_back();
     mRawParameters.back() = NULL;
-    dom::writeInfo("makeParameters exit");
+    base::Log::writeInfo("makeParameters exit");
 }
 
 //--------------------------------------------------------------------------------

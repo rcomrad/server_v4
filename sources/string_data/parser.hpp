@@ -11,7 +11,7 @@
 #include "file.hpp"
 #include "variable.hpp"
 
-namespace file
+namespace strd
 {
 class Parser
 {

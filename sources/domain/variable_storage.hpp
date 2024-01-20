@@ -7,8 +7,8 @@
 #include <string>
 #include <unordered_map>
 
-#include "domain/holy_trinity.hpp"
-#include "domain/metaprogramming.hpp"
+#include "holy_trinity.hpp"
+#include "metaprogramming.hpp"
 
 using namespace std::chrono_literals;
 

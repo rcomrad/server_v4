@@ -1,7 +1,7 @@
 #include "generate_code.hpp"
 
-#include "file_data/file.hpp"
-#include "file_data/path.hpp"
+#include "string_data/file.hpp"
+#include "string_data/path.hpp"
 
 #include "string_algorithms.hpp"
 
@@ -75,7 +75,7 @@ code::CodeGenerator::makeDatabaseStructure() noexcept
         {"std::string", "data::Type::STRING"},
         {"int",         "data::Type::INT"   },
         {"char",        "data::Type::BOOL"  },
-        {"float",        "data::Type::FLOAT"  }
+        {"float",       "data::Type::FLOAT" }
     };
     for (auto& i : mTables)
     {

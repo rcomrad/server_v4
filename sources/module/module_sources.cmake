@@ -1,9 +1,6 @@
 set(
     MODULE_SOURCES 
 
-    command.cpp
-    command.hpp
-
     competition_manager.cpp
     competition_manager.hpp
 

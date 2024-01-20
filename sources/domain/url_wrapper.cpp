@@ -1,21 +1,8 @@
 #include "url_wrapper.hpp"
 
-#include "domain/log.hpp"
+#include "string_data/file.hpp"
 
-#include "file_data/file.hpp"
-
-dom::UrlWrapper::UrlWrapper() noexcept
-{
-    auto temp = file::File::getWords("config", "url.pass");
-    if (temp.size() > 0 && temp[0].size() > 0)
-    {
-        mUrl = "https://" + temp[0][0] + "/";
-    }
-    else
-    {
-        dom::writeError("Can't read site url!"s);
-    }
-}
+#include "log.hpp"
 
 dom::UrlWrapper&
 dom::UrlWrapper::getInstance() noexcept
@@ -23,6 +10,8 @@ dom::UrlWrapper::getInstance() noexcept
     static UrlWrapper instance;
     return instance;
 }
+
+//--------------------------------------------------------------------------------
 
 std::string
 dom::UrlWrapper::toHTMLHref(const std::string& aData,
@@ -42,4 +31,19 @@ std::string
 dom::UrlWrapper::toSite(const std::string& aStr) noexcept
 {
     return getInstance().mUrl + aStr;
+}
+
+//--------------------------------------------------------------------------------
+
+dom::UrlWrapper::UrlWrapper() noexcept
+{
+    auto temp = file::File::getWords("config", "url.pass");
+    if (temp.size() > 0 && temp[0].size() > 0)
+    {
+        mUrl = "https://" + temp[0][0] + "/";
+    }
+    else
+    {
+        dom::writeError("Can't read site url!"s);
+    }
 }

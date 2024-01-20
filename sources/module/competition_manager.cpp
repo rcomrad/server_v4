@@ -1,30 +1,47 @@
 #include "competition_manager.hpp"
 
-#include "domain/url_wrapper.hpp"
+#include "core/variable_storage.hpp"
 
 #include "database/connection_manager.hpp"
 
-#include "core/variable_storage.hpp"
+#include "domain/url_wrapper.hpp"
+
 #include "file_data/file.hpp"
 #include "file_data/parser.hpp"
 #include "file_data/path.hpp"
 
-mod::CompetitionManager mod::CompetitionManager::mInstance;
+//--------------------------------------------------------------------------------
 
-mod::CompetitionManager::CompetitionManager() noexcept
-    : ModuleBase({"comp=question"})
-{
-}
+base::BasicCommandRouter base::Log::glCommandRouter(
+    "main", {"comp"}, &mod::CompetitionManager::applyCommand);
+
+//--------------------------------------------------------------------------------
 
 std::string
-mod::CompetitionManager::doAction(const Command& aComman) noexcept
+mod::CompetitionManager::applyCommand(const Command& aCommand) noexcept
 {
-    return userComp(aComman.argument);
+    auto connection = data::ConnectionManager::getUserConnection();
+
+    if (aCommand.value == "comp=question")
+    {
+        return userComp(aComman.argument);
+    }
+    return "ERROR";
+}
+
+data::Competition
+mod::CompetitionManager::userComp(const std::string aValue) noexcept
+{
+    data::Competition result;
+    bool needWritingToDB = false;
+
+    auto it = aVal
 }
 
 std::string
 mod::CompetitionManager::userComp(const std::string aValue) noexcept
 {
+
     auto connection = data::ConnectionManager::getUserConnection();
 
     auto data          = file::Parser::slice(aValue, "=");
@@ -51,5 +68,5 @@ mod::CompetitionManager::userComp(const std::string aValue) noexcept
     }
     connection.val.write(arr);
 
-    return "sus";
+    return "TODO: result";
 }

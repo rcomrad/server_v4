@@ -4,9 +4,8 @@
 #include <mailio/message.hpp>
 #include <mailio/smtp.hpp>
 
-#include "domain/log.hpp"
-
-#include "file_data/file.hpp"
+#include "base_module/log.hpp"
+#include "string_data/file.hpp"
 
 dom::Mail::Mail(const std::string& aLogin,
                 const std::string& aPassword) noexcept
@@ -91,101 +90,3 @@ dom::Mail::send(const std::string& aEmailName,
 
     return result;
 }
-
-// using mailio::dialog_error;
-// using mailio::mail_address;
-// using mailio::message;
-// using mailio::mime;
-// using mailio::smtp_error;
-// using mailio::smtps;
-// using std::cout;
-// using std::endl;
-// using std::string;
-
-// int
-// main()
-// {
-//     std::ifstream inp("text.txt");
-//     std::string text;
-
-//     std::getline(inp, text, '\0');
-//     inp.close();
-
-//     inp.open("data.txt");
-
-//     int cnt = 0;
-//     std::string email, name, pass;
-//     while (inp >> email)
-//     {
-//         cnt++;
-//         bool flag = true;
-//         while (flag)
-//         {
-//             flag = false;
-//             std::cout << cnt << " " << email << "\n";
-
-//             if (email.find('@') == -1)
-//             {
-//                 std::cout << "email error\n";
-//                 break;
-//             }
-
-//             try
-//             {
-//                 message msg;
-//                 msg.header_codec(message::header_codec_t::BASE64);
-//                 msg.from(mail_address(
-//                     "",
-//                     "fedorovas@adtspb.ru")); // set the correct sender
-//                                              // name and address
-//                 msg.add_recipient(
-//                     mail_address("", email)); // set the correct recipent
-//                                               // name and address
-//                 msg.subject("Итоги заключительного этапа городского тура "
-//                             "олимпиады по информатике");
-
-//                 msg.content_transfer_encoding(
-//                     mime::content_transfer_encoding_t::QUOTED_PRINTABLE);
-//                 msg.content_type(message::media_type_t::TEXT, "plain",
-//                 "utf-8");
-
-//                 std::string temp = text;
-
-//                 // temp += "\nЛогин: " + name + "\n";
-//                 // temp += "Пароль: " + pass + "\n";
-
-//                 // temp += "\nС уважением, Федоров Александр Сергеевич.";
-
-//                 msg.content(temp);
-
-//                 smtps conn("smtp.yandex.com", 465);
-//                 conn.authenticate("fedorovas@adtspb.ru", "8620yan",
-//                                   smtps::auth_method_t::LOGIN);
-//                 conn.submit(msg);
-//             }
-//             catch (smtp_error& exc)
-//             {
-//                 cout << exc.what() << endl;
-//                 flag = true;
-//             }
-//             catch (dialog_error& exc)
-//             {
-//                 cout << exc.what() << endl;
-//                 flag = true;
-//             }
-
-//             if (flag)
-//             {
-//                 // char c;
-//                 // std::cin >> c;
-
-//                 int rrr = 0;
-//                 for (int i = 0; i < 1e6; ++i)
-//                 {
-//                     rrr += rand();
-//                 }
-//                 std::cout << rrr << std::endl;
-//             }
-//         }
-//     }
-// }

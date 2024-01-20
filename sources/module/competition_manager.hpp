@@ -4,21 +4,23 @@
 //--------------------------------------------------------------------------------
 
 #include <string>
+#include <unirdered_map>
 
-#include "module_base.hpp"
+#include "base_module/command_router.hpp"
 
 //--------------------------------------------------------------------------------
 
 namespace mod
 {
-class CompetitionManager : public ModuleBase
+class CompetitionManager
 {
-protected:
-    std::string doAction(const Command& aComman) noexcept override;
-
 private:
-    static CompetitionManager mInstance;
-    CompetitionManager() noexcept;
+    static BasicCommandRouter glCommandRouter;
+
+    static std::string applyCommand(const Command& aCommand) noexcept override;
+
+    data::Competition manageCompetition(
+        const std::unirdered_map<std::string, std::string>& aVariables);
 
     static std::string userComp(const std::string aValue) noexcept;
 };

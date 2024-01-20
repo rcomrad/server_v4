@@ -4,11 +4,11 @@ macro(get_sources SOURCE_LIST DIR)
 
     set(FOLDER_NAMES 
 
+    base_module
     code 
     core 
     database 
     domain 
-    file_data 
     get 
     module 
     multitool 
@@ -16,6 +16,7 @@ macro(get_sources SOURCE_LIST DIR)
     process 
     router 
     server 
+    string_data
     tester 
     tex_manager
     

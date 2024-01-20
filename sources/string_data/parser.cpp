@@ -7,8 +7,8 @@
 
 #include "file.hpp"
 
-std::optional<file::Variable>
-file::Parser::makeVariable(const std::string& aStr) noexcept
+std::optional<strd::Variable>
+strd::Parser::makeVariable(const std::string& aStr) noexcept
 {
     std::optional<Variable> result;
 
@@ -25,15 +25,15 @@ file::Parser::makeVariable(const std::string& aStr) noexcept
     return result;
 }
 
-std::vector<file::Variable>
-file::Parser::getVariablesFromFile(const std::string& aFileName) noexcept
+std::vector<strd::Variable>
+strd::Parser::getVariablesFromFile(const std::string& aFileName) noexcept
 {
     std::vector<Variable> result;
 
-    auto lines = file::File::getLines(aFileName);
+    auto lines = strd::strd::getLines(aFileName);
     for (auto& str : lines)
     {
-        auto temp = file::Parser::makeVariable(str);
+        auto temp = strd::Parser::makeVariable(str);
         if (temp.has_value())
         {
             result.emplace_back(std::move(temp.value()));
@@ -50,23 +50,23 @@ file::Parser::getVariablesFromFile(const std::string& aFileName) noexcept
 }
 
 std::string
-file::Parser::getFileExtension(const std::string& aFileName) noexcept
+strd::Parser::getFileExtension(const std::string& aFileName) noexcept
 {
     int indx = aFileName.size() - 1;
     while (aFileName[indx] != '.') --indx;
     return aFileName.substr(indx + 1);
 }
 
-std::vector<file::Variable>
-file::Parser::getVariablesFromFile(const std::string& aFolderName,
+std::vector<strd::Variable>
+strd::Parser::getVariablesFromFile(const std::string& aFolderName,
                                    const std::string& aFilename) noexcept
 {
-    return file::Parser::getVariablesFromFile(
-        file::Path::getPathUnsafe(aFolderName, aFilename));
+    return strd::Parser::getVariablesFromFile(
+        strd::Path::getPathUnsafe(aFolderName, aFilename));
 }
 
 std::vector<std::string>
-file::Parser::slice(const std::string& aStr,
+strd::Parser::slice(const std::string& aStr,
                     const std::string& aDelimiters,
                     const std::string& aErase) noexcept
 {
@@ -95,7 +95,7 @@ file::Parser::slice(const std::string& aStr,
 }
 
 void
-file::Parser::normalize(std::string& aStr, Type aType) noexcept
+strd::Parser::normalize(std::string& aStr, Type aType) noexcept
 {
     if (aType == Type::Upper)
     {
@@ -110,7 +110,7 @@ file::Parser::normalize(std::string& aStr, Type aType) noexcept
 }
 
 std::string
-file::Parser::normalize(const std::string& aStr, Type aType) noexcept
+strd::Parser::normalize(const std::string& aStr, Type aType) noexcept
 {
     std::string result = aStr;
     normalize(result, aType);

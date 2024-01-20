@@ -4,21 +4,23 @@
 //--------------------------------------------------------------------------------
 
 #include <string>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
 
 //--------------------------------------------------------------------------------
 
-namespace modul
+namespace base
 {
 struct Command
 {
-    int num;
     std::string value;
-    std::string argument;
-    bool saveResult;
+    std::unordered_set<std::string> arguments;
+    std::unordered_map<std::string, std::string> variables;
 
-    Command(int a, const std::string& b, const std::string& c, bool r) noexcept;
+    Command(const std::string& aValue, const std::string& aArguments) noexcept;
 };
-} // namespace modul
+} // namespace base
 
 //--------------------------------------------------------------------------------
 
