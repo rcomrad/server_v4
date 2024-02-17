@@ -4,10 +4,9 @@
 #include <ostream>
 #include <vector>
 
-#include "string_data/to_string.hpp"
+#include "router/router_node.hpp"
 
-#include "command.hpp"
-#include "command_router.hpp"
+#include "string_data/to_string.hpp"
 
 namespace base
 {
@@ -41,7 +40,7 @@ public:
     //--------------------------------------------------------------------------------
 
 private:
-    static BasicCommandRouter glCommandRouter;
+    static route::RouterNode mNode;
 
     enum class PrintStatus
     {
@@ -127,6 +126,12 @@ private:
 
     //--------------------------------------------------------------------------------
 };
+
+// clang-format off
+#define INFO(...)     Log::writeInfo    (__FILE__, __LINE__, __func__, __VA_ARGS__)
+#define WARNING(...)  Log::writeWarning (__FILE__, __LINE__, __func__, __VA_ARGS__)
+#define ERROR(...)    Log::writeError   (__FILE__, __LINE__, __func__, __VA_ARGS__)
+// clang-format on
 
 } // namespace base
 

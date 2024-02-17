@@ -4,11 +4,11 @@ macro(get_sources SOURCE_LIST DIR)
 
     set(FOLDER_NAMES 
 
-    base_module
     code 
     core 
     database 
-    domain 
+    domain
+    general_tools
     get 
     module 
     multitool 

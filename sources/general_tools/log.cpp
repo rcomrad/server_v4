@@ -9,9 +9,7 @@
 
 //--------------------------------------------------------------------------------
 
-base::BasicCommandRouter base::Log::glCommandRouter("main",
-                                                    {"log"},
-                                                    &base::Log::applyCommand);
+route::RouterNode base::Log::mNode("general", "log", &base::Log::applyCommand);
 
 //--------------------------------------------------------------------------------
 

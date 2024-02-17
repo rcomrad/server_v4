@@ -14,9 +14,16 @@ namespace route
 class RouterNode
 {
 public:
-    RouterNode(const std::string& aRouterName,
+    RouterNode(const std::string& aVolumeName,
+               const std::string& aNodeName,
+               void* aFunc) noexcept;
+
+    RouterNode(const std::string& aVolumeName,
                const std::unordered_set<std::string>& aNodeNames,
-               std::function<void*()>&& aFunc) noexcept;
+               void* aFunc) noexcept;
+
+    RouterNode(const std::string& aVolumeName,
+               const std::unordered_map<std::string, void*>& aNodes) noexcept;
 };
 } // namespace route
 

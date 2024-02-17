@@ -1,7 +1,5 @@
 set(
-    BASE_MODULE_SOURCES
-
-    command_router.hpp
+    GENERAL_TOOLS_SOURCES
 
     command.cpp
     command.hpp
