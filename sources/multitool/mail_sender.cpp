@@ -2,14 +2,17 @@
 
 #include <thread>
 
-#include "domain/date_and_time.hpp"
+#include "domain/date_time.hpp"
 #include "domain/mail.hpp"
+#include "domain/time_handler.hpp"
 #include "domain/url_wrapper.hpp"
 
-#include "file_data/file.hpp"
-#include "file_data/parser.hpp"
-#include "file_data/path.hpp"
+#include "text_data/file.hpp"
+#include "text_data/parser.hpp"
+#include "text_data/path.hpp"
+
 #include "post/post_handler.hpp"
+
 #include "server/request_unpacker.hpp"
 // TODO: crow::multipart::message
 
@@ -50,22 +53,23 @@ mult::MailSender::process(const crow::request& aReq) noexcept
     }
     else
     {
-        auto name = dom::DateAndTime::getCurentTimeSafe();
-        file::File::writeData(name + ".xlsx", letter.data);
-        system((file::Path::getPathUnsafe("to_csv.sh") + " "s + name +
+        auto name = dom::TimeHandler::getCurentTime().getAllNoSpace();
+        text::File::writeData(name + ".xlsx", letter.data);
+        system((text::Path::getPathUnsafe("to_csv.sh") + " "s + name +
                 ".xlsx " + name + ".csv")
                    .c_str());
-        letter.data = file::File::getAllData(name + ".csv");
+        letter.data = text::File::getAllData(name + ".csv");
         // letter.data =
-        //     file::File::getAllData(letter.data, file::FileType::String);
+        //     text::File::getAllData(letter.data, text::FileType::String);
 
         std::string fileName =
-            "mail_report_" + dom::DateAndTime::getCurentTimeSafe() + ".txt";
+            "mail_report_" + dom::TimeHandler::getCurentTime().getAllNoSpace() +
+            ".txt";
 
         bool flag =
             serv::RequestUnpacker::getPartUnsafe(msg, "command") == "отправить";
         std::thread t(threadSender, letter,
-                      file::Path::touchFolder("print").value() + fileName,
+                      text::Path::touchFolder("print").value() + fileName,
                       flag);
         t.detach();
 
@@ -107,7 +111,7 @@ mult::MailSender::threadSender(Letter aLetter,
     std::ofstream out(aFileName);
 
     auto table =
-        file::File::getTable(aLetter.data, file::FileType::String,
+        text::File::getTable(aLetter.data, text::FileType::String,
                              [](char c)
                              {
                                  return c == ';' || c == ',' || c == '\0';
@@ -144,7 +148,7 @@ mult::MailSender::threadSender(Letter aLetter,
     }
 
     for (auto& i : table)
-        i["$all$"] = file::Parser::slice(i["$all$"], "", "\"")[0];
+        i["$all$"] = text::Parser::slice(i["$all$"], "", "\"")[0];
 
     auto letter = sliseText(aLetter.text, *table.begin());
 
@@ -161,7 +165,7 @@ mult::MailSender::threadSender(Letter aLetter,
         out << std::endl;
     }
 
-    dom::writeInfo("Start sending");
+    LOG_INFO("Start sending");
     dom::Mail mail(aLetter.login, aLetter.password);
     for (auto& row : table)
     {
@@ -173,15 +177,15 @@ mult::MailSender::threadSender(Letter aLetter,
         }
         auto addr = temp->second;
 
-        // dom::writeInfo("Sending to:", row["$mail$"]);
+        // LOG_INFO("Sending to:", row["$mail$"]);
         std::string copy;
         for (auto& l : letter)
         {
             copy += l.second + row[l.first];
         }
 
-        // dom::writeInfo("Theme is:", aLetter.theme);
-        // dom::writeInfo("Text is:", copy);
+        // LOG_INFO("Theme is:", aLetter.theme);
+        // LOG_INFO("Text is:", copy);
         if (aRealSend)
         {
             bool success = false;
@@ -191,11 +195,13 @@ mult::MailSender::threadSender(Letter aLetter,
                 if (success || i == 1) break;
 
                 out << "Однаминутный перерыв на чай начался в " +
-                           dom::DateAndTime::getCurentTime() + "."
+                           dom::TimeHandler::getCurentTime().getAllWSpace() +
+                           "."
                     << std::endl;
                 std::this_thread::sleep_for(60000ms);
                 out << "Однаминутный перерыв на чай завершился в " +
-                           dom::DateAndTime::getCurentTime() + "."
+                           dom::TimeHandler::getCurentTime().getAllWSpace() +
+                           "."
                     << std::endl;
             }
             if (success)
@@ -204,7 +210,7 @@ mult::MailSender::threadSender(Letter aLetter,
             }
             else
             {
-                out << "-->ERROR: Ошибка отправки  по адресу " + addr + "!";
+                out << "-->LOG_ERROR: Ошибка отправки  по адресу " + addr + "!";
             }
         }
         else
@@ -216,12 +222,12 @@ mult::MailSender::threadSender(Letter aLetter,
         }
         out << std::endl;
     }
-    dom::writeInfo("Finish sending");
+    LOG_INFO("Finish sending");
 
     if (aRealSend)
     {
         out << "Рассылка писем завершена в " +
-                   dom::DateAndTime::getCurentTime() + "."
+                   dom::TimeHandler::getCurentTime().getAllWSpace() + "."
             << std::endl;
     }
 }
@@ -231,7 +237,7 @@ mult::MailSender::sliseText(
     const std::string& aText,
     const std::unordered_map<std::string, std::string>& aKeys) noexcept
 {
-    dom::writeInfo("Start parsing letter");
+    LOG_INFO("Start parsing letter");
     std::vector<std::pair<std::string, std::string>> result;
 
     int last = 0;
@@ -264,7 +270,7 @@ mult::MailSender::sliseText(
 
     result.emplace_back(""s, aText.substr(last, aText.size()));
 
-    dom::writeInfo("Finished parsing letter");
+    LOG_INFO("Finished parsing letter");
 
     return result;
 }

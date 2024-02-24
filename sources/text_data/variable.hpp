@@ -6,7 +6,7 @@
 
 #include "value.hpp"
 
-namespace file
+namespace text
 {
 
 struct Variable

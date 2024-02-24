@@ -1,8 +1,8 @@
 #include "url_wrapper.hpp"
 
-#include "string_data/file.hpp"
+#include "text_data/file.hpp"
 
-#include "log.hpp"
+#include "general_tools/log.hpp"
 
 dom::UrlWrapper&
 dom::UrlWrapper::getInstance() noexcept
@@ -37,13 +37,13 @@ dom::UrlWrapper::toSite(const std::string& aStr) noexcept
 
 dom::UrlWrapper::UrlWrapper() noexcept
 {
-    auto temp = file::File::getWords("config", "url.pass");
+    auto temp = text::File::getWords("config", "url.pass");
     if (temp.size() > 0 && temp[0].size() > 0)
     {
         mUrl = "https://" + temp[0][0] + "/";
     }
     else
     {
-        dom::writeError("Can't read site url!"s);
+        LOG_ERROR("Can't read site url!"s);
     }
 }

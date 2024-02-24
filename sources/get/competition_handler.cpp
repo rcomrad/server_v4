@@ -1,8 +1,8 @@
 #include "competition_handler.hpp"
 
-#include "domain/date_and_time.hpp"
+#include "domain/time_handler.hpp"
 
-#include "file_data/path.hpp"
+#include "text_data/path.hpp"
 // std::string get::CompetitionHandler::mProblemPath =
 //     dom::Path::getInstance().getPath("problem").value();
 
@@ -15,7 +15,8 @@ foo()
 
     for (auto& i : comp)
     {
-        result[i.id] = dom::DateAndTime::getTime(i.startTime);
+        // TODO: fix
+        //result[i.id] = dom::TimeHandler::getTime(i.startTime);
     }
 
     return result;
@@ -37,18 +38,18 @@ get::CompetitionHandler::process(const std::unordered_set<int>& aColumn,
 
     static auto comp = foo();
 
-    auto table = aConnection.val.getNextDataArray<data::Competition>(aColumn);
-    if (table.size() > 0)
-    {
-        auto it = comp.find(table[0].id);
-        if (aColumn.size() == 4 ||
-            it != comp.end() &&
-                dom::DateAndTime::getRawCurentTime() > it->second)
-        {
-            auto tableList        = table.getAsJList();
-            result["competition"] = std::move(tableList);
-        }
-    }
+    // auto table = aConnection.val.getNextDataArray<data::Competition>(aColumn);
+    // if (table.size() > 0)
+    // {
+    //     auto it = comp.find(table[0].id);
+    //     if (aColumn.size() == 4 ||
+    //         it != comp.end() &&
+    //             dom::DateTime::getRawCurentTime() > it->second)
+    //     {
+    //         auto tableList        = table.getAsJList();
+    //         result["competition"] = std::move(tableList);
+    //     }
+    // }
 
     return result;
 

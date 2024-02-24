@@ -8,7 +8,7 @@
 
 #include "database/connection_manager.hpp"
 
-#include "file_data/path.hpp"
+#include "text_data/path.hpp"
 
 #include "crow.h"
 
@@ -50,7 +50,7 @@ public:
     //--------------------------------------------------------------------------------
 
     template <typename T>
-    static std::string dump(const crow::request& aRequest) noexcept
+    static std::string dump() noexcept
     {
         data::DataArray<T> table;
         {
@@ -71,6 +71,9 @@ public:
 
         return result;
     }
+
+// private:
+    // route::RouterNode gRouter;
 };
 } // namespace get
 

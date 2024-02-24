@@ -1,31 +1,33 @@
 #include "tex_file.hpp"
 
-#include "domain/date_and_time.hpp"
+#include "domain/date_time.hpp"
+#include "domain/time_handler.hpp"
 
-#include "file_data/file.hpp"
-#include "file_data/parser.hpp"
-#include "file_data/path.hpp"
+#include "text_data/file.hpp"
+#include "text_data/parser.hpp"
+#include "text_data/path.hpp"
 
 #include "tex_table.hpp"
 
 tex::TexFile::TexFile() noexcept
 {
     mData +=
-        file::File::getAllData(file::Path::getPathUnsafe("header.textemp"));
+        text::File::getAllData(text::Path::getPathUnsafe("header.textemp"));
 }
 
 std::string
 tex::TexFile::printToFile() noexcept
 {
     mData += "\\end{document}\n";
-    std::string name = dom::DateAndTime::getCurentTimeSafe() + ".tex";
-    return file::File::writeData("print", name, mData).value();
+    std::string name =
+        dom::TimeHandler::getCurentTime().getAllNoSpace() + ".tex";
+    return text::File::writeData("print", name, mData).value();
 }
 
 void
 tex::TexFile::addFile(const std::string& aFileName) noexcept
 {
-    auto curFile = file::File::getLines(file::Path::getPathUnsafe(aFileName));
+    auto curFile = text::File::getLines(text::Path::getPathUnsafe(aFileName));
 
     if (curFile[0] != "table")
     {
@@ -55,7 +57,7 @@ tex::TexFile::makeFromFIle(const std::string& aFileName) noexcept
 {
     mData += " \\begin{document}\n";
 
-    auto templ = file::File::getLines(file::Path::getPathUnsafe(aFileName));
+    auto templ = text::File::getLines(text::Path::getPathUnsafe(aFileName));
 
     for (auto& i : templ)
     {
@@ -65,9 +67,9 @@ tex::TexFile::makeFromFIle(const std::string& aFileName) noexcept
         }
         else if (i[0] == '*')
         {
-            auto blocks = file::Parser::slice(i, ";");
+            auto blocks = text::Parser::slice(i, ";");
             int cnt     = std::stoi(blocks[1]);
-            auto files  = file::Parser::slice(blocks[2], ",");
+            auto files  = text::Parser::slice(blocks[2], ",");
             for (int j = 0; j < cnt; ++j)
             {
                 for (auto& k : files)
@@ -79,8 +81,8 @@ tex::TexFile::makeFromFIle(const std::string& aFileName) noexcept
         }
         else if (i[0] == '?')
         {
-            auto blocks = file::Parser::slice(i, ";");
-            auto files  = file::Parser::slice(blocks[2], ",");
+            auto blocks = text::Parser::slice(i, ";");
+            auto files  = text::Parser::slice(blocks[2], ",");
             while (!mVariables[blocks[1]].empty())
             {
                 for (auto& k : files)

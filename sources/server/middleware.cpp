@@ -2,11 +2,11 @@
 
 #include <string>
 
-#include "domain/date_and_time.hpp"
+#include "domain/date_time.hpp"
 
 #include "database/connection_manager.hpp"
 
-#include "core/variable_storage.hpp"
+#include "domain/variable_storage.hpp"
 
 #include "token_handler.hpp"
 
@@ -15,7 +15,7 @@ serv::Middleware::before_handle(crow::request& req,
                                 crow::response& res,
                                 context& ctx)
 {
-    while (core::VariableStorage::isLocked())
+    while (dom::VariableStorage::isLocked())
         ;
 
     auto user = serv::TokenHandler::process(req);
@@ -43,17 +43,17 @@ serv::Middleware::before_handle(crow::request& req,
                 comp = connection.val.getData<data::Competition>("id=" + id);
             }
 
-            if (user.value()->id != 2 &&
-                (comp.id == 0 || !dom::DateAndTime::isPassed(comp.startTime) ||
-                 dom::DateAndTime::isPassed(comp.endTime)))
-            {
-                dom::writeInfo("My id: ", user.value()->id);
-                crow::json::wvalue result;
-                result["errors"] = dom::DateAndTime::getCurentTime();
-                result["competition_question"] = "errors";
-                res                            = std::move(result);
-                res.end();
-            }
+            // if (user.value()->id != 2 &&
+            //     (comp.id == 0 || !dom::DateTime::isPassed(comp.startTime) ||
+            //      dom::DateTime::isPassed(comp.endTime)))
+            // {
+            //     LOG_INFO("My id: ", user.value()->id);
+            //     crow::json::wvalue result;
+            //     result["errors"] = dom::DateTime::getTimeOnly();
+            //     result["competition_question"] = "errors";
+            //     res                            = std::move(result);
+            //     res.end();
+            // }
         }
     }
 }

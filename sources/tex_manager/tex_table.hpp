@@ -7,7 +7,7 @@
 #include <vector>
 
 #include "domain/holy_trinity.hpp"
-#include "domain/to_string.hpp"
+#include "text_data/to_string.hpp"
 
 #include "tex_base.hpp"
 
@@ -65,7 +65,7 @@ public:
     void pushBack(Args&&... args) noexcept
     {
         // if (mCurColumn++ != 1) mData += "& ";
-        // mData += dom::toString(std::forward<T>(aData));
+        // mData += text::toString(std::forward<T>(aData));
         // mData += " ";
 
         // mData += aArgs[0] == '$' ? getVariable(aArgs) : aArgs;
@@ -94,7 +94,7 @@ public:
         mData += gPosition[aType];
         if (int(aColumnBorders) & int(ColumnBorders::Right)) mData += "|";
         mData += "}{";
-        mData += dom::toString(std::forward<T>(aData));
+        mData += text::toString(std::forward<T>(aData));
         mData += "}\n";
     }
 

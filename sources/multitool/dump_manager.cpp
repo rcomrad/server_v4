@@ -1,13 +1,17 @@
 #include "dump_manager.hpp"
 
-#include "domain/date_and_time.hpp"
-#include "domain/log.hpp"
+#include "domain/date_time.hpp"
+#include "domain/time_handler.hpp"
+#include "domain/variable_storage.hpp"
 
-#include "core/variable_storage.hpp"
-#include "file_data/file.hpp"
-#include "file_data/parser.hpp"
+#include "text_data/file.hpp"
+#include "text_data/parser.hpp"
+
 #include "get/get_router.hpp"
+
 #include "post/post_handler.hpp"
+
+#include "general_tools/log.hpp"
 
 //--------------------------------------------------------------------------------
 
@@ -27,8 +31,9 @@ mult::DumpManager::process(const crow::request& aReq) noexcept
 
     // TODO: don't save in file
     std::string file = msg.get_part_by_name("file").body;
-    auto path        = file::File::writeData(
-        "bin", dom::DateAndTime::getCurentTimeSafe() + ".dmp", file);
+    auto path        = text::File::writeData(
+        "bin", dom::TimeHandler::getCurentTime().getAllNoSpace() + ".dmp",
+        file);
 
     post::PostHandler::uploadFromFile(
         {
@@ -44,7 +49,7 @@ mult::DumpManager::makeSaveFile() noexcept
 {
     std::optional<std::string> result;
 
-    auto flag = !core::VariableStorage::touchFlag("bad_db_flag");
+    auto flag = !dom::VariableStorage::touchFlag("bad_db_flag");
     if (flag)
     {
         result = mult::DumpManager::dumpAsFile();
@@ -76,9 +81,9 @@ std::string
 mult::DumpManager::privateProcess(const std::string& aCommand,
                                   const std::string& aArgs) noexcept
 {
-    auto processedArgs = file::Parser::slice(aArgs, ",", "*");
+    auto processedArgs = text::Parser::slice(aArgs, ",", "*");
 
-    std::string result = "ERROR: wrong dump type!";
+    std::string result = "LOG_ERROR: wrong dump type!";
     if (aCommand == "dump")
     {
         result = dumpAsString(processedArgs);
@@ -124,10 +129,11 @@ mult::DumpManager::dumpAsFile(
     const std::vector<std::string>& aTableNames) noexcept
 {
     auto data = dumpAsString(aTableNames);
-    auto path = file::File::writeData(
-        "dump", dom::DateAndTime::getCurentTimeSafe() + ".dmp", data);
+    auto path = text::File::writeData(
+        "dump", dom::TimeHandler::getCurentTime().getAllNoSpace() + ".dmp",
+        data);
 
-    if (!path.has_value()) dom::writeError("Can't create file in dump folder");
+    if (!path.has_value()) LOG_ERROR("Can't create file in dump folder");
     return path;
 }
 
@@ -153,7 +159,7 @@ mult::DumpManager::getDatabaseTableNames() noexcept
 {
     std::vector<std::string> result;
 
-    auto words = file::File::getWords("config"s, "database.psql_db"s);
+    auto words = text::File::getWords("config"s, "database.psql_db"s);
     for (auto& i : words)
     {
         if (i[0] == "TABLE") result.emplace_back(std::move(i[1]));

@@ -1,13 +1,15 @@
 #include "post_handler.hpp"
 
-#include "domain/date_and_time.hpp"
+#include "core/file_router.hpp"
 
 #include "database/connection_manager.hpp"
 #include "database/safe_sql_wrapper.hpp"
 
-#include "core/file_router.hpp"
-#include "file_data/file.hpp"
-#include "file_data/path.hpp"
+#include "domain/date_time.hpp"
+#include "domain/time_handler.hpp"
+
+#include "text_data/file.hpp"
+#include "text_data/path.hpp"
 
 #include "post_router.hpp"
 
@@ -106,7 +108,7 @@ crow::json::wvalue
 post::PostHandler::uploadFromFileRequest(const std::string& aType,
                                          const crow::request& aReq) noexcept
 {
-    dom::writeInfo("Start upload");
+    LOG_INFO("Start upload");
 
     crow::multipart::message msg(aReq);
     std::string filePath = uploadFile(msg);
@@ -135,21 +137,22 @@ post::PostHandler::uploadFile(crow::multipart::message& aMsg,
                               const std::string& aFileKey,
                               const std::string& aFilenameKey) noexcept
 {
-    dom::writeInfo("File upload func");
+    LOG_INFO("File upload func");
 
-    auto pathPrefix = file::Path::getPathUnsafe("upload");
-    // dom::writeInfo("File prefix:", pathPrefix);
+    auto pathPrefix = text::Path::getPathUnsafe("upload");
+    // LOG_INFO("File prefix:", pathPrefix);
 
     std::string fileName;
     if (!aFilenameKey.empty())
         fileName = serv::RequestUnpacker::getPartUnsafe(aMsg, aFilenameKey);
-    // dom::writeInfo("File name:", fileName);
+    // LOG_INFO("File name:", fileName);
     auto file = serv::RequestUnpacker::getPartUnsafe(aMsg, aFileKey);
-    // dom::writeInfo("File data:", file);
+    // LOG_INFO("File data:", file);
 
     std::string filePath =
-        pathPrefix + dom::DateAndTime::getCurentTimeSafe() + "-" + fileName;
-    file::File::writeData(filePath, file);
+        pathPrefix + dom::TimeHandler::getCurentTime().getAllWSpace() +
+        "-" + fileName;
+    text::File::writeData(filePath, file);
 
     return filePath;
 }

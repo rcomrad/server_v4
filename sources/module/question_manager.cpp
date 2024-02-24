@@ -4,10 +4,11 @@
 
 #include "database/connection_manager.hpp"
 
-#include "core/variable_storage.hpp"
-#include "file_data/file.hpp"
-#include "file_data/parser.hpp"
-#include "file_data/path.hpp"
+#include "domain/variable_storage.hpp"
+
+#include "text_data/file.hpp"
+#include "text_data/parser.hpp"
+#include "text_data/path.hpp"
 
 mod::QuestionManager mod::QuestionManager::mInstance;
 
@@ -18,7 +19,7 @@ mod::QuestionManager::QuestionManager() noexcept : ModuleBase({"question"})
 std::string
 mod::QuestionManager::doAction(const Command& aComman) noexcept
 {
-    std::string result = "ERROR: no such command!";
+    std::string result = "LOG_ERROR: no such command!";
     if (aComman.argument == "load")
     {
         result = loadQuestions();
@@ -36,8 +37,8 @@ mod::QuestionManager::loadQuestions() noexcept
     auto connection = data::ConnectionManager::getUserConnection();
     // connection.val.drop("question", "id > 0");
 
-    auto hasQ = file::Path::getContentMap(file::Path::getPathUnsafe("question"),
-                                          file::Path::FileType::Folder);
+    auto hasQ = text::Path::getContentMap(text::Path::getPathUnsafe("question"),
+                                          text::Path::FileType::Folder);
     std::map<std::string, std::string> questions;
     questions.insert(hasQ.begin(), hasQ.end());
 
@@ -52,8 +53,8 @@ mod::QuestionManager::loadQuestions() noexcept
         q.weight     = 1;
         q.juryAnswer = "1";
 
-        auto data = file::File::getWordsMap(
-            i.second + "data.txt", file::FileType::File,
+        auto data = text::File::getWordsMap(
+            i.second + "data.txt", text::FileType::File,
             [](char c) { return c == '=' || c == '\n' || c == '\0'; });
 
         auto ansIt  = data.find("answer");
@@ -69,120 +70,120 @@ mod::QuestionManager::loadQuestions() noexcept
 
     return "?";
 }
-#include "domain/cyrillic.hpp"
+#include "text_data/cyrillic.hpp"
 std::string
 mod::QuestionManager::retestQuestions() noexcept
 {
-    auto connection = data::ConnectionManager::getUserConnection();
-    auto temp       = connection.val.getDataArray<data::Question>();
-    std::unordered_map<int, data::Question> questions;
-    for (auto&& i : temp)
-    {
-        questions[i.id] = std::move(i);
-    }
+    // auto connection = data::ConnectionManager::getUserConnection();
+    // auto temp       = connection.val.getDataArray<data::Question>();
+    // std::unordered_map<int, data::Question> questions;
+    // for (auto&& i : temp)
+    // {
+    //     questions[i.id] = std::move(i);
+    // }
 
-    auto answers = connection.val.getDataArray<data::Answer>();
-    for (auto& a : answers)
-    {
-        if (a.questionID == 30)
-        {
-            int yy = 0;
-            ++yy;
-        }
+    // auto answers = connection.val.getDataArray<data::Answer>();
+    // for (auto& a : answers)
+    // {
+    //     if (a.questionID == 30)
+    //     {
+    //         int yy = 0;
+    //         ++yy;
+    //     }
 
-        auto& q = questions[a.questionID];
-        if (q.type == "table")
-        {
-            if (a.questionID == 30 && a.value == "13467810")
-            {
-                int yy = 0;
-                ++yy;
-            }
+    //     auto& q = questions[a.questionID];
+    //     if (q.type == "table")
+    //     {
+    //         if (a.questionID == 30 && a.value == "13467810")
+    //         {
+    //             int yy = 0;
+    //             ++yy;
+    //         }
 
-            a.verdict = "P";
-            a.weight  = 0;
+    //         a.verdict = "P";
+    //         a.weight  = 0;
 
-            auto jAns = file::Parser::slice(q.juryAnswer, ",");
-            auto pAns = file::Parser::slice(a.value, ", ;.");
+    //         auto jAns = text::Parser::slice(q.juryAnswer, ",");
+    //         auto pAns = text::Parser::slice(a.value, ", ;.");
 
-            bool ggFlag = jAns[0].back() >= '0' && jAns[0].back() <= '9';
-            if (ggFlag && pAns.size() == 1 && pAns[0].size() > 1)
-            {
-                std::string ghgh;
-                for (auto& i : pAns[0])
-                {
-                    ghgh += std::string({i}) + ",";
-                }
-                pAns = file::Parser::slice(ghgh, ", ;.");
-            }
+    //         bool ggFlag = jAns[0].back() >= '0' && jAns[0].back() <= '9';
+    //         if (ggFlag && pAns.size() == 1 && pAns[0].size() > 1)
+    //         {
+    //             std::string ghgh;
+    //             for (auto& i : pAns[0])
+    //             {
+    //                 ghgh += std::string({i}) + ",";
+    //             }
+    //             pAns = text::Parser::slice(ghgh, ", ;.");
+    //         }
 
-            if (!ggFlag || pAns.size() < jAns.size())
-            {
-                pAns.resize(jAns.size());
-            }
+    //         if (!ggFlag || pAns.size() < jAns.size())
+    //         {
+    //             pAns.resize(jAns.size());
+    //         }
 
-            std::unordered_set<std::wstring> ggAnss;
+    //         std::unordered_set<std::wstring> ggAnss;
 
-            for (int i = 0; i < jAns.size(); ++i)
-            {
-                auto jAnsStr = dom::Cyrilic::global.toWString(jAns[i]);
-                dom::Cyrilic::global.standardProcedure(jAnsStr);
-                if (ggFlag)
-                {
-                    ggAnss.insert(jAnsStr);
-                    continue;
-                }
+    //         for (int i = 0; i < jAns.size(); ++i)
+    //         {
+    //             auto jAnsStr = dom::Cyrilic::global.toWString(jAns[i]);
+    //             dom::Cyrilic::global.standardProcedure(jAnsStr);
+    //             if (ggFlag)
+    //             {
+    //                 ggAnss.insert(jAnsStr);
+    //                 continue;
+    //             }
 
-                auto pAnsStr = dom::Cyrilic::global.toWString(pAns[i]);
-                dom::Cyrilic::global.standardProcedure(pAnsStr);
+    //             auto pAnsStr = dom::Cyrilic::global.toWString(pAns[i]);
+    //             dom::Cyrilic::global.standardProcedure(pAnsStr);
 
-                if (pAnsStr == jAnsStr)
-                {
-                    a.weight += q.weight;
-                }
-            }
+    //             if (pAnsStr == jAnsStr)
+    //             {
+    //                 a.weight += q.weight;
+    //             }
+    //         }
 
-            if (ggFlag)
-            {
-                for (int i = 0; i < jAns.size(); ++i)
-                {
-                    auto pAnsStr = dom::Cyrilic::global.toWString(pAns[i]);
-                    dom::Cyrilic::global.standardProcedure(pAnsStr);
+    //         if (ggFlag)
+    //         {
+    //             for (int i = 0; i < jAns.size(); ++i)
+    //             {
+    //                 auto pAnsStr = dom::Cyrilic::global.toWString(pAns[i]);
+    //                 dom::Cyrilic::global.standardProcedure(pAnsStr);
 
-                    if (ggAnss.count(pAnsStr))
-                    {
-                        a.weight += q.weight;
-                    }
-                    else
-                    {
-                        a.weight -= q.weight;
-                    }
-                }
-            }
+    //                 if (ggAnss.count(pAnsStr))
+    //                 {
+    //                     a.weight += q.weight;
+    //                 }
+    //                 else
+    //                 {
+    //                     a.weight -= q.weight;
+    //                 }
+    //             }
+    //         }
 
-            if (a.weight <= 0) a.weight = -1;
-        }
-        else
-        {
-            auto pAnsStr = dom::Cyrilic::global.toWString(a.value);
-            dom::Cyrilic::global.standardProcedure(pAnsStr);
+    //         if (a.weight <= 0) a.weight = -1;
+    //     }
+    //     else
+    //     {
+    //         auto pAnsStr = dom::Cyrilic::global.toWString(a.value);
+    //         dom::Cyrilic::global.standardProcedure(pAnsStr);
 
-            auto jAnsStr = dom::Cyrilic::global.toWString(q.juryAnswer);
-            dom::Cyrilic::global.standardProcedure(jAnsStr);
+    //         auto jAnsStr = dom::Cyrilic::global.toWString(q.juryAnswer);
+    //         dom::Cyrilic::global.standardProcedure(jAnsStr);
 
-            a.verdict = (pAnsStr == jAnsStr) ? "T" : "F";
-            if (a.verdict == "T")
-            {
-                a.weight = 1;
-            }
-            else
-            {
-                a.weight = -1;
-            }
-        }
-    }
+    //         a.verdict = (pAnsStr == jAnsStr) ? "T" : "F";
+    //         if (a.verdict == "T")
+    //         {
+    //             a.weight = 1;
+    //         }
+    //         else
+    //         {
+    //             a.weight = -1;
+    //         }
+    //     }
+    // }
 
-    connection.val.write(answers);
+    // connection.val.write(answers);
 
     return "?";
 }

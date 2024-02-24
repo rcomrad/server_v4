@@ -4,9 +4,10 @@
 //--------------------------------------------------------------------------------
 
 #include <string>
-#include <unirdered_map>
+#include <unordered_map>
 
-#include "base_module/command_router.hpp"
+#include "router/command.hpp"
+#include "router/router_node.hpp"
 
 //--------------------------------------------------------------------------------
 
@@ -15,12 +16,12 @@ namespace mod
 class CompetitionManager
 {
 private:
-    static BasicCommandRouter glCommandRouter;
+    static route::RouterNode glRouter;
 
-    static std::string applyCommand(const Command& aCommand) noexcept override;
+    static std::string applyCommand(const route::Command& aCommand) noexcept;
 
-    data::Competition manageCompetition(
-        const std::unirdered_map<std::string, std::string>& aVariables);
+    // data::Competition manageCompetition(
+    //     const std::unirdered_map<std::string, std::string>& aVariables);
 
     static std::string userComp(const std::string aValue) noexcept;
 };

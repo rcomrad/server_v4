@@ -14,7 +14,7 @@ using namespace std::chrono_literals;
 
 //--------------------------------------------------------------------------------
 
-namespace core
+namespace dom
 {
 class VariableStorage
 {
@@ -33,13 +33,17 @@ public:
     static const int& touchInt(const std::string& aName,
                                int aDefaultValue = 0) noexcept;
 
-    template <typename S, typename = dom::enableIf<dom::isString<S>>>
-    static const std::string& touchWord(const std::string& aName,
-                                        S&& aDefaultValue = "") noexcept
+    // TODO: fix
+    // template <typename S, typename = dom::enableIf<dom::isString<S>>>
+    // static const std::string& touchWord(const std::string& aName,
+    //                                     S&& aDefaultValue = "") noexcept
+
+    static const std::string& touchWord(
+        const std::string& aName, std::string&& aDefaultValue = "") noexcept
     {
         static VariableStorage& instance = getInstance();
         return instance.touch(aName, instance.mWords,
-                              std::forward<S>(aDefaultValue));
+                              std::forward<std::string>(aDefaultValue));
     }
 
     //----------------------------------------------------------------------------
@@ -100,9 +104,9 @@ private:
     }
 
     template <typename T>
-    auto& touch(const std::string& aName,
-                std::unordered_map<std::string, T>& aVariables,
-                T&& aDefaultValue) noexcept
+    T& touch(const std::string& aName,
+             std::unordered_map<std::string, T>& aVariables,
+             T&& aDefaultValue) noexcept
     {
         auto it = aVariables.find(aName);
         if (it != aVariables.end())
@@ -113,7 +117,7 @@ private:
             .first->second;
     }
 };
-} // namespace core
+} // namespace dom
 
 //--------------------------------------------------------------------------------
 

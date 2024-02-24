@@ -3,7 +3,8 @@
 #include "core/role.hpp"
 
 crow::json::wvalue
-get::UserHandler::process(const std::unordered_set<int>& aColumn,
+get::UserHandler::process(const crow::request& aRequest,
+                          const std::unordered_set<int>& aColumn,
                           data::SmartConnection& aConnection) noexcept
 {
     auto table     = aConnection.val.getNextDataArray<data::User>(aColumn);

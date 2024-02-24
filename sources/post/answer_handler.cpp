@@ -1,11 +1,12 @@
 #include "answer_handler.hpp"
 
-#include "domain/date_and_time.hpp"
-
 #include "database/safe_sql_wrapper.hpp"
 
-#include "core/variable_storage.hpp"
-#include "file_data/file.hpp"
+#include "domain/date_time.hpp"
+#include "domain/time_handler.hpp"
+#include "domain/variable_storage.hpp"
+
+#include "text_data/file.hpp"
 
 crow::json::wvalue
 post::AnswerHandler::process(post::PostRequest<data::Answer>& aReq) noexcept
@@ -13,7 +14,7 @@ post::AnswerHandler::process(post::PostRequest<data::Answer>& aReq) noexcept
     auto& answer = aReq.data;
 
     answer.verdict = '?';
-    answer.time    = dom::DateAndTime::getCurentTime();
+    answer.time    = dom::TimeHandler::getCurentTime().getAllWSpace();
     answer.weight  = -1;
 
     // crow::multipart::message msg(aReq);
@@ -28,7 +29,7 @@ post::AnswerHandler::process(post::PostRequest<data::Answer>& aReq) noexcept
     // {
     //     // TODO: optional
     //     answer.value =
-    //         file::File::writeData("answer", "x.ans", answer.value).value();
+    //         text::File::writeData("answer", "x.ans", answer.value).value();
     // }
 
     data::Question question;
@@ -44,7 +45,7 @@ post::AnswerHandler::process(post::PostRequest<data::Answer>& aReq) noexcept
     if (oldAnswer.id) answer.id = oldAnswer.id;
     if (answer.value.size() > 100)
     {
-        dom::writeError("Can't write full answer!", answer.value);
+        LOG_ERROR("Can't write full answer!", answer.value);
         answer.value.resize(100);
     }
 
@@ -72,7 +73,7 @@ post::AnswerHandler::process(post::PostRequest<data::Answer>& aReq) noexcept
 
     // if (mProgramState.checkFlag(core::Flag::TIME_SET))
     // {
-    //     table[0].time = dom::DateAndTime::getCurentTime();
+    //     table[0].time = dom::TimeHandler::getCurentTime().getAllWSpace();
     // }
     // else
     // {

@@ -1,38 +1,40 @@
 #include "variable_storage.hpp"
 
-#include "string_data/parser.hpp"
-#include "string_data/path.hpp"
+#include <thread>
+
+#include "text_data/parser.hpp"
+#include "text_data/path.hpp"
 
 //--------------------------------------------------------------------------------
 
-core::VariableStorage::VariableStorage() noexcept : mMutexFlag(false)
+dom::VariableStorage::VariableStorage() noexcept : mMutexFlag(false)
 {
     reloadSettings();
 }
 
-core::VariableStorage&
-core::VariableStorage::getInstance() noexcept
+dom::VariableStorage&
+dom::VariableStorage::getInstance() noexcept
 {
     static VariableStorage instance;
     return instance;
 }
 
 void
-core::VariableStorage::reloadSettings() noexcept
+dom::VariableStorage::reloadSettings() noexcept
 {
     auto settings =
-        file::Parser::getVariablesFromFile("config", "main_settings.conf");
+        text::Parser::getVariablesFromFile("config", "main_settings.conf");
     for (auto& var : settings)
     {
         switch (var.value.getType())
         {
-            case file::Value::Type::Int:
+            case text::Value::Type::Int:
                 mInts[var.name] = var.value;
                 break;
-            case file::Value::Type::Bool:
+            case text::Value::Type::Bool:
                 mFlags[var.name] = var.value;
                 break;
-            case file::Value::Type::String:
+            case text::Value::Type::String:
                 mWords[var.name] = std::string(var.value);
                 break;
         }
@@ -42,14 +44,14 @@ core::VariableStorage::reloadSettings() noexcept
 //--------------------------------------------------------------------------------
 
 bool
-core::VariableStorage::isLocked() noexcept
+dom::VariableStorage::isLocked() noexcept
 {
     static VariableStorage& instance = getInstance();
     return instance.mMutexFlag;
 }
 
 void
-core::VariableStorage::beginLock(std::chrono::milliseconds aSleepValue) noexcept
+dom::VariableStorage::beginLock(std::chrono::milliseconds aSleepValue) noexcept
 {
     static VariableStorage& instance = getInstance();
     while (instance.mMutexFlag) continue;
@@ -58,7 +60,7 @@ core::VariableStorage::beginLock(std::chrono::milliseconds aSleepValue) noexcept
 }
 
 void
-core::VariableStorage::endLock() noexcept
+dom::VariableStorage::endLock() noexcept
 {
     static VariableStorage& instance = getInstance();
     instance.mMutexFlag              = false;
@@ -67,8 +69,8 @@ core::VariableStorage::endLock() noexcept
 //--------------------------------------------------------------------------------
 
 const bool&
-core::VariableStorage::touchFlag(const std::string& aName,
-                                 bool aDefaultValue) noexcept
+dom::VariableStorage::touchFlag(const std::string& aName,
+                                bool aDefaultValue) noexcept
 {
     static VariableStorage& instance = getInstance();
     return instance.touch(aName, instance.mFlags,
@@ -76,8 +78,8 @@ core::VariableStorage::touchFlag(const std::string& aName,
 }
 
 const int&
-core::VariableStorage::touchInt(const std::string& aName,
-                                int aDefaultValue) noexcept
+dom::VariableStorage::touchInt(const std::string& aName,
+                               int aDefaultValue) noexcept
 {
     static VariableStorage& instance = getInstance();
     return instance.touch(aName, instance.mInts,
@@ -87,7 +89,7 @@ core::VariableStorage::touchInt(const std::string& aName,
 //--------------------------------------------------------------------------------
 
 void
-core::VariableStorage::setVariable(
+dom::VariableStorage::setVariable(
     const std::string& aName,
     bool aValue,
     std::chrono::milliseconds aSleepValue) noexcept
@@ -98,7 +100,7 @@ core::VariableStorage::setVariable(
 }
 
 void
-core::VariableStorage::setVariable(
+dom::VariableStorage::setVariable(
     const std::string& aName,
     int aValue,
     std::chrono::milliseconds aSleepValue) noexcept

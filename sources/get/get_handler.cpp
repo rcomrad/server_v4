@@ -3,6 +3,7 @@
 #include <ranges>
 
 #include "get_router.hpp"
+
 #include "request_storage.hpp"
 
 //--------------------------------------------------------------------------------
@@ -58,7 +59,7 @@ get::GetHandler::mainGet(const crow::request& aRequest,
         for (size_t i = 0; i < req.size; ++i)
         {
             temp.emplace_back(get::GetRouter::basicRouter(
-                req[i].name, req[i].columnNums, connection));
+                req[i].name, aRequest, req[i].columnNums, connection));
         }
     }
 
@@ -71,7 +72,7 @@ get::GetHandler::mainGet(const crow::request& aRequest,
             for (int j = 0; j < curBlock.size(); ++j)
             {
                 auto additionalTable = multiplelGet(
-                    req[i].additionalTable,
+                    aRequest, req[i].additionalTable,
                     req[i].name + "_id=" + curBlock[j]["id"].dump());
                 if (name.empty()) name = additionalTable.keys()[0];
                 curBlock[j][name] = std::move(additionalTable[name]);

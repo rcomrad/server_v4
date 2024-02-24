@@ -5,7 +5,8 @@
 #include <utility>
 
 #include "domain/metaprogramming.hpp"
-#include "domain/to_string.hpp"
+
+#include "text_data/to_string.hpp"
 
 using namespace std::literals;
 
@@ -21,13 +22,13 @@ public:
     template <typename T, typename = dom::enableIf<dom::isNotString<T>>>
     static std::string convert(T&& arg) noexcept
     {
-        return dom::toString(std::forward<T>(arg));
+        return text::toString(std::forward<T>(arg));
     }
 
     template <typename S, typename = dom::enableIf<dom::isString<S>>>
     static auto convert(S&& str) noexcept
     {
-        return "\'" + dom::toString(std::forward<S>(str)) + "\'";
+        return "\'" + text::toString(std::forward<S>(str)) + "\'";
     }
 };
 

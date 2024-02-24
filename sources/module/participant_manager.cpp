@@ -4,10 +4,10 @@
 
 #include "database/connection_manager.hpp"
 
-#include "core/variable_storage.hpp"
-#include "file_data/file.hpp"
-#include "file_data/parser.hpp"
-#include "file_data/path.hpp"
+#include "domain/variable_storage.hpp"
+#include "text_data/file.hpp"
+#include "text_data/parser.hpp"
+#include "text_data/path.hpp"
 
 mod::PaticipantManager mod::PaticipantManager::mInstance;
 
@@ -24,7 +24,7 @@ mod::PaticipantManager::doAction(const Command& aComman) noexcept
 std::string
 mod::PaticipantManager::userComp(const std::string aValue) noexcept
 {
-    auto data      = file::Parser::slice(aValue, "=");
+    auto data      = text::Parser::slice(aValue, "=");
     auto& userPref = data[0];
     // bool flagg     = data[1].back() == '-';
     // if (flagg) data[1].pop_back();

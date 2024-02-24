@@ -1,8 +1,11 @@
 set(
-    MULTITOOL_SOURCES 
+    ROUTER_SOURCES 
 
-    router_master.cpp
-    router_master.hpp
+    command.cpp
+    command.hpp
+
+    router_map.cpp
+    router_map.hpp
 
     router_node.cpp
     router_node.hpp

@@ -6,7 +6,7 @@
 
 #include "domain/pair.hpp"
 
-namespace file
+namespace text
 {
 struct Value
 {

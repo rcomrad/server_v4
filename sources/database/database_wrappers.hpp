@@ -10,7 +10,7 @@
 #include <unordered_set>
 #include <vector>
 
-#include "domain/to_string.hpp"
+#include "text_data/to_string.hpp"
 
 #include "crow.h"
 #include "sql_wrapper.hpp"
@@ -151,7 +151,7 @@ struct UpperDataStruct : public T
         std::string result;
         for (size_t i = 0; i < T::types.size(); ++i)
         {
-            result += toString<dom::ToString>(T::types[i], T::ptrs[i]);
+            result += toString<text::ToString>(T::types[i], T::ptrs[i]);
             result.push_back(';');
         }
         return result;

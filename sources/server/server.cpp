@@ -1,9 +1,9 @@
 #include "server.hpp"
 
 #include "core/file_router.hpp"
-#include "core/variable_storage.hpp"
+#include "domain/variable_storage.hpp"
 #include "crow/middlewares/cors.h"
-#include "file_data/parser.hpp"
+#include "text_data/parser.hpp"
 #include "get/competition_handler.hpp"
 #include "get/get_handler.hpp"
 #include "get/get_router.hpp"
@@ -81,16 +81,16 @@ serv::Server::Server() noexcept
     //---------------------------------------------------------------------
 
     CROW_ROUTE(mApp, "/api/get/all/<string>")
-    ([&](const std::string& aRequest)
-     { return get::GetHandler::multiplelGet(aRequest, ""); });
+    ([&](const crow::request& temp, const std::string& aRequest)
+     { return get::GetHandler::multiplelGet(temp, aRequest, ""); });
 
     CROW_ROUTE(mApp, "/api/get/by_id/<string>/<string>")
-    ([&](const std::string& aRequest, const std::string& aID)
-     { return get::GetHandler::singlGet(aRequest, "id = " + aID); });
+    ([&](const crow::request& temp, const std::string& aRequest, const std::string& aID)
+     { return get::GetHandler::singlGet(temp, aRequest, "id = " + aID); });
 
     CROW_ROUTE(mApp, "/api/get/if/<string>/<string>")
-    ([&](const std::string& aRequest, std::string aCondition)
-     { return get::GetHandler::multiplelGet(aRequest, aCondition); });
+    ([&](const crow::request& temp, const std::string& aRequest, std::string aCondition)
+     { return get::GetHandler::multiplelGet(temp, aRequest, aCondition); });
 
     CROW_ROUTE(mApp, "/api/dump/<string>")
     ([&](const std::string& aName)

@@ -6,8 +6,8 @@
 #include "database/safe_sql_wrapper.hpp"
 
 #include "core/submission_queue.hpp"
-#include "core/variable_storage.hpp"
-#include "file_data/path.hpp"
+#include "domain/variable_storage.hpp"
+#include "text_data/path.hpp"
 
 crow::json::wvalue
 post::SubmitHandler::process(const crow::request& aReq) noexcept
@@ -26,7 +26,7 @@ post::SubmitHandler::process(const crow::request& aReq) noexcept
     submition.verdict    = "NUN";
     submition.test       = -1;
     submition.sourceName = uploadFile(msg);
-    // uploadFile(msg, file::Path::getPathUnsafe("submition"));
+    // uploadFile(msg, text::Path::getPathUnsafe("submition"));
 
     {
         auto connection = data::ConnectionManager::getUserConnection();

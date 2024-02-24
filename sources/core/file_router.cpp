@@ -1,7 +1,8 @@
 #include "file_router.hpp"
 
-#include "file_data/file.hpp"
-#include "file_data/parser.hpp"
+#include "text_data/file.hpp"
+#include "text_data/parser.hpp"
+
 #include "post/post_router.hpp"
 
 std::unordered_map<std::string, decltype(&core::FileRouter::dmpParser)>
@@ -14,7 +15,7 @@ std::unordered_map<std::string, decltype(&core::FileRouter::dmpParser)>
 data::RawDataArray
 core::FileRouter::process(const std::string& aFileName) noexcept
 {
-    auto extension = file::Parser::getFileExtension(aFileName);
+    auto extension = text::Parser::getFileExtension(aFileName);
     auto it        = mRouter.find(extension);
     data::RawDataArray result;
     if (it != mRouter.end()) result = it->second(aFileName);
@@ -24,7 +25,7 @@ core::FileRouter::process(const std::string& aFileName) noexcept
 data::RawDataArray
 core::FileRouter::dmpParser(const std::string& aFileName) noexcept
 {
-    auto words = file::File::getWords(aFileName, file::FileType::File,
+    auto words = text::File::getWords(aFileName, text::FileType::File,
                                       &core::FileRouter::isDMPSeparator);
     data::RawDataArray res;
     for (size_t i = 0; i < words.size(); ++i)
@@ -44,7 +45,7 @@ core::FileRouter::dmpParser(const std::string& aFileName) noexcept
 data::RawDataArray
 core::FileRouter::dataParser(const std::string& aFileName) noexcept
 {
-    auto words = file::File::getWords(aFileName);
+    auto words = text::File::getWords(aFileName);
     data::RawDataArray res;
     for (size_t i = 0; i < words.size(); ++i)
     {
@@ -68,7 +69,7 @@ core::FileRouter::dataParser(const std::string& aFileName) noexcept
 data::RawDataArray
 core::FileRouter::csvParser(const std::string& aFileName) noexcept
 {
-    auto words = file::File::getWords(aFileName, file::FileType::File,
+    auto words = text::File::getWords(aFileName, text::FileType::File,
                                       &core::FileRouter::isCSVSeparator);
     data::RawDataArray res;
     auto& curArray = res["data"];

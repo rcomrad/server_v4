@@ -2,7 +2,9 @@
 
 #include "code/generate_code.hpp"
 
-#include "file_data/path.hpp"
+#include "domain/variable_storage.hpp"
+
+#include "text_data/path.hpp"
 
 #include "module/module_handler.hpp"
 
@@ -10,14 +12,16 @@
 
 #include "tester/tester.hpp"
 
+#include "general_tools/log.hpp"
+
 #include "role.hpp"
 #include "submission_queue.hpp"
-#include "variable_storage.hpp"
 
 //--------------------------------------------------------------------------------
 
-route::RouterNode core::Core::mRouterNode(
-    "module", {"kill"}, []() { return (void*)&core::Core::doAction; });
+route::RouterNode core::Core::mRouterNode("module",
+                                          "kill",
+                                          (void*)&core::Core::doAction);
 
 //--------------------------------------------------------------------------------
 
@@ -29,10 +33,10 @@ core::Core::Core() noexcept : mKillFlag(false)
 
     core::Role::getInstance();
 
-    file::Path::addContentFrom(file::Path::getPathUnsafe("resource"),
-                               file::Path::FileType::File,
-                               file::Path::LevelType::Recursive);
-    file::Path::addContentFrom(file::Path::getPathUnsafe("scripts"));
+    text::Path::addContentFrom(text::Path::getPathUnsafe("resource"),
+                               text::Path::FileType::File,
+                               text::Path::LevelType::Recursive);
+    text::Path::addContentFrom(text::Path::getPathUnsafe("scripts"));
 }
 
 core::Core&
@@ -47,7 +51,8 @@ core::Core::getInstance() noexcept
 void
 core::Core::setup() noexcept
 {
-    auto restartState = VariableStorage::touchWord("restart_on_start", "nun");
+    auto restartState =
+        dom::VariableStorage::touchWord("restart_on_start", "nun");
     if (restartState != "nun")
     {
         mod::ModuleHandler::applyCommand("restart", restartState);
@@ -67,13 +72,13 @@ core::Core::run() noexcept
 //--------------------------------------------------------------------------------
 
 std::string
-core::Core::doAction(const modul::Command& aCommand) noexcept
+core::Core::doAction(const route::Command& aCommand) noexcept
 {
     return getInstance().doActionNonstatic(aCommand);
 }
 
 std::string
-core::Core::doActionNonstatic(const modul::Command& aCommand) noexcept
+core::Core::doActionNonstatic(const route::Command& aCommand) noexcept
 {
     std::string result;
 
@@ -92,7 +97,7 @@ void
 core::Core::start() noexcept
 {
     mApps["server"] = std::move(std::thread(&Core::serverThread, this));
-    if (VariableStorage::touchFlag("submission_auto_check"))
+    if (dom::VariableStorage::touchFlag("submission_auto_check"))
         mApps["tester"] = std::move(std::thread(&Core::testerThread, this));
 }
 
@@ -112,11 +117,11 @@ core::Core::testerThread() noexcept
     {
         if (!sub.isEmpty())
         {
-            dom::writeInfo("start_checking");
+            LOG_INFO("start_checking");
             test::Tester tester(
-                VariableStorage::touchInt("tester_thread_count"));
+                dom::VariableStorage::touchInt("tester_thread_count"));
             tester.run(sub.get());
-            dom::writeInfo("end_checking");
+            LOG_INFO("end_checking");
         }
     }
 }

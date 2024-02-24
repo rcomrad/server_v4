@@ -2,7 +2,7 @@
 
 #include <utility>
 
-#include "domain/log.hpp"
+#include "general_tools/log.hpp"
 
 using namespace std::chrono_literals;
 
@@ -26,7 +26,7 @@ get::RequestStorage::getRequest(const std::string& aRequest) noexcept
         it = instance.mStorage
                  .insert({aRequest, get::RequestParser::process(aRequest)})
                  .first;
-        dom::writeInfo("Adding request to storage:", aRequest);
+        LOG_INFO("Adding request to storage:", aRequest);
 
         mMutexFlag = false;
         mInsertMutex.unlock();

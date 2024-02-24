@@ -2,8 +2,8 @@
 
 #include "database/connection_manager.hpp"
 
-#include "file_data/file.hpp"
-#include "file_data/path.hpp"
+#include "text_data/file.hpp"
+#include "text_data/path.hpp"
 #include "multitool/dump_manager.hpp"
 #include "post/journal_handler.hpp"
 #include "post/plan_handler.hpp"
@@ -47,7 +47,7 @@ mod::Populate::doAction(const Command& aCommand) noexcept
     }
     else
     {
-        res = "ERROR\nCan't create dump!";
+        res = "LOG_ERROR\nCan't create dump!";
     }
 
     return res;
@@ -58,12 +58,12 @@ mod::Populate::remakeDatabase() noexcept
 {
     createEnvironment();
     createDatabaseFromFile(
-        file::Path::getPathUnsafe("config", "database.psql_db"));
+        text::Path::getPathUnsafe("config", "database.psql_db"));
     post::PostHandler::uploadFromFile(
         {
             {"type", "nun"}
     },
-        file::Path::getPathUnsafe("config", "database.dmp"));
+        text::Path::getPathUnsafe("config", "database.dmp"));
 }
 
 void
@@ -109,7 +109,7 @@ mod::Populate::createDatabaseFromFile(std::string aFileName) noexcept
     auto connection = data::ConnectionManager::getUserConnection();
 
     std::vector<data::ColumnSetting> colums;
-    auto lines = file::File::getWords(aFileName);
+    auto lines = text::File::getWords(aFileName);
     lines.emplace_back(std::vector<std::string>{"TABLE", "NUN"});
     std::string name;
     for (auto i : lines)

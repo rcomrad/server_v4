@@ -3,5 +3,5 @@
 std::string
 mult::MultiHandler::process(const crow::request& aReq) noexcept
 {
-    return "ERROR!";
+    return "LOG_ERROR!";
 }

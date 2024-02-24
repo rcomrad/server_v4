@@ -12,7 +12,7 @@
 
 #include "domain/holy_trinity.hpp"
 
-namespace file
+namespace text
 {
 class Path
 {

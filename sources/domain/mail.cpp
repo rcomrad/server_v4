@@ -4,8 +4,8 @@
 #include <mailio/message.hpp>
 #include <mailio/smtp.hpp>
 
-#include "base_module/log.hpp"
-#include "string_data/file.hpp"
+#include "general_tools/log.hpp"
+#include "text_data/file.hpp"
 
 dom::Mail::Mail(const std::string& aLogin,
                 const std::string& aPassword) noexcept
@@ -20,13 +20,13 @@ dom::Mail::Mail(const std::string& aLogin,
         academtalantTls();
     }
 
-    dom::writeInfo(mSmtp, mPort);
+    LOG_INFO(mSmtp, mPort);
 }
 
 void
 dom::Mail::useDefaultMail() noexcept
 {
-    static auto pass = file::File::getWords("config", "mail.pass");
+    static auto pass = text::File::getWords("config", "mail.pass");
     mLogin           = pass[0][0];
     mPassword        = pass[0][1];
 
@@ -79,12 +79,12 @@ dom::Mail::send(const std::string& aEmailName,
     }
     catch (mailio::smtp_error& exc)
     {
-        dom::writeError(exc.what());
+        LOG_ERROR(exc.what());
         result = false;
     }
     catch (mailio::dialog_error& exc)
     {
-        dom::writeError(exc.what());
+        LOG_ERROR(exc.what());
         result = false;
     }
 

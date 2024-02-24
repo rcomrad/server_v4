@@ -6,10 +6,10 @@
 #include <set>
 #include <vector>
 
-#include "domain/log.hpp"
+#include "general_tools/log.hpp"
 
-#include "file_data/file.hpp"
-#include "file_data/path.hpp"
+#include "text_data/file.hpp"
+#include "text_data/path.hpp"
 
 #include "sql_wrapper.hpp"
 
@@ -20,7 +20,7 @@ data::DatabaseConnection::generateConnectionTypeSettings() noexcept
 {
     std::unordered_map<ConnectionType, data::DBSettings> result;
 
-    auto words = file::File::getWords("config", "database.pass");
+    auto words = text::File::getWords("config", "database.pass");
     for (auto& i : words)
     {
         result[data::ConnectionType(std::stoi(i[0]))] =
@@ -44,7 +44,7 @@ data::DatabaseConnection::getConnectionTypeSettings(
 data::DatabaseConnection::DatabaseConnection(const DBSettings& aDBS) noexcept
     : mDBSettings(aDBS), mDatabase(aDBS)
 {
-    dom::writeInfo("Creating_database_quare");
+    LOG_INFO("Creating_database_quare");
 }
 
 data::DatabaseConnection::DatabaseConnection(
@@ -52,7 +52,7 @@ data::DatabaseConnection::DatabaseConnection(
     : mDBSettings(getConnectionTypeSettings(aType)),
       mDatabase(getConnectionTypeSettings(aType))
 {
-    dom::writeInfo("Creating_database_quare");
+    LOG_INFO("Creating_database_quare");
 }
 
 //--------------------------------------------------------------------------------

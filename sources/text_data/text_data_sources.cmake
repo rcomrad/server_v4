@@ -1,5 +1,5 @@
 set(
-    STRING_DATA_SOURCES
+    TEXT_DATA_SOURCES
 
     file.cpp
     file.hpp

@@ -13,13 +13,15 @@
 dom::DateTime
 dom::TimeHandler::getCurentTime() noexcept
 {
-    auto time = boost::posix_time::second_clock::local_time().time_of_day();
-    //    auto date = boost::gregorian::day_clock().universal_day();
     DateTime result;
 
-    result.dateTime.date.day   = time.day();
-    result.dateTime.date.month = time.month();
-    result.dateTime.date.year  = time.year();
+    auto curMoment = boost::posix_time::second_clock::local_time();
+    auto time      = curMoment.time_of_day();
+    auto date      = curMoment.date();
+
+    result.dateTime.date.day   = date.day();
+    result.dateTime.date.month = date.month();
+    result.dateTime.date.year  = date.year();
 
     result.dateTime.time.seconds = time.seconds();
     result.dateTime.time.minutes = time.minutes();
@@ -27,6 +29,22 @@ dom::TimeHandler::getCurentTime() noexcept
 
     return result;
 }
+
+// dom::DateTime
+// dom::TimeHandler::create(const boost::gregorian::date& aDate) noexcept
+// {
+//     DateTime result;
+
+//     result.dateTime.date.day   = aDate.day();
+//     result.dateTime.date.month = aDate.month();
+//     result.dateTime.date.year  = aDate.year();
+
+//     result.dateTime.time.seconds = 0;
+//     result.dateTime.time.minutes = 0;
+//     result.dateTime.time.hours   = 0;
+
+//     return result;
+// }
 
 //--------------------------------------------------------------------------------
 
@@ -48,13 +66,13 @@ dom::TimeHandler::durationHasPassed(const DateTime& aTimeFrom,
 //--------------------------------------------------------------------------------
 
 // boost::posix_time::ptime
-// dom::DateAndTime::getRawCurentTime() noexcept
+// dom::DateTime::getRawCurentTime() noexcept
 // {
 //     return boost::posix_time::second_clock::local_time();
 // }
 
 // std::string
-// dom::DateAndTime::getCurentTime() noexcept
+// dom::TimeHandler::getCurentTime().getAllWSpace() noexcept
 // {
 //     boost::posix_time::ptime timeLocal =
 //         boost::posix_time::second_clock::local_time();
@@ -72,13 +90,13 @@ dom::TimeHandler::durationHasPassed(const DateTime& aTimeFrom,
 // }
 
 // std::string
-// dom::DateAndTime::getCurentTimeSafe() noexcept
+// dom::TimeHandler::getCurentTime().getAllWSpaceSafe() noexcept
 // {
 
 // }
 
 // boost::gregorian::date
-// dom::DateAndTime::getDate(const std::string& aDate) noexcept
+// dom::DateTime::getDate(const std::string& aDate) noexcept
 // {
 //     uint16_t year  = uint16_t(std::stoi(aDate.substr(0, 4)));
 //     uint16_t month = uint8_t(std::stoi(aDate.substr(5, 2)));
@@ -89,7 +107,7 @@ dom::TimeHandler::durationHasPassed(const DateTime& aTimeFrom,
 // }
 
 // boost::posix_time::ptime
-// dom::DateAndTime::getTime(const std::string& aTime) noexcept
+// dom::DateTime::getTime(const std::string& aTime) noexcept
 // {
 //     // 2023-04-03 12:00:00
 
@@ -108,7 +126,7 @@ dom::TimeHandler::durationHasPassed(const DateTime& aTimeFrom,
 // }
 
 // std::string
-// dom::DateAndTime::getDateStr(const boost::gregorian::date& aDate) noexcept
+// dom::DateTime::getDateStr(const boost::gregorian::date& aDate) noexcept
 // {
 //     uint16_t year  = aDate.year();
 //     uint16_t month = aDate.month().as_number();
@@ -120,7 +138,7 @@ dom::TimeHandler::durationHasPassed(const DateTime& aTimeFrom,
 // }
 
 // std::string
-// dom::DateAndTime::toStr(const boost::posix_time::ptime& aTime) noexcept
+// dom::DateTime::toStr(const boost::posix_time::ptime& aTime) noexcept
 // {
 
 //     if (aTime.time_of_day().hours() < 10) dateTime += "0";
@@ -133,7 +151,7 @@ dom::TimeHandler::durationHasPassed(const DateTime& aTimeFrom,
 // }
 
 // bool
-// dom::DateAndTime::curentTimeAssert(
+// dom::DateTime::curentTimeAssert(
 //     const std::string& aTime,
 //     const boost::posix_time::time_duration& aDuration) noexcept
 // {
@@ -141,7 +159,7 @@ dom::TimeHandler::durationHasPassed(const DateTime& aTimeFrom,
 // }
 
 // bool
-// dom::DateAndTime::curentTimeAssert(
+// dom::DateTime::curentTimeAssert(
 //     const boost::posix_time::ptime& aTime,
 //     const boost::posix_time::time_duration& aDuration) noexcept
 // {
@@ -152,7 +170,7 @@ dom::TimeHandler::durationHasPassed(const DateTime& aTimeFrom,
 // }
 
 // bool
-// dom::DateAndTime::isPassed(const std::string& aTime) noexcept
+// dom::DateTime::isPassed(const std::string& aTime) noexcept
 // {
 //     boost::posix_time::ptime timeLocal =
 //         boost::posix_time::second_clock::local_time();

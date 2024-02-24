@@ -3,11 +3,11 @@
 #include <mutex>
 #include <unordered_map>
 
-#include "domain/log.hpp"
+#include "general_tools/log.hpp"
 #include "domain/url_wrapper.hpp"
 
-#include "file_data/file.hpp"
-#include "file_data/path.hpp"
+#include "text_data/file.hpp"
+#include "text_data/path.hpp"
 
 crow::json::wvalue
 get::QuestionHandler::process(int aQuestionID, int aUserId) noexcept
@@ -61,7 +61,7 @@ get::QuestionHandler::getQuestion(int aQuestionID) const noexcept
     }
     else
     {
-        dom::writeInfo("Loading question #", aQuestionID);
+        LOG_INFO("Loading question #", aQuestionID);
         result = loadQuestion(aQuestionID);
     }
     return result;
@@ -81,20 +81,20 @@ get::QuestionHandler::loadQuestion(int aQuestionID) const noexcept
     }
     auto result = question.getAsJson({"nickname", "jury_answer"});
 
-    auto path = file::Path::getPath("question");
+    auto path = text::Path::getPath("question");
     if (path)
     {
         std::string legend;
 
         std::string folder = path.value() + question.nickname;
-        auto fileData      = file::File::getLines(folder + "/legend.txt");
+        auto fileData      = text::File::getLines(folder + "/legend.txt");
         for (auto& i : fileData)
         {
             legend += std::move(i);
             legend += " <br> ";
         }
 
-        auto data = file::Path::getContentMap(folder);
+        auto data = text::Path::getContentMap(folder);
         for (auto& i : data)
         {
             if (excludedFiles.count(i.first)) continue;
@@ -104,7 +104,7 @@ get::QuestionHandler::loadQuestion(int aQuestionID) const noexcept
                      // (question.type == "multi" || question.type == "table")
             )
             {
-                auto temp = file::File::getLines(i.second);
+                auto temp = text::File::getLines(i.second);
                 crow::json::wvalue::list ans_list;
                 for (auto& i : temp)
                 {
@@ -129,7 +129,7 @@ get::QuestionHandler::loadQuestion(int aQuestionID) const noexcept
 
         // if (question.type == "table")
         // {
-        //     auto rows = file::File::getLines(folder + "/rows.txt");
+        //     auto rows = text::File::getLines(folder + "/rows.txt");
         //     crow::json::wvalue::list rowList;
         //     for (auto&& i : rows)
         //     {

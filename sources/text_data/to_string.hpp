@@ -5,11 +5,11 @@
 
 #include <string>
 
-#include "metaprogramming.hpp"
+#include "domain/metaprogramming.hpp"
 
 //--------------------------------------------------------------------------------
 
-namespace dom
+namespace text
 {
 
 class ToString

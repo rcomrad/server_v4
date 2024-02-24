@@ -15,6 +15,7 @@ class FormHandler : public GetHandler
 {
 public:
     static crow::json::wvalue process(
+        const crow::request& aRequest,
         const std::unordered_set<int>& aColumn,
         data::SmartConnection& aConnection) noexcept;
 };

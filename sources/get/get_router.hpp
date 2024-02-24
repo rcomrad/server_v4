@@ -1,7 +1,9 @@
 #ifndef GET_ROUTER_HPP
 #define GET_ROUTER_HPP
 
+#include <string>
 #include <unordered_map>
+#include <vector>
 
 #include "get_handler.hpp"
 

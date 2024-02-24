@@ -16,9 +16,9 @@ macro(get_sources SOURCE_LIST DIR)
     process 
     router 
     server 
-    string_data
     tester 
     tex_manager
+    text_data
     
     )
 

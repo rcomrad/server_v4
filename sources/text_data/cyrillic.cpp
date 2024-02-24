@@ -5,7 +5,7 @@
 #include <vector>
 
 bool
-dom::isSpace(char c) noexcept
+text::isSpace(char c) noexcept
 {
     // TODO:
     //  std::isspace
@@ -14,20 +14,20 @@ dom::isSpace(char c) noexcept
 
 //--------------------------------------------------------------------------------
 
-dom::Cyrilic dom::Cyrilic::global;
+text::Cyrilic text::Cyrilic::global;
 
 void
-dom::Cyrilic::standardProcedure(std::wstring& aStr) noexcept
+text::Cyrilic::standardProcedure(std::wstring& aStr) noexcept
 {
-    dom::Cyrilic::global.cutOffEnding(aStr);
-    dom::Cyrilic::global.destroyBadCharacters(aStr);
-    dom::Cyrilic::global.toUpper(aStr);
-    dom::Cyrilic::global.destroyWhiteSpaces(aStr, true);
-    dom::Cyrilic::global.cutOffEnding(aStr);
+    text::Cyrilic::global.cutOffEnding(aStr);
+    text::Cyrilic::global.destroyBadCharacters(aStr);
+    text::Cyrilic::global.toUpper(aStr);
+    text::Cyrilic::global.destroyWhiteSpaces(aStr, true);
+    text::Cyrilic::global.cutOffEnding(aStr);
 }
 
 void
-dom::Cyrilic::toLower(std::wstring& aStr) noexcept
+text::Cyrilic::toLower(std::wstring& aStr) noexcept
 {
     for (auto& i : aStr)
     {
@@ -54,7 +54,7 @@ dom::Cyrilic::toLower(std::wstring& aStr) noexcept
 //--------------------------------------------------------------------------------
 
 void
-dom::Cyrilic::toUpper(std::wstring& aStr) noexcept
+text::Cyrilic::toUpper(std::wstring& aStr) noexcept
 {
     for (auto& i : aStr)
     {
@@ -84,7 +84,7 @@ dom::Cyrilic::toUpper(std::wstring& aStr) noexcept
 //--------------------------------------------------------------------------------
 
 std::wstring
-dom::Cyrilic::toWString(const std::string& aStr) noexcept
+text::Cyrilic::toWString(const std::string& aStr) noexcept
 {
     return toWString(aStr.c_str());
 }
@@ -92,7 +92,7 @@ dom::Cyrilic::toWString(const std::string& aStr) noexcept
 //--------------------------------------------------------------------------------
 
 std::wstring
-dom::Cyrilic::toWString(const char* aStr) noexcept
+text::Cyrilic::toWString(const char* aStr) noexcept
 {
     std::wstring result;
     auto str   = const_cast<char*>(aStr);
@@ -115,7 +115,7 @@ dom::Cyrilic::toWString(const char* aStr) noexcept
 //--------------------------------------------------------------------------------
 
 void
-dom::Cyrilic::destroyBadCharacters(std::wstring& aStr) noexcept
+text::Cyrilic::destroyBadCharacters(std::wstring& aStr) noexcept
 {
     for (auto& i : aStr)
     {
@@ -177,7 +177,7 @@ dom::Cyrilic::destroyBadCharacters(std::wstring& aStr) noexcept
 //--------------------------------------------------------------------------------
 
 void
-dom::Cyrilic::destroyWhiteSpaces(std::wstring& aStr, bool flag) noexcept
+text::Cyrilic::destroyWhiteSpaces(std::wstring& aStr, bool flag) noexcept
 {
     int l = 0, r = 0;
     char last = ' ';
@@ -211,7 +211,7 @@ dom::Cyrilic::destroyWhiteSpaces(std::wstring& aStr, bool flag) noexcept
 //--------------------------------------------------------------------------------
 using namespace std::string_literals;
 void
-dom::Cyrilic::cutOffEnding(std::wstring& aStr) noexcept
+text::Cyrilic::cutOffEnding(std::wstring& aStr) noexcept
 {
     if (aStr.size() < 5) return;
 
@@ -238,7 +238,7 @@ dom::Cyrilic::cutOffEnding(std::wstring& aStr) noexcept
 //--------------------------------------------------------------------------------
 
 void
-dom::Cyrilic::destroyWord(std::wstring& aStr,
+text::Cyrilic::destroyWord(std::wstring& aStr,
                           const std::wstring& aWord) noexcept
 {
     int num = 0;
@@ -265,7 +265,7 @@ dom::Cyrilic::destroyWord(std::wstring& aStr,
 //--------------------------------------------------------------------------------
 
 char*
-dom::Cyrilic::toLowerCyrillic(const char* aCharacter) noexcept
+text::Cyrilic::toLowerCyrillic(const char* aCharacter) noexcept
 {
     char* res(new char[3]);
     res[2] = '\000';
@@ -290,7 +290,7 @@ dom::Cyrilic::toLowerCyrillic(const char* aCharacter) noexcept
 }
 
 char*
-dom::Cyrilic::toUpperCyrillic(const char* aCharacter) noexcept
+text::Cyrilic::toUpperCyrillic(const char* aCharacter) noexcept
 {
     char* res(new char[3]);
     res[0] = '\320';
@@ -317,7 +317,7 @@ dom::Cyrilic::toUpperCyrillic(const char* aCharacter) noexcept
 
 //--------------------------------------------------------------------------------
 std::string
-dom::Cyrilic::translit(const std::string& aStr) noexcept
+text::Cyrilic::translit(const std::string& aStr) noexcept
 {
     static std::unordered_map<std::string, std::string> dict = {
         {"А", "A"},

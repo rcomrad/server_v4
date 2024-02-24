@@ -1,8 +1,10 @@
 #include "multitool_router.hpp"
 
-#include "domain/log.hpp"
+#include "general_tools/log.hpp"
 
 // #include "core/token_handler.hpp"
+
+#include "domain/variable_storage.hpp"
 
 #include "server/server.hpp"
 
@@ -17,8 +19,8 @@ crow::response
 mult::MultitoolRouter::route(const crow::request& aReq)
 {
     static const bool& isTokenActive =
-        core::VariableStorage::touchFlag("token:isActive", false);
-    // dom::writeInfo("-||->GG");
+        dom::VariableStorage::touchFlag("token:isActive", false);
+    // LOG_INFO("-||->GG");
     crow::response result;
 
     auto& ctx = serv::Server::getContext(aReq);
@@ -39,8 +41,8 @@ mult::MultitoolRouter::route(const crow::request& aReq)
         }
         else
         {
-            dom::writeInfo("My role:", ctx.mUser->role,
-                           "Needed role:", it->second.roles);
+            LOG_INFO("My role:", ctx.mUser->role,
+                     "Needed role:", it->second.roles);
             result      = {"Access denied!"};
             result.code = 403;
         }

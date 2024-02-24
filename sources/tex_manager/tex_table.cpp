@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-#include "file_data/parser.hpp"
+#include "text_data/parser.hpp"
 
 std::unordered_map<tex::ColumnType, std::string> tex::TexTable::gPosition = {
     {tex::ColumnType::Nun,            "" },
@@ -60,20 +60,20 @@ tex::TexTable::fromRawData(const std::vector<std::string>& aData) noexcept
     {
         if (aData[i][0] == '\\')
         {
-            auto parts = file::Parser::slice(aData[i], " ", "\\");
+            auto parts = text::Parser::slice(aData[i], " ", "\\");
             if (parts.size() < 2) mData += "\\\\ \\hline";
             else mData += "\\\\ \\cline{" + parts[0] + "-" + parts[1] + "}";
         }
         else
         {
-            auto parts = file::Parser::slice(aData[i], ";");
+            auto parts = text::Parser::slice(aData[i], ";");
             for (auto& j : parts)
             {
                 if (j == "-") pushBack(" ");
                 else if (j[0] != '[') pushBack(j);
                 else
                 {
-                    auto blocks = file::Parser::slice(j, ",", "[]");
+                    auto blocks = text::Parser::slice(j, ",", "[]");
                     mData += "\\multicolumn";
 
                     std::replace(blocks[1].begin(), blocks[1].end(), 'R', 'p');

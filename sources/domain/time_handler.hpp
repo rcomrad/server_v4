@@ -27,6 +27,7 @@ public:
     // static bool isPassed(const std::string& aTime) noexcept;
 
     static DateTime getCurentTime() noexcept;
+    // static DateTime create(const boost::gregorian::date& aDate) noexcept;
 
     static bool dateTimeHasPassed(const DateTime& aTimeMoment) noexcept;
     static bool durationHasPassed(const DateTime& aTimeFrom,

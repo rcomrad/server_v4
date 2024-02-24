@@ -4,15 +4,15 @@
 
 #include <fstream>
 
-#include "domain/log.hpp"
+#include "general_tools/log.hpp"
 
-#include "file_data/path.hpp"
+#include "text_data/path.hpp"
 #include "process/process.hpp"
 
 //--------------------------------------------------------------------------------
 
 std::string test::Compiler::mCPPCompiler =
-    file::Path::getPathUnsafe("compiler") + "magicCPPCompiler.cmd";
+    text::Path::getPathUnsafe("compiler") + "magicCPPCompiler.cmd";
 
 std::unordered_map<std::string, test::Compiler::Language>
     test::Compiler::mLanguages = {

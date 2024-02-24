@@ -2,15 +2,17 @@
 
 #include <cmath>
 
-#include "domain/date_and_time.hpp"
+#include "core/role.hpp"
 
 #include "database/connection_manager.hpp"
 
-#include "core/role.hpp"
-#include "core/variable_storage.hpp"
-#include "file_data/file.hpp"
-#include "file_data/parser.hpp"
-#include "file_data/path.hpp"
+#include "domain/date_time.hpp"
+#include "domain/time_handler.hpp"
+#include "domain/variable_storage.hpp"
+
+#include "text_data/file.hpp"
+#include "text_data/parser.hpp"
+#include "text_data/path.hpp"
 
 #include "pass_generator.hpp"
 #include "request_unpacker.hpp"
@@ -22,23 +24,23 @@ serv::TokenHandler& serv::TokenHandler::mInstance =
 
 serv::TokenHandler::TokenHandler() noexcept
     : ModuleBase({"token"}),
-      //   mIsActive(core::VariableStorage::touchFlag("token_isActive")),
+      //   mIsActive(dom::VariableStorage::touchFlag("token_isActive")),
       //   mAuthorizationMemorise(
-      //       core::VariableStorage::touchFlag("token_isMemory")),
-      mIsActive(core::VariableStorage::touchFlag("token:isActive", false)),
+      //       dom::VariableStorage::touchFlag("token_isMemory")),
+      mIsActive(dom::VariableStorage::touchFlag("token:isActive", false)),
       mAuthorizationMemorise(
-          core::VariableStorage::touchFlag("token:isMemory", false)),
+          dom::VariableStorage::touchFlag("token:isMemory", false)),
       mTokenIterator(1),
       mTokenCount(100)
 {
-    auto size   = core::VariableStorage::touchInt("token_size", 100);
+    auto size   = dom::VariableStorage::touchInt("token_size", 100);
     mTokenCount = std::max(size, mTokenCount);
     rearrangeTokenArray();
 
     std::vector<int> lifespan = {24, 0, 0};
     auto lifespanInput =
-        core::VariableStorage::touchWord("token_lifespan", "24:00:00");
-    auto temp = file::Parser::slice(lifespanInput, ":");
+        dom::VariableStorage::touchWord("token_lifespan", "24:00:00");
+    auto temp = text::Parser::slice(lifespanInput, ":");
     for (int i = 0; i < std::min(temp.size(), size_t(3)); ++i)
     {
         lifespan[i] = std::stoi(temp[i]);
@@ -46,16 +48,16 @@ serv::TokenHandler::TokenHandler() noexcept
     mTokenLifespan = {lifespan[0], lifespan[1], lifespan[2]};
 
     auto urlsRoles =
-        file::File::getWords("config", "url.conf", file::FileType::File,
+        text::File::getWords("config", "url.conf", text::FileType::File,
                              [](char c) { return c == ' ' || c == '\0'; });
     for (auto& i : urlsRoles)
     {
         mAutorisation[i[0]] = std::stoi(i[1]);
     }
 
-    mod::ModuleBase::Command aCommand(
-        0, "token", core::VariableStorage::touchWord("token", "turn_off"));
-    doAction(aCommand);
+    // mod::ModuleBase::Command aCommand(
+    //     0, "token", dom::VariableStorage::touchWord("token", "turn_off"));
+    // doAction(aCommand);
 }
 
 serv::TokenHandler&
@@ -112,10 +114,10 @@ serv::TokenHandler::generateNonstatic(const data::User& aUser,
 
         token.userIp    = aIP;
         token.userID    = aUser.id;
-        token.startTime = dom::DateAndTime::getCurentTime();
+        token.startTime = dom::TimeHandler::getCurentTime().getAllWSpace();
         token.userRole  = aUser.roleID;
         token.value =
-            PassGenerator::generate() + "=" + dom::toString(mTokenIterator);
+            PassGenerator::generate() + "=" + text::toString(mTokenIterator);
         connection.val.write(token);
     }
 
@@ -123,7 +125,7 @@ serv::TokenHandler::generateNonstatic(const data::User& aUser,
     user.inUse      = true;
     user.ip         = token.userIp;
     user.id         = token.userID;
-    user.time       = dom::DateAndTime::getTime(token.startTime);
+    // user.time       = dom::DateTime::getTime(token.startTime);
     user.falseLogin = 0;
     user.role       = token.userRole;
     user.password   = token.value;
@@ -173,20 +175,20 @@ serv::TokenHandler::doAction(const Command& aCommand) noexcept
     if (aCommand.argument == "turn_off")
     {
         res = "Tokens turned OFF!";
-        core::VariableStorage::setVariable("token:isActive", false);
-        core::VariableStorage::setVariable("token:isMemory", false);
+        dom::VariableStorage::setVariable("token:isActive", false);
+        dom::VariableStorage::setVariable("token:isMemory", false);
     }
     else if (aCommand.argument == "turn_on")
     {
         res = "Tokens turned ON!";
-        core::VariableStorage::setVariable("token:isActive", true);
-        core::VariableStorage::setVariable("token:isMemory", false);
+        dom::VariableStorage::setVariable("token:isActive", true);
+        dom::VariableStorage::setVariable("token:isMemory", false);
     }
     else if (aCommand.argument == "memory")
     {
         res = "Start url-role memorization.";
-        core::VariableStorage::setVariable("token:isActive", false);
-        core::VariableStorage::setVariable("token:isMemory", true);
+        dom::VariableStorage::setVariable("token:isActive", false);
+        dom::VariableStorage::setVariable("token:isMemory", true);
     }
     else if (aCommand.argument == "print")
     {
@@ -195,11 +197,11 @@ serv::TokenHandler::doAction(const Command& aCommand) noexcept
     }
     else if (aCommand.argument == "cut")
     {
-        core::VariableStorage::setVariable("insert_tokens", false);
+        dom::VariableStorage::setVariable("insert_tokens", false);
     }
     else if (aCommand.argument == "add")
     {
-        core::VariableStorage::setVariable("insert_tokens", true);
+        dom::VariableStorage::setVariable("insert_tokens", true);
     }
 
     return res;
@@ -211,9 +213,9 @@ serv::TokenHandler::printAutorisation() const noexcept
     std::string data;
     for (auto& i : mAutorisation)
     {
-        data += i.first + " " + dom::toString(i.second) + "\n";
+        data += i.first + " " + text::toString(i.second) + "\n";
     }
-    file::File::writeData("config", "url.conf", data);
+    text::File::writeData("config", "url.conf", data);
 }
 
 // int
@@ -260,7 +262,7 @@ serv::TokenHandler::check(const std::string& aToken,
     {
         auto& user = userOpt.value();
 
-        // if (!dom::DateAndTime::curentTimeAssert(user.time,
+        // if (!dom::DateTime::curentTimeAssert(user.time,
         // mTokenLifespan))
         // {
         //     user.inUse = false;
@@ -377,7 +379,7 @@ serv::TokenHandler::rearrangeTokenArray() noexcept
     std::vector<int> toDrop;
     for (auto& i : tokens)
     {
-        // if (dom::DateAndTime::curentTimeAssert(i.startTime, mTokenLifespan))
+        // if (dom::DateTime::curentTimeAssert(i.startTime, mTokenLifespan))
         // {
         //     toDrop.emplace_back(i.id);
         // }
@@ -391,7 +393,7 @@ serv::TokenHandler::rearrangeTokenArray() noexcept
             mTokens[num].ip       = i.userIp;
             mTokens[num].password = i.value;
             mTokens[num].inUse    = true;
-            mTokens[num].time     = dom::DateAndTime::getTime(i.startTime);
+            // mTokens[num].time     = dom::DateTime::getTime(i.startTime);
         }
     }
     connection.val.dropByID("token", toDrop);

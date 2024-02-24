@@ -2,19 +2,23 @@
 
 #include <sstream>
 
-#include "domain/date_and_time.hpp"
-#include "domain/mail.hpp"
-#include "domain/url_wrapper.hpp"
+#include "core/role.hpp"
 
 #include "database/connection_manager.hpp"
 #include "database/safe_sql_wrapper.hpp"
 
-#include "core/role.hpp"
-#include "core/variable_storage.hpp"
-#include "file_data/file.hpp"
-#include "file_data/parser.hpp"
-#include "file_data/path.hpp"
+#include "domain/date_time.hpp"
+#include "domain/mail.hpp"
+#include "domain/time_handler.hpp"
+#include "domain/url_wrapper.hpp"
+#include "domain/variable_storage.hpp"
+
+#include "text_data/file.hpp"
+#include "text_data/parser.hpp"
+#include "text_data/path.hpp"
+
 #include "get/get_handler.hpp"
+
 #include "server/token_handler.hpp"
 
 std::mutex post::UserHandler::mRegMut;
@@ -63,7 +67,7 @@ post::UserHandler::rawDataHandler(data::RawData& aData) noexcept
 crow::response
 post::UserHandler::autorisation(const crow::request& aReq) noexcept
 {
-    auto addTokenFlag = core::VariableStorage::touchFlag("insert_tokens", true);
+    auto addTokenFlag = dom::VariableStorage::touchFlag("insert_tokens", true);
     auto x            = crow::json::load(aReq.body);
     auto resp         = crow::response(400);
     if (x)
@@ -90,7 +94,7 @@ post::UserHandler::autorisation(const crow::request& aReq) noexcept
         }
         else
         {
-            user.lastLogin = dom::DateAndTime::getCurentTimeSafe();
+            user.lastLogin = dom::TimeHandler::getCurentTime().getAllWSpace();
             {
                 auto connection = data::ConnectionManager::getUserConnection();
                 connection.val.write(user);
@@ -286,10 +290,10 @@ std::unordered_map<std::string, std::unordered_set<std::string>>
 post::UserHandler::getKeyMap() noexcept
 {
     std::unordered_map<std::string, std::unordered_set<std::string>> result;
-    auto data = file::File::getLines("config", "key_role.pass");
+    auto data = text::File::getLines("config", "key_role.pass");
     for (int i = 0; i < data.size(); i += 2)
     {
-        auto roles = file::Parser::slice(data[i + 1], " ");
+        auto roles = text::Parser::slice(data[i + 1], " ");
         result[data[i]] =
             std::unordered_set<std::string>(roles.begin(), roles.end());
     }
@@ -327,10 +331,11 @@ post::UserHandler::sendComfLink(const data::User& aUser) noexcept
     mail.useDefaultMail();
 
     // to erase whitespaces
-    static auto curSiteUrl = file::File::getWords("config", "url.pass")[0][0];
+    static auto curSiteUrl = text::File::getWords("config", "url.pass")[0][0];
 
-    std::string link = dom::toString(aUser.id) + "=" +
-                       dom::DateAndTime::getCurentTimeSafe() + "=";
+    std::string link = text::toString(aUser.id) + "=" +
+                       dom::TimeHandler::getCurentTime().getAllWSpace() +
+                       "=";
     for (int i = 0; i < 10; ++i) link += 'a' + rand() % 26;
 
     std::optional<std::string> result;

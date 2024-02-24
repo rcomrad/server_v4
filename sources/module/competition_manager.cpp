@@ -1,42 +1,41 @@
 #include "competition_manager.hpp"
 
-#include "core/variable_storage.hpp"
-
 #include "database/connection_manager.hpp"
 
 #include "domain/url_wrapper.hpp"
+#include "domain/variable_storage.hpp"
 
-#include "file_data/file.hpp"
-#include "file_data/parser.hpp"
-#include "file_data/path.hpp"
+#include "text_data/file.hpp"
+#include "text_data/parser.hpp"
+#include "text_data/path.hpp"
 
 //--------------------------------------------------------------------------------
 
-base::BasicCommandRouter base::Log::glCommandRouter(
-    "main", {"comp"}, &mod::CompetitionManager::applyCommand);
+route::RouterNode mod::CompetitionManager::glRouter(
+    "main", "comp", &mod::CompetitionManager::applyCommand);
 
 //--------------------------------------------------------------------------------
 
 std::string
-mod::CompetitionManager::applyCommand(const Command& aCommand) noexcept
+mod::CompetitionManager::applyCommand(const route::Command& aCommand) noexcept
 {
     auto connection = data::ConnectionManager::getUserConnection();
 
     if (aCommand.value == "comp=question")
     {
-        return userComp(aComman.argument);
+        return userComp(*aCommand.arguments.begin());
     }
-    return "ERROR";
+    return "LOG_ERROR";
 }
 
-data::Competition
-mod::CompetitionManager::userComp(const std::string aValue) noexcept
-{
-    data::Competition result;
-    bool needWritingToDB = false;
+// data::Competition
+// mod::CompetitionManager::userComp(const std::string aValue) noexcept
+// {
+//     data::Competition result;
+//     bool needWritingToDB = false;
 
-    auto it = aVal
-}
+//     auto it = aVal
+// }
 
 std::string
 mod::CompetitionManager::userComp(const std::string aValue) noexcept
@@ -44,7 +43,7 @@ mod::CompetitionManager::userComp(const std::string aValue) noexcept
 
     auto connection = data::ConnectionManager::getUserConnection();
 
-    auto data          = file::Parser::slice(aValue, "=");
+    auto data          = text::Parser::slice(aValue, "=");
     auto& questionPref = data[1];
 
     data::Competition comp;

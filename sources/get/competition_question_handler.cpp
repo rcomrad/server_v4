@@ -1,17 +1,17 @@
 #include "competition_question_handler.hpp"
 
-#include "domain/date_and_time.hpp"
+#include "domain/date_time.hpp"
 
-#include "file_data/file.hpp"
-#include "file_data/path.hpp"
+#include "text_data/file.hpp"
+#include "text_data/path.hpp"
 // std::string get::CompetitionHandler::mProblemPath =
 //     dom::Path::getInstance().getPath("problem").value();
 
 // boost::posix_time::ptime
 // foott()
 // {
-//     auto time = file::File::getAllData("data", "time.txt");
-//     return dom::DateAndTime::getTime(time);
+//     auto time = text::File::getAllData("data", "time.txt");
+//     return dom::DateTime::getTime(time);
 // }
 
 crow::json::wvalue
@@ -22,15 +22,16 @@ get::CompetitionQuestionHandler::process(
     // static auto time = foott();
 
     crow::json::wvalue result;
-    // if (dom::DateAndTime::getRawCurentTime() > time)
+    // if (dom::DateTime::getRawCurentTime() > time)
     // {
-        auto table     = aConnection.val.getNextDataArray<data::Form>(aColumn);
-        auto tableList = table.getAsJList();
-        result["competition_question"] = std::move(tableList);
+    auto table     = aConnection.val.getNextDataArray<data::Form>(aColumn);
+    auto tableList = table.getAsJList();
+    result["competition_question"] = std::move(tableList);
     // }
     // else
     // {
-    //     result["error"]                = dom::DateAndTime::getCurentTime();
+    //     result["error"]                =
+    //     dom::TimeHandler::getCurentTime().getAllWSpace();
     //     result["competition_question"] = "error";
     // }
 

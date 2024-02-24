@@ -2,13 +2,14 @@
 
 #include <unordered_set>
 
-#include "domain/cyrillic.hpp"
-#include "domain/log.hpp"
+#include "text_data/cyrillic.hpp"
+
+#include "general_tools/log.hpp"
 
 #include "file.hpp"
 
-std::optional<strd::Variable>
-strd::Parser::makeVariable(const std::string& aStr) noexcept
+std::optional<text::Variable>
+text::Parser::makeVariable(const std::string& aStr) noexcept
 {
     std::optional<Variable> result;
 
@@ -25,23 +26,23 @@ strd::Parser::makeVariable(const std::string& aStr) noexcept
     return result;
 }
 
-std::vector<strd::Variable>
-strd::Parser::getVariablesFromFile(const std::string& aFileName) noexcept
+std::vector<text::Variable>
+text::Parser::getVariablesFromFile(const std::string& aFileName) noexcept
 {
     std::vector<Variable> result;
 
-    auto lines = strd::strd::getLines(aFileName);
+    auto lines = text::File::getLines(aFileName);
     for (auto& str : lines)
     {
-        auto temp = strd::Parser::makeVariable(str);
+        auto temp = text::Parser::makeVariable(str);
         if (temp.has_value())
         {
             result.emplace_back(std::move(temp.value()));
         }
         else
         {
-            dom::writeError("Line '", str, "' from ", aFileName,
-                            " doesn't contain variable");
+            LOG_ERROR("Line '", str, "' from ", aFileName,
+                      " doesn't contain variable");
             continue;
         }
     }
@@ -50,23 +51,23 @@ strd::Parser::getVariablesFromFile(const std::string& aFileName) noexcept
 }
 
 std::string
-strd::Parser::getFileExtension(const std::string& aFileName) noexcept
+text::Parser::getFileExtension(const std::string& aFileName) noexcept
 {
     int indx = aFileName.size() - 1;
     while (aFileName[indx] != '.') --indx;
     return aFileName.substr(indx + 1);
 }
 
-std::vector<strd::Variable>
-strd::Parser::getVariablesFromFile(const std::string& aFolderName,
+std::vector<text::Variable>
+text::Parser::getVariablesFromFile(const std::string& aFolderName,
                                    const std::string& aFilename) noexcept
 {
-    return strd::Parser::getVariablesFromFile(
-        strd::Path::getPathUnsafe(aFolderName, aFilename));
+    return text::Parser::getVariablesFromFile(
+        text::Path::getPathUnsafe(aFolderName, aFilename));
 }
 
 std::vector<std::string>
-strd::Parser::slice(const std::string& aStr,
+text::Parser::slice(const std::string& aStr,
                     const std::string& aDelimiters,
                     const std::string& aErase) noexcept
 {
@@ -77,13 +78,13 @@ strd::Parser::slice(const std::string& aStr,
     for (auto c : aStr)
     {
         if (erase.count(c)) continue;
-        if (delimiters.count(c) && result.back.size())
+        if (delimiters.count(c) && result.back().size())
         {
             result.emplace_back();
             continue;
         }
 
-        result.back().emplace_back(c);
+        result.back().push_back(c);
     }
 
     if (result.back().empty())
@@ -95,7 +96,7 @@ strd::Parser::slice(const std::string& aStr,
 }
 
 void
-strd::Parser::normalize(std::string& aStr, Type aType) noexcept
+text::Parser::normalize(std::string& aStr, Type aType) noexcept
 {
     if (aType == Type::Upper)
     {
@@ -110,7 +111,7 @@ strd::Parser::normalize(std::string& aStr, Type aType) noexcept
 }
 
 std::string
-strd::Parser::normalize(const std::string& aStr, Type aType) noexcept
+text::Parser::normalize(const std::string& aStr, Type aType) noexcept
 {
     std::string result = aStr;
     normalize(result, aType);

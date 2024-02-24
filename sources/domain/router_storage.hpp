@@ -47,7 +47,7 @@
 //         }
 //         else
 //         {
-//             dom::WRITE_ERROR
+//             dom::WRITE_LOG_ERROR
 //         }
 //     }
 

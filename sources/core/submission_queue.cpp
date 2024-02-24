@@ -2,11 +2,11 @@
 
 #include "database/connection_manager.hpp"
 
-#include "variable_storage.hpp"
+#include "domain/variable_storage.hpp"
 
 core::SubmissionQueue::SubmissionQueue()
 {
-    mIsActive = VariableStorage::touchFlag("submission_auto_check");
+    mIsActive = dom::VariableStorage::touchFlag("submission_auto_check");
 }
 
 core::SubmissionQueue&

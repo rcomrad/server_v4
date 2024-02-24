@@ -49,7 +49,7 @@ IncludeCategories:
     Priority:        52
   - Regex:           '"domain.*"'
     Priority:        53
-  - Regex:           '"file_data.*"'
+  - Regex:           '"text_data.*"'
     Priority:        54
   - Regex:           '"get.*"'
     Priority:        55

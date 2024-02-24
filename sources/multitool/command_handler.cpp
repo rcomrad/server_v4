@@ -5,9 +5,9 @@
 #include "database/connection_manager.hpp"
 
 #include "core/core.hpp"
-#include "file_data/file.hpp"
-#include "file_data/parser.hpp"
-#include "file_data/path.hpp"
+#include "text_data/file.hpp"
+#include "text_data/parser.hpp"
+#include "text_data/path.hpp"
 #include "module/module_handler.hpp"
 #include "server/request_unpacker.hpp"
 #include "server/token_handler.hpp"
@@ -40,7 +40,7 @@ std::string
 mult::CommandHandler::process(const std::string& aCommand,
                               const std::string& aArgument) noexcept
 {
-    std::string res = "ERROR\nInvalid command!\n>:(\n";
+    std::string res = "LOG_ERROR\nInvalid command!\n>:(\n";
     if (mod::ModuleHandler::hasCommand(aCommand))
     {
         res = mod::ModuleHandler::processCommand(aCommand, aArgument);

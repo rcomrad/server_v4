@@ -5,20 +5,20 @@
 
 #include <array>
 #include <functional>
-#include <map>
 #include <optional>
 #include <string>
+#include <unordered_map>
 #include <unordered_set>
 #include <utility>
 #include <vector>
 
-#include "domain/log.hpp"
+#include "general_tools/log.hpp"
 
 #include "path.hpp"
 
 //--------------------------------------------------------------------------------
 
-namespace file
+namespace text
 {
 
 // To avoid an implicit conversion from const char* to bool
@@ -51,42 +51,42 @@ public:
     static std::vector<std::vector<std::string>> getWords(
         const std::string& aFileName,
         FileType aFileType             = FileType::File,
-        std::function<bool(char)> funk = &file::File::isSeparator) noexcept;
+        std::function<bool(char)> funk = &text::File::isSeparator) noexcept;
     static std::vector<std::vector<std::string>> getWords(
         const std::string& aFolderName,
         const std::string& aFileName,
         FileType aFileType             = FileType::File,
-        std::function<bool(char)> funk = &file::File::isSeparator) noexcept;
+        std::function<bool(char)> funk = &text::File::isSeparator) noexcept;
 
     static std::unordered_map<std::string, std::string> getWordsMap(
         const std::string& aFileName,
         FileType aFileType             = FileType::File,
-        std::function<bool(char)> funk = &file::File::isSeparator) noexcept;
+        std::function<bool(char)> funk = &text::File::isSeparator) noexcept;
     static std::unordered_map<std::string, std::string> getWordsMap(
         const std::string& aFolderName,
         const std::string& aFileName,
         FileType aFileType             = FileType::File,
-        std::function<bool(char)> funk = &file::File::isSeparator) noexcept;
+        std::function<bool(char)> funk = &text::File::isSeparator) noexcept;
 
     static std::unordered_set<std::string> getWordsSet(
         const std::string& aFileName,
         FileType aFileType             = FileType::File,
-        std::function<bool(char)> funk = &file::File::isSeparator) noexcept;
+        std::function<bool(char)> funk = &text::File::isSeparator) noexcept;
     static std::unordered_set<std::string> getWordsSet(
         const std::string& aFolderName,
         const std::string& aFileName,
         FileType aFileType             = FileType::File,
-        std::function<bool(char)> funk = &file::File::isSeparator) noexcept;
+        std::function<bool(char)> funk = &text::File::isSeparator) noexcept;
 
     static std::vector<std::unordered_map<std::string, std::string>> getTable(
         const std::string& aFileName,
         FileType aFileType             = FileType::File,
-        std::function<bool(char)> funk = &file::File::isSeparator) noexcept;
+        std::function<bool(char)> funk = &text::File::isSeparator) noexcept;
     static std::vector<std::unordered_map<std::string, std::string>> getTable(
         const std::string& aFolderName,
         const std::string& aFileName,
         FileType aFileType             = FileType::File,
-        std::function<bool(char)> funk = &file::File::isSeparator) noexcept;
+        std::function<bool(char)> funk = &text::File::isSeparator) noexcept;
 
     static bool writeData(const std::string& aFileName,
                           const std::string& aData) noexcept;
@@ -104,7 +104,7 @@ private:
                            const std::string& aFileName,
                            Args&&... args) noexcept
     {
-        auto path = file::Path::getPath(aFolderName, aFileName);
+        auto path = text::Path::getPath(aFolderName, aFileName);
         decltype(aFuncPtr(path.value(), std::forward<Args>(args)...)) result;
         if (path.has_value())
         {
@@ -112,14 +112,14 @@ private:
         }
         else
         {
-            dom::writeError("Can't find such file ( Folder:", aFolderName,
-                            ", Name:", aFileName, ")");
+            LOG_ERROR("Can't find such file ( Folder:", aFolderName,
+                      ", Name:", aFileName, ")");
         }
         return result;
     }
 };
 
-} // namespace file
+} // namespace text
 
 //--------------------------------------------------------------------------------
 

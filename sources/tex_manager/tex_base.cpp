@@ -1,6 +1,6 @@
 #include "tex_base.hpp"
 
-#include "file_data/parser.hpp"
+#include "text_data/parser.hpp"
 
 tex::TexBase::TexBase(std::unordered_map<std::string, std::vector<std::string>>*
                           aVariables) noexcept
@@ -15,7 +15,7 @@ tex::TexBase::getVariable(const std::string& aName) noexcept
 
     if (mVariables != nullptr && aName.find('$') != std::string::npos)
     {
-        std::string name = file::Parser::slice(aName, " ")[0];
+        std::string name = text::Parser::slice(aName, " ")[0];
         auto it          = mVariables->find(name);
         if (it != mVariables->end() && it->second.size() > 0)
         {

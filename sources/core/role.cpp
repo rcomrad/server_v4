@@ -2,15 +2,15 @@
 
 #include "database/connection_manager.hpp"
 
-#include "file_data/parser.hpp"
+#include "text_data/parser.hpp"
 
-#include "variable_storage.hpp"
+#include "domain/variable_storage.hpp"
 
 //--------------------------------------------------------------------------------
 
 core::Role::Role() noexcept
 {
-    auto flag = VariableStorage::touchFlag("bad_db_flag");
+    auto flag = dom::VariableStorage::touchFlag("bad_db_flag");
     if (!flag)
     {
         loadRoles();
@@ -88,7 +88,7 @@ int
 core::Role::getRoleID(const std::string& aRoleNames,
                       const std::string& aDelimiter) noexcept
 {
-    auto roles = file::Parser::slice(
+    auto roles = text::Parser::slice(
         aRoleNames, (aDelimiter.size() == 0) ? " \t\n,;"s : aDelimiter);
     return getRoleID(roles);
 }

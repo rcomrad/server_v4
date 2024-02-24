@@ -2,7 +2,7 @@
 
 #include <filesystem>
 
-#include "domain/log.hpp"
+#include "general_tools/log.hpp"
 
 #include "file.hpp"
 #include "parser.hpp"
@@ -19,23 +19,23 @@
 
 //--------------------------------------------------------------------------------
 
-std::unordered_set<std::string> file::Path::mForbiddenFolders = {
+std::unordered_set<std::string> text::Path::mForbiddenFolders = {
     "/.", "/build", "/cmake_scripts", "/devops"};
 
-file::Path::Path() noexcept
+text::Path::Path() noexcept
 {
     reset();
 }
 
-file::Path&
-file::Path::getInstance() noexcept
+text::Path&
+text::Path::getInstance() noexcept
 {
     static Path instance;
     return instance;
 }
 
 void
-file::Path::reset() noexcept
+text::Path::reset() noexcept
 {
     mPaths["main"] =
         std::filesystem::current_path().parent_path().string() + "/";
@@ -44,16 +44,16 @@ file::Path::reset() noexcept
     mPaths["data"] = mPaths["main"];
 
     auto pathFile = mPaths["config"] + "path.conf";
-    auto paths    = file::Parser::getVariablesFromFile(pathFile);
+    auto paths    = text::Parser::getVariablesFromFile(pathFile);
     if (paths.empty())
     {
-        dom::writeWarning("Path file doesn't exist or empty");
+        LOG_WARNING("Path file doesn't exist or empty");
     }
     for (auto& var : paths)
     {
-        if (var.value.getType() != file::Value::Type::String)
+        if (var.value.getType() != text::Value::Type::String)
         {
-            dom::writeError("'", var.name, "' from ", pathFile, " isn't path");
+            LOG_ERROR("'", var.name, "' from ", pathFile, " isn't path");
             continue;
         }
 
@@ -65,7 +65,7 @@ file::Path::reset() noexcept
 //--------------------------------------------------------------------------------
 
 boost::optional<const std::string&>
-file::Path::getPath(const std::string& aName, bool aIsCritical) noexcept
+text::Path::getPath(const std::string& aName, bool aIsCritical) noexcept
 {
     boost::optional<const std::string&> result;
 
@@ -77,11 +77,11 @@ file::Path::getPath(const std::string& aName, bool aIsCritical) noexcept
     {
         if (aIsCritical)
         {
-            dom::writeError("No such path (", aName, ")");
+            LOG_ERROR("No such path (", aName, ")");
         }
         else
         {
-            dom::writeWarning("No such path (", aName, ")");
+            LOG_WARNING("No such path (", aName, ")");
         }
     }
 
@@ -89,7 +89,7 @@ file::Path::getPath(const std::string& aName, bool aIsCritical) noexcept
 }
 
 std::optional<std::string>
-file::Path::getPath(const std::string& aFolder,
+text::Path::getPath(const std::string& aFolder,
                     const std::string& aName,
                     bool aIsCritical) noexcept
 {
@@ -104,11 +104,11 @@ file::Path::getPath(const std::string& aFolder,
     {
         if (aIsCritical)
         {
-            dom::writeError("No such folder (", aFolder, ")");
+            LOG_ERROR("No such folder (", aFolder, ")");
         }
         else
         {
-            dom::writeWarning("No such folder (", aFolder, ")");
+            LOG_WARNING("No such folder (", aFolder, ")");
         }
     }
 
@@ -116,20 +116,20 @@ file::Path::getPath(const std::string& aFolder,
 }
 
 std::string
-file::Path::getPathUnsafe(const std::string& aFolder) noexcept
+text::Path::getPathUnsafe(const std::string& aFolder) noexcept
 {
     return getPathUnsafeTempl(aFolder);
 }
 
 std::string
-file::Path::getPathUnsafe(const std::string& aFolder,
+text::Path::getPathUnsafe(const std::string& aFolder,
                           const std::string& aName) noexcept
 {
     return getPathUnsafeTempl(aFolder, aName);
 }
 
 std::optional<std::string>
-file::Path::touchFolder(const std::string& aName) noexcept
+text::Path::touchFolder(const std::string& aName) noexcept
 {
     std::optional<std::string> result;
 
@@ -138,17 +138,17 @@ file::Path::touchFolder(const std::string& aName) noexcept
     auto temp = ins.getPath(aName);
     if (!temp.has_value())
     {
-        dom::writeWarning("No such path (", aName, ")");
+        LOG_WARNING("No such path (", aName, ")");
 
         std::string path = ins.mPaths["data"] + aName + "/";
         if (std::filesystem::create_directories(path))
         {
             result = ins.mPaths[aName] = path;
-            dom::writeInfo("Creating path", aName, " (", path, ")");
+            LOG_INFO("Creating path", aName, " (", path, ")");
         }
         else
         {
-            dom::writeError("Can't creating path", aName, " (", path, ")");
+            LOG_ERROR("Can't creating path", aName, " (", path, ")");
         }
     }
     else
@@ -160,7 +160,7 @@ file::Path::touchFolder(const std::string& aName) noexcept
 }
 
 bool
-file::Path::clearFolder(const std::string& aName) noexcept
+text::Path::clearFolder(const std::string& aName) noexcept
 {
     bool result = false;
 
@@ -185,24 +185,24 @@ file::Path::clearFolder(const std::string& aName) noexcept
         std::filesystem::create_directories(temp);
 
         result = true;
-        dom::writeInfo("Remove folder (", aName, ")");
+        LOG_INFO("Remove folder (", aName, ")");
     }
     else
     {
-        dom::writeWarning("Can't remove folder (", aName, ")");
+        LOG_WARNING("Can't remove folder (", aName, ")");
     }
 
     return result;
 }
 
 void
-file::Path::addFoldersFrom(const std::string& aPath) noexcept
+text::Path::addFoldersFrom(const std::string& aPath) noexcept
 {
     getInstance().addAllFolders(aPath);
 }
 
 void
-file::Path::addContentFrom(const std::string& aPath,
+text::Path::addContentFrom(const std::string& aPath,
                            FileType aFIleType,
                            LevelType aLevelType) noexcept
 {
@@ -218,7 +218,7 @@ file::Path::addContentFrom(const std::string& aPath,
 //--------------------------------------------------------------------------------
 
 std::map<std::string, std::string>
-file::Path::getContentMap(const std::string& aPath,
+text::Path::getContentMap(const std::string& aPath,
                           FileType aFIleType,
                           LevelType aLevelType) noexcept
 {
@@ -242,14 +242,14 @@ file::Path::getContentMap(const std::string& aPath,
 }
 
 void
-file::Path::addAllFolders(const std::string& aPath) noexcept
+text::Path::addAllFolders(const std::string& aPath) noexcept
 {
     auto temp = getContentMap(aPath, FileType::Folder, LevelType::Recursive);
     mPaths.insert(temp.begin(), temp.end());
 }
 
 std::vector<std::string>
-file::Path::getContent(const std::string& aPath,
+text::Path::getContent(const std::string& aPath,
                        FileType aFIleType,
                        LevelType aLevelType) noexcept
 {

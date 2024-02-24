@@ -1,13 +1,14 @@
 #include "results_manager.hpp"
 
-#include "domain/date_and_time.hpp"
-#include "domain/url_wrapper.hpp"
-
 #include "database/connection_manager.hpp"
 
-#include "core/variable_storage.hpp"
-#include "file_data/file.hpp"
-#include "file_data/path.hpp"
+#include "domain/date_time.hpp"
+#include "domain/time_handler.hpp"
+#include "domain/url_wrapper.hpp"
+#include "domain/variable_storage.hpp"
+
+#include "text_data/file.hpp"
+#include "text_data/path.hpp"
 
 mod::ResultsManager mod::ResultsManager::mInstance;
 
@@ -70,8 +71,8 @@ mod::ResultsManager::getResults(const std::string aValue) noexcept
     }
 
     std::string outputName =
-        "results" + dom::DateAndTime::getCurentTimeSafe() + ".txt";
-    file::File::writeData("print", outputName, results);
+        "results" + dom::TimeHandler::getCurentTime().getAllWSpace() + ".txt";
+    text::File::writeData("print", outputName, results);
 
     return dom::UrlWrapper::toSite("print/" + outputName);
 }

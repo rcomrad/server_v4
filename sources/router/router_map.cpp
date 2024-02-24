@@ -5,7 +5,7 @@
 route::RouterMap&
 route::RouterMap::getInstance() noexcept
 {
-    static RouterMaster instance;
+    static RouterMap instance;
     return instance;
 }
 
@@ -23,7 +23,7 @@ void*
 route::RouterMap::get(const std::string& aVolumeName,
                       const std::string& aNodeName) noexcept
 {
-    getInstance().getNonstatic(aVolumeName, aNodeName);
+    return getInstance().getNonstatic(aVolumeName, aNodeName);
 }
 
 //--------------------------------------------------------------------------------
@@ -46,6 +46,12 @@ route::RouterMap::getNonstatic(const std::string& aVolumeName,
     if (it1 != mMap.end())
     {
         auto it2 = it1->second.find(aNodeName);
+        if (it2 != it1->second.end())
+        {
+            // TODO: warning? info?
+            it2 = it1->second.find("*");
+        }
+
         if (it2 != it1->second.end())
         {
             result = it2->second;

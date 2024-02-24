@@ -1,6 +1,6 @@
 #include "connection_manager.hpp"
 
-#include "core/variable_storage.hpp"
+#include "domain/variable_storage.hpp"
 
 //--------------------------------------------------------------------------------
 
@@ -37,7 +37,7 @@ data::ConnectionManager::getAdminConnection() noexcept
 
 data::ConnectionManager::ConnectionManager() noexcept
     : mConnectionPools{ConnectionPool(1, data::ConnectionType::ADMIN),
-                       ConnectionPool(core::VariableStorage::touchInt(
+                       ConnectionPool(dom::VariableStorage::touchInt(
                                           "database_connection_count", 3),
                                       data::ConnectionType::USER)}
 {
@@ -97,7 +97,7 @@ void
 data::ConnectionManager::turnOn() noexcept
 {
     getInstance().mConnectionPools[1].create(
-        core::VariableStorage::touchInt("database_connection_count", 3),
+        dom::VariableStorage::touchInt("database_connection_count", 3),
         data::ConnectionType::USER);
 }
 

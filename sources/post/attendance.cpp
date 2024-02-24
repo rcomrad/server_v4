@@ -5,8 +5,8 @@
 #include "database/connection_manager.hpp"
 #include "database/database_structures.hpp"
 
-#include "file_data/file.hpp"
-#include "file_data/path.hpp"
+#include "text_data/file.hpp"
+#include "text_data/path.hpp"
 #include "tex_manager/tex_table.hpp"
 
 #include "database/safe_sql_wrapper.hpp"
@@ -46,7 +46,7 @@ post::Attendance::setMark(int aStudentId,
 void
 post::Attendance::newPage(uint8_t aMounth) noexcept
 {
-    static auto monthNums = file::File::getWordsMap("resource", "month.txt");
+    static auto monthNums = text::File::getWordsMap("resource", "month.txt");
 
     curMounth = aMounth;
 
@@ -116,7 +116,7 @@ post::Attendance::getAttendance() noexcept
                 int id                  = i.second;
                 const std::string& name = i.first;
 
-                cur += dom::toString(cnt) + "& " + name;
+                cur += text::toString(cnt) + "& " + name;
                 for (auto& j : attend[id])
                 {
                     cur += "& " + j;

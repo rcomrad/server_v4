@@ -10,7 +10,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include "domain/log.hpp"
+#include "general_tools/log.hpp"
 #include "domain/metaprogramming.hpp"
 
 #include "postgresql.hpp"
@@ -128,7 +128,7 @@ public:
         }
         else
         {
-            dom::writeError("Insert", T::geName(), "element failed");
+            LOG_ERROR("Insert", T::geName(), "element failed");
         }
         return aData.id;
     }

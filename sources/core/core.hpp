@@ -9,8 +9,7 @@
 
 #include "domain/holy_trinity.hpp"
 
-#include "module/command.hpp"
-
+#include "router/command.hpp"
 #include "router/router_node.hpp"
 
 //--------------------------------------------------------------------------------
@@ -31,10 +30,10 @@ public:
     //----------------------------------------------------------------------------
 
 public:
-    static std::string doAction(const modul::Command& aCommand) noexcept;
+    static std::string doAction(const route::Command& aCommand) noexcept;
 
 private:
-    std::string doActionNonstatic(const modul::Command& aCommand) noexcept;
+    std::string doActionNonstatic(const route::Command& aCommand) noexcept;
 
     //----------------------------------------------------------------------------
 

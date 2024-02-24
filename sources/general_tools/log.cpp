@@ -9,32 +9,26 @@
 
 //--------------------------------------------------------------------------------
 
-route::RouterNode base::Log::mNode("general", "log", &base::Log::applyCommand);
+route::RouterNode gen::Log::mNode("general", "log", &gen::Log::applyCommand);
 
 //--------------------------------------------------------------------------------
 
-base::Log::Log() noexcept
+gen::Log::Log() noexcept
 {
     mIsFileOutput = false;
     mStatus       = PrintStatus::Info;
     mStreams      = &std::cout;
 }
 
-base::Log::~Log()
+gen::Log::~Log()
 {
     clear();
 }
 
 void
-base::Log::clear() noexcept
+gen::Log::clear() noexcept
 {
-    static Log instance;
-    return instance;
-}
 
-base::Log&
-base::Log::getInstance() noexcept
-{
     if (mIsFileOutput)
     {
         delete mStreams;
@@ -42,20 +36,27 @@ base::Log::getInstance() noexcept
     }
 }
 
+gen::Log&
+gen::Log::getInstance() noexcept
+{
+    static Log instance;
+    return instance;
+}
+
 //--------------------------------------------------------------------------------
 
 void
-base::Log::reloadFromSettings() noexcept
+gen::Log::reloadFromSettings() noexcept
 {
-    auto log = core::VariableStorage::touchWord("log_type");
+    auto log = dom::VariableStorage::touchWord(std::string("log_type"));
     getInstance().setLogType(log);
 
-    auto output = core::VariableStorage::touchWord("log_output");
+    auto output = dom::VariableStorage::touchWord("log_output"s);
     getInstance().setOutputType(output);
 }
 
 std::string
-base::Log::applyCommand(const Command& aCommand) noexcept
+gen::Log::applyCommand(const route::Command& aCommand) noexcept
 {
     return getInstance().applyCommandNonstatic(aCommand);
 }
@@ -63,7 +64,7 @@ base::Log::applyCommand(const Command& aCommand) noexcept
 //--------------------------------------------------------------------------------
 
 std::string
-base::Log::applyCommandNonstatic(const Command& aCommand) noexcept
+gen::Log::applyCommandNonstatic(const route::Command& aCommand) noexcept
 {
 
     auto logIt = aCommand.variables.find("type");
@@ -82,7 +83,7 @@ base::Log::applyCommandNonstatic(const Command& aCommand) noexcept
 }
 
 void
-base::Log::setLogType(const std::string& aLogType) noexcept
+gen::Log::setLogType(const std::string& aLogType) noexcept
 {
     static std::unordered_map<std::string, PrintStatus> statusMap = {
         {"info",    PrintStatus::Info   },
@@ -109,7 +110,7 @@ base::Log::setLogType(const std::string& aLogType) noexcept
 }
 
 void
-base::Log::setOutputType(const std::string& aOutputType) noexcept
+gen::Log::setOutputType(const std::string& aOutputType) noexcept
 {
     clear();
     if (aOutputType == "cout")
