@@ -12,7 +12,7 @@
 //--------------------------------------------------------------------------------
 
 route::RouterNode mod::CompetitionManager::glRouter(
-    "main", "comp", &mod::CompetitionManager::applyCommand);
+    "main", "comp", (void*)&mod::CompetitionManager::applyCommand);
 
 //--------------------------------------------------------------------------------
 

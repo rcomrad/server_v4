@@ -9,7 +9,7 @@
 
 //--------------------------------------------------------------------------------
 
-route::RouterNode gen::Log::mNode("general", "log", &gen::Log::applyCommand);
+route::RouterNode gen::Log::mNode("general", "log", (void*) &gen::Log::applyCommand);
 
 //--------------------------------------------------------------------------------
 

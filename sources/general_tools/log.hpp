@@ -75,15 +75,15 @@ private:
         std::string str;
         std::vector<std::string> temp;
 
-        (void)(temp.emplace_back(text::toString(std::forward<Args>(args)), 0),
-               ...);
+        (void)(temp.emplace_back(text::toString(std::forward<Args>(args)), 0), ...);
+        // (void)(temp.emplace_back(toString      (std::forward<Args>(args)), 0), ...);
         for (int i = 0; i < temp.size() - 1; ++i)
         {
             if (!temp[i + 1].empty() && temp[i].back() != '(' &&
                 temp[i + 1].front() != ')' && temp[i].back() != '\'' &&
                 temp[i + 1].front() != '\'')
             {
-                temp[i].push_back(' ');
+                temp[i] += ' ';
             }
         }
         for (auto&& i : temp)

@@ -10,6 +10,9 @@ set(
     path.cpp
     path.hpp
 
+    to_string.cpp
+    to_string.hpp
+
     value.cpp
     value.hpp
 

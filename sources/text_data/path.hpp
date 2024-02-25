@@ -65,7 +65,7 @@ public:
 
 private:
     std::unordered_map<std::string, std::string> mPaths;
-    static std::unordered_set<std::string> mForbiddenFolders;
+    std::unordered_set<std::string> mForbiddenFolders;
 
     Path() noexcept;
     static Path& getInstance() noexcept;
@@ -86,7 +86,8 @@ private:
                 std::replace(path.begin(), path.end(), '\\', '/');
 
                 bool flag = false;
-                for (auto& i : mForbiddenFolders)
+                //TODO: do it better
+                for (const auto& i : getInstance().mForbiddenFolders)
                 {
                     if (path.find(i) != std::string::npos)
                     {
@@ -116,6 +117,6 @@ private:
         return result;
     }
 };
-} // namespace file
+} // namespace text
 
 #endif // !KUS_PATHS_HPP

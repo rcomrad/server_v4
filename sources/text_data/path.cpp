@@ -19,12 +19,10 @@
 
 //--------------------------------------------------------------------------------
 
-std::unordered_set<std::string> text::Path::mForbiddenFolders = {
-    "/.", "/build", "/cmake_scripts", "/devops"};
-
 text::Path::Path() noexcept
 {
     reset();
+    mForbiddenFolders = {"/.", "/build", "/cmake_scripts", "/devops"};
 }
 
 text::Path&
