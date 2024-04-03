@@ -73,26 +73,26 @@ serv::Middleware::before_handle(crow::request& req,
     // }
     // https://kussystem.ru/api/get/if/competition_user[competition_id[]]/user_id=2
     // if (parts[parts.size() - 2] == "user_competition[competition_id[id;name;start_time]]")
-    if (parts[parts.size() - 2] == "competition_user[competition_id[]]")
-    {
-        crow::json::wvalue comp;
-        comp["end_time"] = "2024-03-23 23:59:59";
-        comp["start_time"] = "2024-03-23 07:00:00";
-        comp["name"] = "Программирование";
-        comp["id"] = 1;
+    // if (parts[parts.size() - 2] == "competition_user[competition_id[]]")
+    // {
+    //     crow::json::wvalue comp;
+    //     comp["end_time"] = "2024-03-23 23:59:59";
+    //     comp["start_time"] = "2024-03-23 07:00:00";
+    //     comp["name"] = "Программирование";
+    //     comp["id"] = 1;
 
-        crow::json::wvalue comp2;
-        comp2["competition"] = std::move(comp);
+    //     crow::json::wvalue comp2;
+    //     comp2["competition"] = std::move(comp);
 
-        crow::json::wvalue::list ls;
-        ls.push_back(std::move(comp2));
+    //     crow::json::wvalue::list ls;
+    //     ls.push_back(std::move(comp2));
 
-        crow::json::wvalue result;
-        result["competition_users"] = std::move(ls);
+    //     crow::json::wvalue result;
+    //     result["competition_users"] = std::move(ls);
 
-        res                            = std::move(result);
-        res.end();
-    }
+    //     res                            = std::move(result);
+    //     res.end();
+    // }
 
 
     // std::cout << "----->>>>>>>>> " <<  req.url << std::endl;

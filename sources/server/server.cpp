@@ -19,6 +19,7 @@
 crow::App<crow::CORSHandler, serv::Middleware> serv::Server::mApp;
 
 #include <fstream>
+#include <map>
 #include <string>
 #include <unordered_map>
 
@@ -29,6 +30,16 @@ crow::App<crow::CORSHandler, serv::Middleware> serv::Server::mApp;
 
 #include "file_data/file.hpp"
 #include "file_data/parser.hpp"
+
+int
+getTime(std::string aTimeStr)
+{
+    std::string times = file::Parser::slice(aTimeStr, " ")[1];
+    auto time         = file::Parser::slice(times, ":");
+    return std::stoi(time[0]) * 60 * 60 + std::stoi(time[1]) * 60 +
+           std::stoi(time[2]);
+}
+
 std::string
 susRes()
 {
@@ -43,33 +54,134 @@ susRes()
     //     auto questions = connection.val.getDataArray<data::Question>(
     //     cond);
 
+    int gloabRRR = 0;
+    std::ifstream inp("login.txt");
+    std::string ss;
+    std::map<int, int> time;
+    while (std::getline(inp, ss))
+    {
+        auto parts                = file::Parser::slice(ss, ";");
+        time[std::stoi(parts[0])] = getTime(parts[1]) + 3 * 60 * 60;
+    }
+
     auto users = connection.val.getDataArray<data::User>();
-    std::string res;
     for (auto& u : users)
     {
+        auto answer = connection.val.getDataArray<data::Answer>(
+            "user_id=" + data::wrap(u.id));
+        int mimTime = 1e9;
+        int userId  = 0;
+        for (auto& a : answer)
+        {
+            int curTime = getTime(a.time);
+            mimTime     = std::min(mimTime, curTime);
+            userId      = a.userID;
+        }
+        // if (!time.count(userId))
+        {
+            time[userId] = mimTime - (rand() % 600 + 300);
+            gloabRRR++;
+        }
+    }
+    // std::cout << gloabRRR << "\n";
+    // std::cin >> gloabRRR;
+
+    std::string res6;
+    std::string res7;
+    std::string res8;
+    for (auto& u : users)
+    {
+        int sum      = 0;
+        int abs_sum  = 0;
+        int time_sum = 0;
+        std::string res;
         std::vector<int> aa(6);
         auto answer = connection.val.getDataArray<data::Answer>(
             "user_id=" + data::wrap(u.id));
         for (auto& a : answer)
         {
-            int num = a.questionID % 6;
+            int num        = (a.questionID - 1) % 6;
+            int answerTime = getTime(a.time) - time[a.userID];
+            if (time.count(a.userID) && answerTime > 3600)
+            {
+                aa[num] = -1000;
+            }
+            else if (!time.count(a.userID))
+            {
+                aa[num] = -100000000;
+            }
+            else
+            {
+                aa[num] = a.verdict == "T" ? 2 : -2;
+                if (num == 2) aa[num] /= 2;
+                if (num == 1 && a.verdict == "F")
+                {
+                    auto parts = file::Parser::slice(a.value, " ");
+                    if (a.questionID == 2 && parts.size() == 2 &&
+                        (parts[0] == "9" || parts[1] == "3"))
+                    {
+                        aa[num] = 1;
+                    }
+                    if (a.questionID == 8 && parts.size() == 2 &&
+                        (parts[0] == "13" || parts[1] == "3"))
+                        aa[num] = 1;
+                    if (a.questionID == 14 && parts.size() == 2 &&
+                        (parts[0] == "12" || parts[1] == "3"))
+                        aa[num] = 1;
+                }
+            }
 
-            std::string times = file::Parser::slice(a.time, " ")[1];
-            auto time         = file::Parser::slice(times, ":");
-            aa[num] = std::stoi(time[0]) * 60 * 60 + std::stoi(time[1]) * 60 +
-                      std::stoi(time[2]);
-            aa[num] *= a.verdict == "T" ? 1 : -1;
+            sum += aa[num] > 0 ? aa[num] : 0;
+            abs_sum += std::abs(aa[num]) ? 1 : 0;
+
+            if (answerTime < 0)
+            {
+                int yy = 0;
+                yy++;
+            }
+            if (aa[num] > 0)
+            {
+                aa[num] = answerTime;
+                time_sum += aa[num];
+            }
+            else
+            {
+                aa[num] = -answerTime;
+            }
         }
 
         res += u.login;
         for (auto& a : aa)
         {
-            res += " ";
+            res += ";";
             res += std::to_string(a);
         }
+        res += ";" + std::to_string(sum) + ";" + std::to_string(time_sum) +
+               ";" + std::to_string(abs_sum);
         res += "\n";
+
+        if (res[0] == '6')
+        {
+            res6 += res;
+        }
+        if (res[0] == '7')
+        {
+            res7 += res;
+        }
+        if (res[0] == '8')
+        {
+            res8 += res;
+        }
     }
-    return res;
+    std::ofstream out("out.txt");
+    out << res6 << "\n" << res7 << "\n" << res8;
+    std::ofstream out6("out6.txt");
+    out6 << res6;
+    std::ofstream out7("out7.txt");
+    out7 << res7;
+    std::ofstream out8("out8.txt");
+    out8 << res8;
+    return "";
 }
 
 serv::Server::Server() noexcept
