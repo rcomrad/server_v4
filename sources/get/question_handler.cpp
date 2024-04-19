@@ -23,8 +23,27 @@ get::QuestionHandler::process(int aQuestionID, int aUserId) noexcept
     }
     if (answer.id)
     {
+        temp["answer"] = answer.value;
         // answer.value.pop_back();
-        temp["answer"] = std::move(answer.value);
+        // std::string ggg = answer.value;
+        // if (answer.verdict == "T")
+        // {
+        //     ggg += " (верно)";
+        // }
+        // else if  (answer.verdict == "F")
+        // {
+        //     ggg += " (неверно)";
+        // }
+        // else if  (answer.verdict == "X")
+        // {
+        //     ggg += " (превышено ограничение времени)";
+        // }
+        // else if  (answer.verdict == "E")
+        // {
+        //     ggg += " (ошибка системы)";
+        // }
+        // temp["answer"] = std::move(ggg);
+
         // result["verdict"] = std::move(answer.verdict);
     }
 

@@ -30,33 +30,33 @@ serv::Middleware::before_handle(crow::request& req,
         res.end();
     }
 
-    if (req.url.size() == 71)
-    {
-        std::string temp = req.url;
-        std::string id   = {temp.back()};
-        temp.resize(temp.size() - 17);
-        if (temp == "/api/get/if/competition_question[question_id[id,name]]")
-        {
+    // if (req.url.size() == 71)
+    // {
+    //     std::string temp = req.url;
+    //     std::string id   = {temp.back()};
+    //     temp.resize(temp.size() - 17);
+    //     if (temp == "/api/get/if/competition_question[question_id[id,name]]")
+    //     {
 
-            data::Competition comp;
-            {
-                auto connection = data::ConnectionManager::getUserConnection();
-                comp = connection.val.getData<data::Competition>("id=" + id);
-            }
+    //         data::Competition comp;
+    //         {
+    //             auto connection = data::ConnectionManager::getUserConnection();
+    //             comp = connection.val.getData<data::Competition>("id=" + id);
+    //         }
 
-            if (user.value()->id != 2 &&
-                (comp.id == 0 || !dom::DateAndTime::isPassed(comp.startTime) ||
-                 dom::DateAndTime::isPassed(comp.endTime)))
-            {
-                dom::writeInfo("My id: ", user.value()->id);
-                crow::json::wvalue result;
-                result["errors"] = dom::DateAndTime::getCurentTime();
-                result["competition_question"] = "errors";
-                res                            = std::move(result);
-                res.end();
-            }
-        }
-    }
+    //         if (user.value()->id != 2 &&
+    //             (comp.id == 0 || !dom::DateAndTime::isPassed(comp.startTime) ||
+    //              dom::DateAndTime::isPassed(comp.endTime)))
+    //         {
+    //             dom::writeInfo("My id: ", user.value()->id);
+    //             crow::json::wvalue result;
+    //             result["errors"] = dom::DateAndTime::getCurentTime();
+    //             result["competition_question"] = "errors";
+    //             res                            = std::move(result);
+    //             res.end();
+    //         }
+    //     }
+    // }
 // std::cout << "----->>>>>>>>> " <<  req.url << std::endl;
     std::string temp = req.url;
     auto parts = file::Parser::slice(temp, "/");
@@ -75,17 +75,34 @@ serv::Middleware::before_handle(crow::request& req,
     // if (parts[parts.size() - 2] == "user_competition[competition_id[id;name;start_time]]")
     // if (parts[parts.size() - 2] == "competition_user[competition_id[]]")
     // {
+    //     crow::json::wvalue::list ls;
+
     //     crow::json::wvalue comp;
-    //     comp["end_time"] = "2024-03-23 23:59:59";
-    //     comp["start_time"] = "2024-03-23 07:00:00";
-    //     comp["name"] = "Программирование";
+    //     comp["end_time"] = "2024-03-12 23:59:59";
+    //     comp["start_time"] = "2024-03-12 07:00:00";
+    //     comp["name"] = "Информатика 6 класс";
     //     comp["id"] = 1;
 
     //     crow::json::wvalue comp2;
     //     comp2["competition"] = std::move(comp);
-
-    //     crow::json::wvalue::list ls;
     //     ls.push_back(std::move(comp2));
+
+    //     comp["end_time"] = "2024-03-12 23:59:59";
+    //     comp["start_time"] = "2024-03-12 07:00:00";
+    //     comp["name"] = "Информатика 7 класс";
+    //     comp["id"] = 2;
+    //     comp2["competition"] = std::move(comp);
+    //     ls.push_back(std::move(comp2));
+
+
+    //     comp["end_time"] = "2024-03-12 23:59:59";
+    //     comp["start_time"] = "2024-03-12 07:00:00";
+    //     comp["name"] = "Информатика 8 класс";
+    //     comp["id"] = 3;
+    //     comp2["competition"] = std::move(comp);
+    //     ls.push_back(std::move(comp2));
+
+
 
     //     crow::json::wvalue result;
     //     result["competition_users"] = std::move(ls);
@@ -93,6 +110,28 @@ serv::Middleware::before_handle(crow::request& req,
     //     res                            = std::move(result);
     //     res.end();
     // }
+
+        if (parts[parts.size() - 2] == "competition_user[competition_id[]]")
+    {
+        crow::json::wvalue::list ls;
+
+        crow::json::wvalue comp;
+        comp["end_time"] = "2024-04-14 14:00:00";
+        comp["start_time"] = "2024-04-14 10:00:00";
+        comp["name"] = "ПРограммирование";
+        comp["id"] = 1;
+
+        crow::json::wvalue comp2;
+        comp2["competition"] = std::move(comp);
+        ls.push_back(std::move(comp2));
+
+
+        crow::json::wvalue result;
+        result["competition_users"] = std::move(ls);
+
+        res                            = std::move(result);
+        res.end();
+    }
 
 
     // std::cout << "----->>>>>>>>> " <<  req.url << std::endl;

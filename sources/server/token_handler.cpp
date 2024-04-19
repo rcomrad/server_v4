@@ -137,7 +137,7 @@ serv::TokenHandler::processNonstatic(const crow::request& aReq) noexcept
     serv::UserDataPtr result;
 
     static std::unordered_set<std::string> withoutAuthentication = {
-        "/api/login", 
+        "/api/login",
         "/api/registration",
         "/api/confirm",
         "/api/get/if/competition",
@@ -147,6 +147,9 @@ serv::TokenHandler::processNonstatic(const crow::request& aReq) noexcept
         "/api/get/if/competition_user[competition_id[]]",
         "/api/get/if/competition_question",
         "/api/get/if/competition_question[question_id[id,name]]",
+        "/api/command/token/turn_off",
+        "/api/dump/*",
+        "/api/dump_as_file/*",
     };
     auto url      = urlDedaction(aReq.raw_url);
     auto tokenOpt = RequestUnpacker::getToken(aReq);

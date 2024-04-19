@@ -40,8 +40,11 @@ core::FileRouter::dmpParser(const std::string& aFileName) noexcept
             curArray.value.emplace_back(std::move(words[i]));
         }
     }
+
     for (auto&& i : res)
     {
+        if (!std::stoi(i.second.value[0][0])) continue;
+
         auto&& data = i.second.value;
         std::map<int, std::vector<std::string>> resort;
         for (auto&& j : data)
@@ -56,21 +59,22 @@ core::FileRouter::dmpParser(const std::string& aFileName) noexcept
             {
                 int error = 0;
                 ++error;
-                // std::cout << j.second[0] << " " << j.second[1] << " " << j.second[2];
-                // exit(0);
+                // std::cout << j.second[0] << " " << j.second[1] << " " <<
+                // j.second[2]; exit(0);
             }
             if (j.second.size() && j.second.back().size() > 90)
             {
                 // int error = 0;
                 // ++error;
                 j.second.back() = "NUN";
-                // std::cout << j.second[0] << " " << j.second[1] << " " << j.second[2];
-                // exit(0);
+                // std::cout << j.second[0] << " " << j.second[1] << " " <<
+                // j.second[2]; exit(0);
             }
             data.emplace_back(std::move(j.second));
         }
+
+        return res;
     }
-    return res;
 }
 
 data::RawDataArray

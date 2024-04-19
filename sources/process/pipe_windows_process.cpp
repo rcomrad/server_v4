@@ -22,7 +22,7 @@ proc::PipeWindowsProcess::~PipeWindowsProcess()
 void
 proc::PipeWindowsProcess::IORedirection() noexcept
 {
-    dom::writeInfo("Rederecting_input_and_output_to_pipe");
+    // dom::writeInfo("Rederecting_input_and_output_to_pipe");
 
     mIOSet = true;
 

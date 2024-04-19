@@ -76,7 +76,7 @@ proc::PipeLinuxProcess::create() noexcept
     // kill(-mChildPID, SIGKILL);
     IORedirection();
     makeParameters();
-    dom::writeInfo("Creating_process_with_name:", mRawParameters[0]);
+    // dom::writeInfo("Creating_process_with_name:", mRawParameters[0]);
 
     mChildPID = fork();
     if (mChildPID == -1)
@@ -107,7 +107,7 @@ proc::PipeLinuxProcess::create() noexcept
 bool
 proc::PipeLinuxProcess::run() noexcept
 {
-    dom::writeInfo("Runing_simple_process");
+    // dom::writeInfo("Runing_simple_process");
     wait(NULL);
     return true;
 }
@@ -116,7 +116,7 @@ proc::PipeLinuxProcess::run() noexcept
 std::optional<proc::Limits>
 proc::PipeLinuxProcess::runWithLimits() noexcept
 {
-    dom::writeInfo("Runing_process_with_time_and_memory_evaluation");
+    // dom::writeInfo("Runing_process_with_time_and_memory_evaluation");
 
     std::optional<Limits> result = {};
 
@@ -149,15 +149,15 @@ proc::PipeLinuxProcess::runWithLimits() noexcept
     timeUsage += resourseUsage.ru_stime.tv_usec;
     timeUsage /= 1000;
 
-    dom::writeInfo("status:", status);
-    dom::writeInfo("WIFEXITED:", WIFEXITED(status));
-    dom::writeInfo("WEXITSTATUS:", WEXITSTATUS(status));
-    dom::writeInfo("WIFSIGNALED:", WIFSIGNALED(status));
-    dom::writeInfo("WTERMSIG:", WTERMSIG(status));
-    dom::writeInfo("WIFSTOPPED:", WIFSTOPPED(status));
+    // dom::writeInfo("status:", status);
+    // dom::writeInfo("WIFEXITED:", WIFEXITED(status));
+    // dom::writeInfo("WEXITSTATUS:", WEXITSTATUS(status));
+    // dom::writeInfo("WIFSIGNALED:", WIFSIGNALED(status));
+    // dom::writeInfo("WTERMSIG:", WTERMSIG(status));
+    // dom::writeInfo("WIFSTOPPED:", WIFSTOPPED(status));
 
-    dom::writeInfo("time_usage:", timeUsage);
-    dom::writeInfo("memory_usage:", memoryUsage);
+    // dom::writeInfo("time_usage:", timeUsage);
+    // dom::writeInfo("memory_usage:", memoryUsage);
 
     if (WIFEXITED(status))
     {
@@ -175,7 +175,7 @@ proc::PipeLinuxProcess::runWithLimits() noexcept
 void
 proc::PipeLinuxProcess::IORedirection() noexcept
 {
-    dom::writeInfo("Rederecting_input_and_output_to_pipe");
+    // dom::writeInfo("Rederecting_input_and_output_to_pipe");
 
     close(mPipeA[0]);
     close(mPipeA[1]);
@@ -291,7 +291,7 @@ proc::PipeLinuxProcess::writeData(const std::string& aMessage) noexcept
 void
 proc::PipeLinuxProcess::makeParameters() noexcept
 {
-    dom::writeInfo("makeParameters entry");
+    // dom::writeInfo("makeParameters entry");
     for (auto i : mRawParameters)
     {
         if (i != NULL) delete[] i;
@@ -306,7 +306,7 @@ proc::PipeLinuxProcess::makeParameters() noexcept
     }
     mRawParameters.emplace_back();
     mRawParameters.back() = NULL;
-    dom::writeInfo("makeParameters exit");
+    // dom::writeInfo("makeParameters exit");
 }
 
 //--------------------------------------------------------------------------------

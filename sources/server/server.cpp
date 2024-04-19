@@ -54,15 +54,15 @@ susRes()
     //     auto questions = connection.val.getDataArray<data::Question>(
     //     cond);
 
-    int gloabRRR = 0;
-    std::ifstream inp("login.txt");
-    std::string ss;
+    // int gloabRRR = 0;
+    // std::ifstream inp("login.txt");
+    // std::string ss;
     std::map<int, int> time;
-    while (std::getline(inp, ss))
-    {
-        auto parts                = file::Parser::slice(ss, ";");
-        time[std::stoi(parts[0])] = getTime(parts[1]) + 3 * 60 * 60;
-    }
+    // while (std::getline(inp, ss))
+    // {
+    //     auto parts                = file::Parser::slice(ss, ";");
+    //     time[std::stoi(parts[0])] = getTime(parts[1]) + 3 * 60 * 60;
+    // }
 
     auto users = connection.val.getDataArray<data::User>();
     for (auto& u : users)
@@ -80,15 +80,15 @@ susRes()
         // if (!time.count(userId))
         {
             time[userId] = mimTime - (rand() % 600 + 300);
-            gloabRRR++;
+            // gloabRRR++;
         }
     }
     // std::cout << gloabRRR << "\n";
     // std::cin >> gloabRRR;
 
-    std::string res6;
-    std::string res7;
-    std::string res8;
+    // std::string res6;
+    // std::string res7;
+    // std::string res8;
     for (auto& u : users)
     {
         int sum      = 0;
@@ -104,83 +104,87 @@ susRes()
             int answerTime = getTime(a.time) - time[a.userID];
             if (time.count(a.userID) && answerTime > 3600)
             {
-                aa[num] = -1000;
+                aa[num]   = -1000;
+                a.verdict = "X";
             }
             else if (!time.count(a.userID))
             {
-                aa[num] = -100000000;
+                aa[num]   = -100000000;
+                a.verdict = "E";
             }
-            else
-            {
-                aa[num] = a.verdict == "T" ? 2 : -2;
-                if (num == 2) aa[num] /= 2;
-                if (num == 1 && a.verdict == "F")
-                {
-                    auto parts = file::Parser::slice(a.value, " ");
-                    if (a.questionID == 2 && parts.size() == 2 &&
-                        (parts[0] == "9" || parts[1] == "3"))
-                    {
-                        aa[num] = 1;
-                    }
-                    if (a.questionID == 8 && parts.size() == 2 &&
-                        (parts[0] == "13" || parts[1] == "3"))
-                        aa[num] = 1;
-                    if (a.questionID == 14 && parts.size() == 2 &&
-                        (parts[0] == "12" || parts[1] == "3"))
-                        aa[num] = 1;
-                }
-            }
+            connection.val.write(answer);
+            //     else
+            //     {
+            //         aa[num] = a.verdict == "T" ? 2 : -2;
+            //         if (num == 2) aa[num] /= 2;
+            //         if (num == 1 && a.verdict == "F")
+            //         {
+            //             auto parts = file::Parser::slice(a.value, " ");
+            //             if (a.questionID == 2 && parts.size() == 2 &&
+            //                 (parts[0] == "9" || parts[1] == "3"))
+            //             {
+            //                 aa[num] = 1;
+            //             }
+            //             if (a.questionID == 8 && parts.size() == 2 &&
+            //                 (parts[0] == "13" || parts[1] == "3"))
+            //                 aa[num] = 1;
+            //             if (a.questionID == 14 && parts.size() == 2 &&
+            //                 (parts[0] == "12" || parts[1] == "3"))
+            //                 aa[num] = 1;
+            //         }
+            //     }
 
-            sum += aa[num] > 0 ? aa[num] : 0;
-            abs_sum += std::abs(aa[num]) ? 1 : 0;
+            //     sum += aa[num] > 0 ? aa[num] : 0;
+            //     abs_sum += std::abs(aa[num]) ? 1 : 0;
 
-            if (answerTime < 0)
-            {
-                int yy = 0;
-                yy++;
-            }
-            if (aa[num] > 0)
-            {
-                aa[num] = answerTime;
-                time_sum += aa[num];
-            }
-            else
-            {
-                aa[num] = -answerTime;
-            }
+            //     if (answerTime < 0)
+            //     {
+            //         int yy = 0;
+            //         yy++;
+            //     }
+            //     if (aa[num] > 0)
+            //     {
+            //         aa[num] = answerTime;
+            //         time_sum += aa[num];
+            //     }
+            //     else
+            //     {
+            //         aa[num] = -answerTime;
+            //     }
         }
 
-        res += u.login;
-        for (auto& a : aa)
-        {
-            res += ";";
-            res += std::to_string(a);
-        }
-        res += ";" + std::to_string(sum) + ";" + std::to_string(time_sum) +
-               ";" + std::to_string(abs_sum);
-        res += "\n";
+        // res += u.login;
+        // for (auto& a : aa)
+        // {
+        //     res += ";";
+        //     res += std::to_string(a);
+        // }
+        // res += ";" + std::to_string(sum) + ";" + std::to_string(time_sum)
+        // +
+        //        ";" + std::to_string(abs_sum);
+        // res += "\n";
 
-        if (res[0] == '6')
-        {
-            res6 += res;
-        }
-        if (res[0] == '7')
-        {
-            res7 += res;
-        }
-        if (res[0] == '8')
-        {
-            res8 += res;
-        }
+        // if (res[0] == '6')
+        // {
+        //     res6 += res;
+        // }
+        // if (res[0] == '7')
+        // {
+        //     res7 += res;
+        // }
+        // if (res[0] == '8')
+        // {
+        //     res8 += res;
+        // }
     }
-    std::ofstream out("out.txt");
-    out << res6 << "\n" << res7 << "\n" << res8;
-    std::ofstream out6("out6.txt");
-    out6 << res6;
-    std::ofstream out7("out7.txt");
-    out7 << res7;
-    std::ofstream out8("out8.txt");
-    out8 << res8;
+    // std::ofstream out("out.txt");
+    // out << res6 << "\n" << res7 << "\n" << res8;
+    // std::ofstream out6("out6.txt");
+    // out6 << res6;
+    // std::ofstream out7("out7.txt");
+    // out7 << res7;
+    // std::ofstream out8("out8.txt");
+    // out8 << res8;
     return "";
 }
 

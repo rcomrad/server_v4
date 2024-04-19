@@ -1,8 +1,9 @@
 #include "problem_handler.hpp"
 
+#include "domain/url_wrapper.hpp"
+
 #include "file_data/file.hpp"
 #include "file_data/path.hpp"
-
 void
 loadProblem(crow::json::wvalue& aProblem,
             std::string aName,
@@ -11,6 +12,23 @@ loadProblem(crow::json::wvalue& aProblem,
     static std::string problemFolderPath =
         file::Path::getPath("problem").value();
     auto currentProblemPath = problemFolderPath + aName;
+
+    // std::string rrr;
+    // static const std::unordered_set<std::string> excludedFiles = {
+    //     "checker.cpp", "input_format.txt", "legend.txt", "output_format.txt",
+    //     "testlib.h"};
+    // auto data = file::Path::getContentMap(problemFolderPath);
+    // for (auto& i : data)
+    // {
+    //     if (excludedFiles.count(i.first)) continue;
+
+    //     if (i.first.find(".gif") != -1 || i.first.find(".png") != -1 ||
+    //         i.first.find(".PNG") != -1 || i.first.find(".jpg") != -1)
+    //     {
+    //         rrr = dom::UrlWrapper::toHTMLSrc("problem/" + problemFolderPath +
+    //                                          "/" + i.first);
+    //     }
+    // }
 
     aProblem["legend"] =
         file::File::getAllData(currentProblemPath + "/legend.txt");
@@ -78,7 +96,8 @@ get::ProblemHandler::process(int aProblemID, int aUserID) noexcept
     {
         auto connection = data::ConnectionManager::getUserConnection();
         submission      = connection.val.getDataArray<data::Submission>(
-            "user_id=" + dom::toString(aUserID) + " and " + "problem_id=" + dom::toString(aProblemID));
+            "user_id=" + dom::toString(aUserID) + " and " +
+            "problem_id=" + dom::toString(aProblemID));
     }
     result["submission"] = submission.getAsJList();
 
