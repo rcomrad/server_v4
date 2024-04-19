@@ -54,15 +54,15 @@ susRes()
     //     auto questions = connection.val.getDataArray<data::Question>(
     //     cond);
 
-    // int gloabRRR = 0;
-    // std::ifstream inp("login.txt");
-    // std::string ss;
+    int gloabRRR = 0;
+    std::ifstream inp("login.txt");
+    std::string ss;
     std::map<int, int> time;
-    // while (std::getline(inp, ss))
-    // {
-    //     auto parts                = file::Parser::slice(ss, ";");
-    //     time[std::stoi(parts[0])] = getTime(parts[1]) + 3 * 60 * 60;
-    // }
+    while (std::getline(inp, ss))
+    {
+        auto parts                = file::Parser::slice(ss, ";");
+        time[std::stoi(parts[0])] = getTime(parts[1]) + 3 * 60 * 60;
+    }
 
     auto users = connection.val.getDataArray<data::User>();
     for (auto& u : users)
@@ -80,15 +80,15 @@ susRes()
         // if (!time.count(userId))
         {
             time[userId] = mimTime - (rand() % 600 + 300);
-            // gloabRRR++;
+            gloabRRR++;
         }
     }
     // std::cout << gloabRRR << "\n";
     // std::cin >> gloabRRR;
 
-    // std::string res6;
-    // std::string res7;
-    // std::string res8;
+    std::string res6;
+    std::string res7;
+    std::string res8;
     for (auto& u : users)
     {
         int sum      = 0;
@@ -98,93 +98,193 @@ susRes()
         std::vector<int> aa(6);
         auto answer = connection.val.getDataArray<data::Answer>(
             "user_id=" + data::wrap(u.id));
+        if (u.login == "6ACT100")
+        {
+            int yy = 0;
+            ++yy;
+        }
         for (auto& a : answer)
         {
-            int num        = (a.questionID - 1) % 6;
-            int answerTime = getTime(a.time) - time[a.userID];
-            if (time.count(a.userID) && answerTime > 3600)
+            int num = (a.questionID - 1) % 6;
+            // int answerTime = getTime(a.time) - time[a.userID];
+            // if (time.count(a.userID) && answerTime > 3600)
+            // {
+            //     aa[num] = -1000;
+            // }
+            // else if (!time.count(a.userID))
+            // {
+            //     aa[num] = -100000000;
+            // }
+            // else
+            // {
+            aa[num] = a.verdict == "T" ? 2 : -2;
+            if (num == 0 || num == 2) aa[num] /= 2;
+            if (num == 1 && a.verdict == "F")
             {
-                aa[num]   = -1000;
-                a.verdict = "X";
+                auto parts = file::Parser::slice(a.value, " ");
+                if (parts.size() == 2)
+                {
+                    if (a.questionID == 2 && parts.size() == 2 &&
+                        (parts[0] == "6" || parts[1] == "3"))
+                    {
+                        aa[num] = 1;
+                    }
+                    if (a.questionID == 8 && parts.size() == 2 &&
+                        (parts[0] == "7" || parts[1] == "4"))
+                        aa[num] = 1;
+                    if (a.questionID == 14 && parts.size() == 2 &&
+                        (parts[0] == "11" || parts[1] == "6"))
+                        aa[num] = 1;
+                }
             }
-            else if (!time.count(a.userID))
+
+            if (num == 3 && a.verdict == "F")
             {
-                aa[num]   = -100000000;
-                a.verdict = "E";
+                auto parts = file::Parser::slice(a.value, " ");
+                if (parts.size() == 3)
+                {
+                    std::string frst  = parts[0] + parts[1];
+                    std::string secnd = parts[2];
+                    auto question     = connection.val.getData<data::Question>(
+                        "id=" + data::wrap(a.questionID));
+
+                    parts = file::Parser::slice(question.juryAnswer, " ");
+                    std::string aF = parts[0] + parts[1];
+                    std::string aS = parts[2];
+
+                    if (frst == aF)
+                    {
+                        aa[num] = 1;
+                    }
+                    if (secnd == aS)
+                    {
+                        aa[num] = 1;
+                    }
+                }
+
+                if (aa[num] == -1)
+                {
+                    int tt = 0;
+                    ++tt;
+                }
             }
-            connection.val.write(answer);
-            //     else
-            //     {
-            //         aa[num] = a.verdict == "T" ? 2 : -2;
-            //         if (num == 2) aa[num] /= 2;
-            //         if (num == 1 && a.verdict == "F")
-            //         {
-            //             auto parts = file::Parser::slice(a.value, " ");
-            //             if (a.questionID == 2 && parts.size() == 2 &&
-            //                 (parts[0] == "9" || parts[1] == "3"))
-            //             {
-            //                 aa[num] = 1;
-            //             }
-            //             if (a.questionID == 8 && parts.size() == 2 &&
-            //                 (parts[0] == "13" || parts[1] == "3"))
-            //                 aa[num] = 1;
-            //             if (a.questionID == 14 && parts.size() == 2 &&
-            //                 (parts[0] == "12" || parts[1] == "3"))
-            //                 aa[num] = 1;
-            //         }
-            //     }
+            // }
 
-            //     sum += aa[num] > 0 ? aa[num] : 0;
-            //     abs_sum += std::abs(aa[num]) ? 1 : 0;
+            sum += aa[num] > 0 ? aa[num] : 0;
+            abs_sum += std::abs(aa[num]) ? 1 : 0;
 
-            //     if (answerTime < 0)
-            //     {
-            //         int yy = 0;
-            //         yy++;
-            //     }
-            //     if (aa[num] > 0)
-            //     {
-            //         aa[num] = answerTime;
-            //         time_sum += aa[num];
-            //     }
-            //     else
-            //     {
-            //         aa[num] = -answerTime;
-            //     }
+            // if (answerTime < 0)
+            // {
+            //     int yy = 0;
+            //     yy++;
+            // }
+            // if (aa[num] > 0)
+            // {
+            //     aa[num] = answerTime;
+            //     time_sum += aa[num];
+            // }
+            // else
+            // {
+            //     aa[num] = -answerTime;
+            // }
         }
 
-        // res += u.login;
-        // for (auto& a : aa)
-        // {
-        //     res += ";";
-        //     res += std::to_string(a);
-        // }
-        // res += ";" + std::to_string(sum) + ";" + std::to_string(time_sum)
-        // +
-        //        ";" + std::to_string(abs_sum);
-        // res += "\n";
+        res += u.login;
+        for (auto& a : aa)
+        {
+            res += ";";
+            res += std::to_string(a);
+        }
+        res += ";" + std::to_string(sum) + ";" + std::to_string(abs_sum);
+        res += "\n";
 
-        // if (res[0] == '6')
-        // {
-        //     res6 += res;
-        // }
-        // if (res[0] == '7')
-        // {
-        //     res7 += res;
-        // }
-        // if (res[0] == '8')
-        // {
-        //     res8 += res;
-        // }
+        if (res[0] == '6')
+        {
+            res6 += res;
+        }
+        if (res[0] == '7')
+        {
+            res7 += res;
+        }
+        if (res[0] == '8')
+        {
+            res8 += res;
+        }
     }
-    // std::ofstream out("out.txt");
-    // out << res6 << "\n" << res7 << "\n" << res8;
-    // std::ofstream out6("out6.txt");
-    // out6 << res6;
-    // std::ofstream out7("out7.txt");
-    // out7 << res7;
-    // std::ofstream out8("out8.txt");
-    // out8 << res8;
+    std::ofstream out("out.txt");
+    out << res6 << "\n" << res7 << "\n" << res8;
+    std::ofstream out6("out6.txt");
+    out6 << res6;
+    std::ofstream out7("out7.txt");
+    out7 << res7;
+    std::ofstream out8("out8.txt");
+    out8 << res8;
+    return "";
+}
+
+std::string
+supRes()
+{
+    auto connection = data::ConnectionManager::getUserConnection();
+
+    // auto questionIDs =
+    // connection.val.getDataArray<data::CompetitionQuestion>(
+    //     "competition_id=" + data::wrap(aCompetitionID));
+    //     std::string cond;
+    //     for(auto& i : questionIDs) cond += "id=" +
+    //     std::to_string(i.questionID) + " OR "; cond.resize(cond.size() - 4);
+    //     auto questions = connection.val.getDataArray<data::Question>(
+    //     cond);
+
+    std::string res;
+    auto users = connection.val.getDataArray<data::User>();
+    for (auto& u : users)
+    {
+        std::vector<int> line(6);
+        auto submission = connection.val.getDataArray<data::Submission>(
+            "user_id=" + data::wrap(u.id));
+
+        if (u.login == "8KRSNS201006")
+        {
+            int yy = 0;
+            ++yy;
+        }
+
+        int points = 0, penalty = 0;
+        for (auto& s : submission)
+        {
+            int p_id = s.problemID - 1;
+            if (s.verdict == "CE" || line[p_id] > 0) continue;
+            if (line[p_id] > 0) continue;
+            --line[p_id];
+            if (s.verdict == "OK")
+            {
+                int yy1 = getTime(s.dateVal);
+                int yy2 = getTime("1 10:00:00");
+                int yy3 = yy1 - yy2;
+
+                line[p_id] *= -1;
+                ++points;
+                penalty += (line[p_id] - 1) * 20;
+                penalty += yy3;
+            }
+        }
+
+        line.emplace_back(points);
+        line.emplace_back(penalty);
+
+        if (!points && !penalty) continue;
+
+        res += u.login;
+        for (auto& i : line)
+        {
+            res += ";";
+            res += std::to_string(i);
+        }
+        res += "\n";
+    }
+    std::ofstream out("out.txt");
+    out << res;
     return "";
 }
 
@@ -279,6 +379,9 @@ serv::Server::Server() noexcept
 
     CROW_ROUTE(mApp, "/api/qqq")
     ([]() { return susRes(); });
+
+    CROW_ROUTE(mApp, "/api/www")
+    ([]() { return supRes(); });
 
     CROW_ROUTE(mApp, "/api/get_problem/<int>/<int>")
     ([&](int aProblemID, int aUserID)
