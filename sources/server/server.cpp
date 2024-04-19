@@ -240,9 +240,11 @@ supRes()
     auto users = connection.val.getDataArray<data::User>();
     for (auto& u : users)
     {
-        std::vector<int> line(6);
+        std::vector<int> line(5);
         auto submission = connection.val.getDataArray<data::Submission>(
             "user_id=" + data::wrap(u.id));
+
+        bool flag = true;
 
         if (u.login == "8KRSNS201006")
         {
@@ -253,6 +255,7 @@ supRes()
         int points = 0, penalty = 0;
         for (auto& s : submission)
         {
+            flag     = false;
             int p_id = s.problemID - 1;
             if (s.verdict == "CE" || line[p_id] > 0) continue;
             if (line[p_id] > 0) continue;
@@ -265,7 +268,7 @@ supRes()
 
                 line[p_id] *= -1;
                 ++points;
-                penalty += (line[p_id] - 1) * 20;
+                penalty += (line[p_id] - 1) * 20 * 60;
                 penalty += yy3;
             }
         }
@@ -273,7 +276,7 @@ supRes()
         line.emplace_back(points);
         line.emplace_back(penalty);
 
-        if (!points && !penalty) continue;
+        if (flag) continue;
 
         res += u.login;
         for (auto& i : line)
