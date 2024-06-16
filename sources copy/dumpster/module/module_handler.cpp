@@ -18,8 +18,8 @@ mod::ModuleHandler::run() noexcept
 }
 
 str::String
-mod::ModuleHandler::processCommand(const str::String& aCommand,
-                                   const str::String& aArgument) noexcept
+mod::ModuleHandler::processCommand(const char* aCommand,
+                                   const char* aArgument) noexcept
 {
     return getInstance().processCommandNonstatic(aCommand, aArgument);
 }
@@ -27,14 +27,13 @@ mod::ModuleHandler::processCommand(const str::String& aCommand,
 //--------------------------------------------------------------------------------
 
 void
-mod::ModuleHandler::addCommand(const str::String& aCommand,
-                               ModuleBase* aPtr) noexcept
+mod::ModuleHandler::addCommand(const char* aCommand, ModuleBase* aPtr) noexcept
 {
     getInstance().mModules[aCommand] = aPtr;
 }
 
 bool
-mod::ModuleHandler::hasCommand(const str::String& aCommand) noexcept
+mod::ModuleHandler::hasCommand(const char* aCommand) noexcept
 {
     return getInstance().mModules.count(aCommand);
 }
@@ -74,9 +73,8 @@ mod::ModuleHandler::runNonstatic() noexcept
 }
 
 str::String
-mod::ModuleHandler::processCommandNonstatic(
-    const str::String& aCommand,
-    const str::String& aArgument) noexcept
+mod::ModuleHandler::processCommandNonstatic(const char* aCommand,
+                                            const char* aArgument) noexcept
 {
     str::String result;
 

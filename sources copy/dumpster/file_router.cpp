@@ -11,7 +11,7 @@ std::unordered_map<str::String, decltype(&core::FileRouter::dmpParser)>
 };
 
 data::RawDataArray
-core::FileRouter::process(const str::String& aFileName) noexcept
+core::FileRouter::process(const char* aFileName) noexcept
 {
     int indx = aFileName.size() - 1;
     while (aFileName[indx] != '.') --indx;
@@ -24,7 +24,7 @@ core::FileRouter::process(const str::String& aFileName) noexcept
 }
 
 data::RawDataArray
-core::FileRouter::dmpParser(const str::String& aFileName) noexcept
+core::FileRouter::dmpParser(const char* aFileName) noexcept
 {
     auto words = file::File::getWords(aFileName, file::FileType::File,
                                       &core::FileRouter::isDMPSeparator);
@@ -44,7 +44,7 @@ core::FileRouter::dmpParser(const str::String& aFileName) noexcept
 }
 
 data::RawDataArray
-core::FileRouter::dataParser(const str::String& aFileName) noexcept
+core::FileRouter::dataParser(const char* aFileName) noexcept
 {
     auto words = file::File::getWords(aFileName);
     data::RawDataArray res;
@@ -68,7 +68,7 @@ core::FileRouter::dataParser(const str::String& aFileName) noexcept
 }
 
 data::RawDataArray
-core::FileRouter::csvParser(const str::String& aFileName) noexcept
+core::FileRouter::csvParser(const char* aFileName) noexcept
 {
     auto words = file::File::getWords(aFileName, file::FileType::File,
                                       &core::FileRouter::isCSVSeparator);

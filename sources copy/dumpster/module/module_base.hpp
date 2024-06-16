@@ -23,7 +23,7 @@ public:
         str::String value;
         str::String argument;
 
-        Command(int a, const str::String& b, const str::String& c);
+        Command(int a, const char* b, const char* c);
     };
     virtual str::String doAction(const Command& aCommand) noexcept = 0;
 

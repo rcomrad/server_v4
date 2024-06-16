@@ -13,7 +13,7 @@
 #include "file_data/path.hpp"
 
 str::String
-post::PrintJournal::process(const str::String& aData) noexcept
+post::PrintJournal::process(const char* aData) noexcept
 {
     str::String result;
 

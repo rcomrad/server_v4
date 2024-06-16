@@ -25,7 +25,7 @@ public:
     // static str::String registration2(const crow::request& aReq,
     //                                    bool info) noexcept;
 
-    static crow::response confirmation(const str::String& aUrl) noexcept;
+    static crow::response confirmation(const char* aUrl) noexcept;
 
 private:
     static std::mutex mRegMut;

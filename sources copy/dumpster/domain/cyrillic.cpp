@@ -84,7 +84,7 @@ dom::Cyrilic::toUpper(std::wstring& aStr) noexcept
 //--------------------------------------------------------------------------------
 
 std::wstring
-dom::Cyrilic::toWString(const str::String& aStr) noexcept
+dom::Cyrilic::toWString(const char* aStr) noexcept
 {
     return toWString(aStr.c_str());
 }
@@ -317,7 +317,7 @@ dom::Cyrilic::toUpperCyrillic(const char* aCharacter) noexcept
 
 //--------------------------------------------------------------------------------
 str::String
-dom::Cyrilic::translit(const str::String& aStr) noexcept
+dom::Cyrilic::translit(const char* aStr) noexcept
 {
     static std::unordered_map<str::String, str::String> dict = {
         {"А", "A"},

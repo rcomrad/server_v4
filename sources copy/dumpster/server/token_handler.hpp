@@ -31,7 +31,7 @@ public:
     HOLY_TRINITY_SINGLE(TokenHandler);
 
     static str::String generate(const data::User& aUser,
-                                const str::String& aIP) noexcept;
+                                const char* aIP) noexcept;
     static UserDataPtr process(const crow::request& aReq) noexcept;
 
 protected:
@@ -39,7 +39,7 @@ protected:
 
 private:
     str::String generateNonstatic(const data::User& aUser,
-                                  const str::String& aIP) noexcept;
+                                  const char* aIP) noexcept;
     UserDataPtr processNonstatic(const crow::request& aReq) noexcept;
 
     //--------------------------------------------------------------------------------
@@ -62,16 +62,14 @@ private:
     bool processCommandsStatic() noexcept;
     void printAutorisation() const noexcept;
 
-    UserDataPtr check(const str::String& aToken,
-                      const str::String& aURL,
-                      const str::String& aIP) noexcept;
-    UserDataPtr apply(const str::String& aToken,
-                      const str::String& aURL) noexcept;
+    UserDataPtr check(const char* aToken,
+                      const char* aURL,
+                      const char* aIP) noexcept;
+    UserDataPtr apply(const char* aToken, const char* aURL) noexcept;
 
-    boost::optional<UserData&> getUserDataByToken(
-        const str::String& aToken) noexcept;
-    int getUserNum(const str::String& aToken) noexcept;
-    static str::String urlDedaction(const str::String& aUrl) noexcept;
+    boost::optional<UserData&> getUserDataByToken(const char* aToken) noexcept;
+    int getUserNum(const char* aToken) noexcept;
+    static str::String urlDedaction(const char* aUrl) noexcept;
 
     void rearrangeTokenArray() noexcept;
 };

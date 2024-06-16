@@ -21,8 +21,8 @@ public:
     static int getRoleID(
         const std::unordered_set<str::String>& aRoleNames) noexcept;
     static int getRoleID(const std::vector<str::String>& aRoleNames) noexcept;
-    static int getRoleID(const str::String& aRoleNames,
-                         const str::String& aDelimiter = "") noexcept;
+    static int getRoleID(const char* aRoleNames,
+                         const char* aDelimiter = "") noexcept;
 
     static std::unordered_set<str::String> getRoles(int aRoleID) noexcept;
 

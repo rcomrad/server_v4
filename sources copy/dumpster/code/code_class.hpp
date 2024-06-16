@@ -16,35 +16,33 @@ namespace code
 class CodeClass
 {
 public:
-    CodeClass(const str::String& aClassName,
-              const str::String& aNamespace) noexcept;
-    // void setName(const str::String& aName) noexcept;
-    // void setNamespace(const str::String& aNamespace) noexcept;
+    CodeClass(const char* aClassName, const char* aNamespace) noexcept;
+    // void setName(const char* aName) noexcept;
+    // void setNamespace(const char* aNamespace) noexcept;
 
-    void addParent(const str::String& aName) noexcept;
+    void addParent(const char* aName) noexcept;
 
-    CodeFunction& addRouterFunction(const str::String& aName,
-                                    const str::String& aType,
-                                    const str::String& aBody) noexcept;
-    CodeFunction& addFuncRouterForDatabase(const str::String& aName,
-                                           const str::String& aFunction,
-                                           const str::String& aBody) noexcept;
+    CodeFunction& addRouterFunction(const char* aName,
+                                    const char* aType,
+                                    const char* aBody) noexcept;
+    CodeFunction& addFuncRouterForDatabase(const char* aName,
+                                           const char* aFunction,
+                                           const char* aBody) noexcept;
 
     void addFunction(const CodeFunction& aFunc) noexcept;
 
-    void addVariable(const str::String& aName,
-                     const str::String& aType,
-                     const str::String& aValue = "") noexcept;
-    void addStaticVariable(const str::String& aVarName,
-                           const str::String& aType,
-                           const str::String& aInitialisation) noexcept;
+    void addVariable(const char* aName,
+                     const char* aType,
+                     const char* aValue = "") noexcept;
+    void addStaticVariable(const char* aVarName,
+                           const char* aType,
+                           const char* aInitialisation) noexcept;
 
     void outputToCpp(std::ofstream& aFile) const noexcept;
     void outputToHpp(std::ofstream& aFile) const noexcept;
 
     void makeStruct() noexcept;
-    void addUsing(const str::String& aName,
-                  const str::String& aTemplate = "") noexcept;
+    void addUsing(const char* aName, const char* aTemplate = "") noexcept;
 
 private:
     bool mIsStruct;

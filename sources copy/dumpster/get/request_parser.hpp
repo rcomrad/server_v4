@@ -39,11 +39,10 @@ public:
         std::vector<TableData> tables;
 
         const TableData& operator[](int num) const noexcept;
-        str::String getFullStatement(
-            const str::String& aCondition) const noexcept;
+        str::String getFullStatement(const char* aCondition) const noexcept;
     };
 
-    static DataRequest process(const str::String& aRequest) noexcept;
+    static DataRequest process(const char* aRequest) noexcept;
 
 private:
     std::vector<int> mPrev;
@@ -62,18 +61,18 @@ private:
     str::String getTables() const noexcept;
     str::String getColumns() const noexcept;
 
-    void parse(const str::String& aRequest) noexcept;
+    void parse(const char* aRequest) noexcept;
     void arrangeActualNames() noexcept;
     void arrangeColumns() noexcept;
 
     void pushTable(int iter,
                    int& last,
-                   const str::String& aRequest,
+                   const char* aRequest,
                    int aOffset) noexcept;
 
     void pushName(int iter,
                   int& last,
-                  const str::String& aRequest,
+                  const char* aRequest,
                   int curPrev) noexcept;
 };
 

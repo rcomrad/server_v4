@@ -41,8 +41,8 @@ mult::CommandHandler::process(const crow::request& aReq) noexcept
 }
 
 str::String
-mult::CommandHandler::process(const str::String& aCommand,
-                              const str::String& aArgument) noexcept
+mult::CommandHandler::process(const char* aCommand,
+                              const char* aArgument) noexcept
 {
     str::String res = "ERROR\nInvalid command!\n>:(\n";
     if (mod::ModuleHandler::hasCommand(aCommand))

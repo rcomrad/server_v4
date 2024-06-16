@@ -15,14 +15,13 @@ namespace dom
 class Mail
 {
 public:
-    Mail(const str::String& aLogin    = "",
-         const str::String& aPassword = "") noexcept;
+    Mail(const char* aLogin = "", const char* aPassword = "") noexcept;
 
     void useDefaultMail() noexcept;
 
-    bool send(const str::String& aEmailName,
-              const str::String& aTheme,
-              const str::String& aText) const noexcept;
+    bool send(const char* aEmailName,
+              const char* aTheme,
+              const char* aText) const noexcept;
 
 private:
     str::String mLogin;

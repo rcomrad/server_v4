@@ -229,7 +229,7 @@ mult::MailSender::threadSender(Letter aLetter,
 
 std::vector<std::pair<str::String, str::String>>
 mult::MailSender::sliseText(
-    const str::String& aText,
+    const char* aText,
     const std::unordered_map<str::String, str::String>& aKeys) noexcept
 {
     LOG_INFO("Start parsing letter");

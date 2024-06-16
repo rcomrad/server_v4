@@ -17,7 +17,7 @@ public:
     HOLY_TRINITY_NOCOPY(TexBase);
 
 protected:
-    str::String getVariable(const str::String& aName) noexcept;
+    str::String getVariable(const char* aName) noexcept;
 
 private:
     std::unordered_map<str::String, std::vector<str::String>>* mVariables;

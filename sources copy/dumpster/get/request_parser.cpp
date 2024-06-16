@@ -21,7 +21,7 @@ get::RequestParser::DataRequest::operator[](int num) const noexcept
 
 str::String
 get::RequestParser::DataRequest::getFullStatement(
-    const str::String& aCondition) const noexcept
+    const char* aCondition) const noexcept
 {
     // TODO: auto schema
     return rowStatement +
@@ -31,7 +31,7 @@ get::RequestParser::DataRequest::getFullStatement(
 }
 
 get::RequestParser::DataRequest
-get::RequestParser::process(const str::String& aRequest) noexcept
+get::RequestParser::process(const char* aRequest) noexcept
 {
     RequestParser instance;
 
@@ -90,7 +90,7 @@ get::RequestParser::getColumns() const noexcept
 }
 
 void
-get::RequestParser::parse(const str::String& aRequest) noexcept
+get::RequestParser::parse(const char* aRequest) noexcept
 {
     int curPrev     = 0;
     int last        = 0;
@@ -205,7 +205,7 @@ get::RequestParser::arrangeColumns() noexcept
 void
 get::RequestParser::pushTable(int iter,
                               int& last,
-                              const str::String& aRequest,
+                              const char* aRequest,
                               int aOffset) noexcept
 {
     if (iter - last > 1)
@@ -223,7 +223,7 @@ get::RequestParser::pushTable(int iter,
 void
 get::RequestParser::pushName(int iter,
                              int& last,
-                             const str::String& aRequest,
+                             const char* aRequest,
                              int curPrev) noexcept
 {
     if (iter - last >= 1)

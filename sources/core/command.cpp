@@ -1,21 +1,22 @@
 #include "command.hpp"
 
-#include "string/parser.hpp"
+#include "kus_standard/parser.hpp"
 
 core::Command::Command() noexcept : ready(false)
 {
     buffer[0] = 0;
 }
 
-core::Command::Command(const str::String& aStr) noexcept
+// TODO: do we nedd move?
+void
+core::Command::assemble() noexcept
 {
-    auto args = str::Parser::slice(aStr, "; \n\t");
+    auto args = kstd::Parser::slice(buffer, "; \n\t");
     value     = std::move(args[0]);
-    args.erase(args.begin());
 
-    for (auto& i : args)
+    for (int i = 1; i < args.size(); ++i)
     {
-        auto temp = str::Parser::slice(i, "=");
+        auto temp = kstd::Parser::slice(args[i], "=");
         if (temp.size() == 1)
         {
             arguments.insert(std::move(temp[0]));
@@ -25,4 +26,6 @@ core::Command::Command(const str::String& aStr) noexcept
             variables[std::move(temp[0])] = std::move(temp[1]);
         }
     }
+
+    ready = true;
 }

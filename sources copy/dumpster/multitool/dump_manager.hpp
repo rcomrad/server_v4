@@ -19,8 +19,8 @@ class DumpManager : public mod::ModuleBase
 public:
     static str::String process(const crow::request& aReq) noexcept;
     static std::optional<str::String> makeSaveFile() noexcept;
-    static str::String makeDump(const str::String& aCommand,
-                                const str::String& aArgs) noexcept;
+    static str::String makeDump(const char* aCommand,
+                                const char* aArgs) noexcept;
 
 protected:
     str::String doAction(const Command& aCommand) noexcept override;
@@ -29,8 +29,8 @@ private:
     static DumpManager mInstance;
     DumpManager() noexcept;
 
-    static str::String privateProcess(const str::String& aCommand,
-                                      const str::String& aArgs) noexcept;
+    static str::String privateProcess(const char* aCommand,
+                                      const char* aArgs) noexcept;
 
     static str::String dumpAsString(
         const std::vector<str::String>& aTableNames = {}) noexcept;

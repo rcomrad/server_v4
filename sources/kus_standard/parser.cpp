@@ -2,55 +2,167 @@
 
 #include "core/logging.hpp"
 
-#include "string/separators.hpp"
+#include "separators.hpp"
+
+struct ASCIIBox
+{
+
+    uint64_t data[2];
+
+    ASCIIBox()
+    {
+        data[0] = 0;
+        data[1] = 0;
+    }
+    ASCIIBox(const char* str) : ASCIIBox()
+    {
+        set(str);
+    }
+
+    void set(int num)
+    {
+        data[0] |= 1 << num;
+        data[1] |= 1 << (num - 32);
+    }
+    void set(const char* str)
+    {
+        while (*str)
+        {
+            set(*str);
+            ++str;
+        }
+    }
+    bool get(int num)
+    {
+        return (data[0] & (1 << num)) | (data[1] & (1 << (num - 32)));
+    }
+};
 
 std::vector<std::string_view>
-Parser::operator()(const char* buffer,
-                   const char* aDelimiters,
-                   const char* aErase = "") noexcept
+kstd::Parser::slice(const char* a_buffer, const char* a_delimiters) noexcept
 {
-    std::vector<std::string_view> result(1);
-    
+    return slice(std::string_view(a_buffer), a_delimiters);
+}
 
-    for (auto i : aStr)
+std::vector<std::string_view>
+kstd::Parser::slice(std::string_view a_buffer,
+                    const char* a_delimiters) noexcept
+{
+    std::vector<std::string_view> result;
+
+    ASCIIBox delimiters(a_delimiters);
+    delimiters.set(" \n\t\0");
+
+    auto last = a_buffer.begin();
+    auto cur  = --a_buffer.begin();
+
+    do
     {
-        if (aErase.find(i) != str::String::npos)
+        ++cur;
+        if (delimiters.get(*cur))
         {
+            if (0 != last - cur)
+            {
+                result.emplace_back(cur, last);
+            }
+            last = cur;
             continue;
         }
-
-        if (aDelimiters.find(i) == str::String::npos)
-        {
-            // TODO: unicode
-            //  if (!(std::isspace(i) && result.back().empty()))
-            if (!(str::Separator::space(i) && result.back().empty()))
-            {
-                result.back().push_back(i);
-            }
-        }
-        else if (!result.back().empty())
-        {
-            while (!result.back().empty() &&
-                   str::Separator::space(result.back().back()))
-            {
-                result.back().pop_back();
-            }
-            result.emplace_back();
-        }
-    }
-
-    if (!result.empty() && result.back().empty())
-    {
-        result.pop_back();
-    }
+    } while (*cur);
 
     return result;
 }
 
+// std::vector<std::string_view>
+// kstd::Parser::slice(char* buffer, const char* aDelimiters) noexcept
+// {
+//     std::vector<std::string_view> result;
+
+//     ASCIIBox delimiters(aDelimiters);
+//     delimiters.set(" \n\t\0");
+
+//     const char* last = buffer;
+//     const char* cur  = buffer - 1;
+
+//     do
+//     {
+//         ++cur;
+//         if (delimiters.get(*cur))
+//         {
+//             if (0 != last - cur)
+//             {
+//                 result.back().emplace_bcak(cur, last);
+//             }
+//             last = cur;
+//             continue;
+//         }
+//     } while (*cur);
+
+//     return result;
+// }
+
+// std::vector<std::string_view>
+// kstd::Parser::operator()(char* buffer,
+//                          const char* aDelimiters) noexcept
+// {
+//     std::vector<std::string_view> result(1);
+
+//     ASCIIBox delimiters(aDelimiters);
+//     delimiters.set(" \n\t\0");
+//     ASCIIBox erase(aErase);
+
+//     const char* last = buffer;
+//     const char* cur  = buffer;
+
+//     while (*cur)
+//     {
+//         if (erase.get(*cur))
+//         {
+//             continue;
+//         }
+
+//         if (delimiters.get(*cur))
+//         {
+//             if (0 == last - cur)
+//             {
+
+//             }
+//             continue;
+//         }
+
+//         if (aDelimiters.find(i) == str::String::npos)
+//         {
+//             // TODO: unicode
+//             //  if (!(std::isspace(i) && result.back().empty()))
+//             if (!(str::Separator::space(i) && result.back().empty()))
+//             {
+//                 result.back().push_back(i);
+//             }
+//         }
+
+//         else if (!result.back().empty())
+//         {
+//             while (!result.back().empty() &&
+//                    str::Separator::space(result.back().back()))
+//             {
+//                 result.back().pop_back();
+//             }
+//             result.emplace_back();
+//         }
+//     }
+
+//     if (!result.empty() && result.back().empty())
+//     {
+//         result.pop_back();
+//     }
+
+//     return result;
+// }
+
 // #include "file.hpp"
 
 // std::optional<str::Variable>
-// str::Parser::makeVariable(const str::String& aStr) noexcept
+// str::Parser::makeVariable(const char* aStr) noexcept
 // {
 //     std::optional<Variable> result;
 
@@ -92,7 +204,7 @@ Parser::operator()(const char* buffer,
 // }
 
 // std::vector<str::Variable>
-// str::Parser::getVariablesFromFile(const str::String& aFolderName,
+// str::Parser::getVariablesFromFile(const char* aFolderName,
 //                                   const str::String aFilename) noexcept
 // {
 //     return str::Parser::getVariablesFromFile(
@@ -100,9 +212,9 @@ Parser::operator()(const char* buffer,
 // }
 
 // std::vector<str::String>
-// str::Parser::slice(const str::String& aStr,
-//                    const str::String& aDelimiters,
-//                    const str::String& aErase) noexcept
+// str::Parser::slice(const char* aStr,
+//                    const char* aDelimiters,
+//                    const char* aErase) noexcept
 // {
 //     std::vector<str::String> result(1);
 
@@ -142,7 +254,7 @@ Parser::operator()(const char* buffer,
 // }
 
 // void
-// str::Parser::normalize(str::String& aStr, Type aType) noexcept
+// str::Parser::normalize(char* aStr, Type aType) noexcept
 // {
 //     if (aType == Type::Upper)
 //     {
@@ -157,7 +269,7 @@ Parser::operator()(const char* buffer,
 // }
 
 // str::String
-// str::Parser::normalize(const str::String& aStr, Type aType) noexcept
+// str::Parser::normalize(const char* aStr, Type aType) noexcept
 // {
 //     str::String result;
 //    // = aStr;

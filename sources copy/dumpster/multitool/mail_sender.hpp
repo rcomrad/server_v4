@@ -30,7 +30,7 @@ private:
                              bool aRealSend) noexcept;
 
     static std::vector<std::pair<str::String, str::String>> sliseText(
-        const str::String& aText,
+        const char* aText,
         const std::unordered_map<str::String, str::String>& aKeys) noexcept;
 };
 

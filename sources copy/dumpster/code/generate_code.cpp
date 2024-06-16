@@ -230,7 +230,7 @@ code::CodeGenerator::generate(CodeFile::FileType aType) const noexcept
 void
 code::CodeGenerator::addRouter(
     code::CodeClass& aClass,
-    const str::String& aName,
+    const char* aName,
     std::unordered_map<str::String, str::String> aNameMap) const noexcept
 {
     for (auto& i : aNameMap) i.second.insert(0, 1, '&');

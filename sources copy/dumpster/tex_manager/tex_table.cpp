@@ -99,7 +99,7 @@ tex::TexTable::get() const noexcept
 }
 
 void
-tex::TexTable::add(const str::String& aData) noexcept
+tex::TexTable::add(const char* aData) noexcept
 {
     mData += aData;
 }

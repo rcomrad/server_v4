@@ -12,7 +12,7 @@ class RequestStorage
 {
 public:
     static RequestParser::DataRequest& getRequest(
-        const str::String& aRequest) noexcept;
+        const char* aRequest) noexcept;
 
 private:
     std::unordered_map<str::String, RequestParser::DataRequest> mStorage;

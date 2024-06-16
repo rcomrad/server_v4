@@ -23,7 +23,7 @@ tex::TexFile::printToFile() noexcept
 }
 
 void
-tex::TexFile::addFile(const str::String& aFileName) noexcept
+tex::TexFile::addFile(const char* aFileName) noexcept
 {
     auto curFile = file::File::getLines(core::Path::getPathUnsafe(aFileName));
 
@@ -51,7 +51,7 @@ tex::TexFile::addFile(const str::String& aFileName) noexcept
 }
 
 str::String
-tex::TexFile::makeFromFIle(const str::String& aFileName) noexcept
+tex::TexFile::makeFromFIle(const char* aFileName) noexcept
 {
     mData += " \\begin{document}\n";
 

@@ -14,7 +14,7 @@ namespace post
 class PrintJournal
 {
 public:
-    static str::String process(const str::String& aData) noexcept;
+    static str::String process(const char* aData) noexcept;
 
 private:
     static str::String makeJournal(tex::TexFile& aTexFile, int aID) noexcept;

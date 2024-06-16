@@ -51,7 +51,7 @@ file::VariableStorage::reloadSettings() noexcept
 //--------------------------------------------------------------------------------
 
 std::optional<bool>
-file::VariableStorage::getFlag(const str::String& aName) const noexcept
+file::VariableStorage::getFlag(const char* aName) const noexcept
 {
     const std::lock_guard<std::mutex> lock(mBoolMutex);
 
@@ -65,7 +65,7 @@ file::VariableStorage::getFlag(const str::String& aName) const noexcept
 }
 
 std::optional<int>
-file::VariableStorage::getInt(const str::String& aName) const noexcept
+file::VariableStorage::getInt(const char* aName) const noexcept
 {
     const std::lock_guard<std::mutex> lock(mIntMutex);
 
@@ -78,12 +78,12 @@ file::VariableStorage::getInt(const str::String& aName) const noexcept
     return result;
 }
 
-boost::optional<const str::String&>
-file::VariableStorage::getWord(const str::String& aName) const noexcept
+boost::optional<const char*>
+file::VariableStorage::getWord(const char* aName) const noexcept
 {
     const std::lock_guard<std::mutex> lock(mWordMutex);
 
-    boost::optional<const str::String&> result;
+    boost::optional<const char*> result;
     auto it = mWords.find(aName);
     if (it != mWords.end())
     {
@@ -95,7 +95,7 @@ file::VariableStorage::getWord(const str::String& aName) const noexcept
 //--------------------------------------------------------------------------------
 
 bool
-file::VariableStorage::getFlagUnsafe(const str::String& aName,
+file::VariableStorage::getFlagUnsafe(const char* aName,
                                      bool aDefault) const noexcept
 {
     bool result = aDefault;
@@ -105,7 +105,7 @@ file::VariableStorage::getFlagUnsafe(const str::String& aName,
 }
 
 int
-file::VariableStorage::getIntUnsafe(const str::String& aName,
+file::VariableStorage::getIntUnsafe(const char* aName,
                                     int aDefault) const noexcept
 {
     int result = aDefault;
@@ -114,36 +114,34 @@ file::VariableStorage::getIntUnsafe(const str::String& aName,
     return result;
 }
 
-const str::String&
-file::VariableStorage::getWordUnsafe(const str::String& aName,
-                                     const str::String& aDefault) const noexcept
+const char*
+file::VariableStorage::getWordUnsafe(const char* aName,
+                                     const char* aDefault) const noexcept
 {
-    auto temp                 = getWord(aName);
-    const str::String& result = temp.has_value() ? temp.value() : aDefault;
+    auto temp          = getWord(aName);
+    const char* result = temp.has_value() ? temp.value() : aDefault;
     return result;
 }
 
 //--------------------------------------------------------------------------------
 
 void
-file::VariableStorage::setVariable(const str::String& aName,
-                                   bool aValue) noexcept
+file::VariableStorage::setVariable(const char* aName, bool aValue) noexcept
 {
     const std::lock_guard<std::mutex> lock(mBoolMutex);
     mFlags[aName] = aValue;
 }
 
 void
-file::VariableStorage::setVariable(const str::String& aName,
-                                   int aValue) noexcept
+file::VariableStorage::setVariable(const char* aName, int aValue) noexcept
 {
     const std::lock_guard<std::mutex> lock(mIntMutex);
     mInts[aName] = aValue;
 }
 
 void
-file::VariableStorage::setVariable(const str::String& aName,
-                                   const str::String& aValue) noexcept
+file::VariableStorage::setVariable(const char* aName,
+                                   const char* aValue) noexcept
 {
     const std::lock_guard<std::mutex> lock(mWordMutex);
     mWords[aName] = aValue;

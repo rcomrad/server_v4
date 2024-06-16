@@ -28,33 +28,31 @@ core::DateTime::operator-(const DateTime& aOther) const noexcept
 
 //--------------------------------------------------------------------------------
 
-str::String
-core::DateTime::getTime() const noexcept
-{
-    str::String result(10);
-    std::sprintf((char*)result.data(), "%02d:%02d:%02d", dateTime.time.hours,
-                 dateTime.time.minutes, dateTime.time.seconds);
-    return result;
-}
+// core::DateTime::TimeType
+// core::DateTime::getTime() const noexcept
+// {
+//     kstd::CharBuffer result;
+//     std::sprintf((char*)result.data(), "%02d:%02d:%02d", dateTime.time.hours,
+//                  dateTime.time.minutes, dateTime.time.seconds);
+//     return result;
+// }
 
-str::String
-core::DateTime::getDate() const noexcept
-{
-    str::String result(12);
-    std::sprintf((char*)result.data(), "%04d-%02d-%02d", dateTime.date.year,
-                 dateTime.date.month, dateTime.date.day);
-    return result;
-}
+// core::DateTime::DateType
+// core::DateTime::getDate() const noexcept
+// {
+//     kstd::CharBuffer result;
+//     std::sprintf((char*)result.data(), "%04d-%02d-%02d", dateTime.date.year,
+//                  dateTime.date.month, dateTime.date.day);
+//     return result;
+// }
 
-str::String
-core::DateTime::getAll(char aDelimiter) const noexcept
-{
-    str::String result;
-    result.reserve(22);
+// core::DateTime::DateTimeType
+// core::DateTime::getAll(char aDelimiter) const noexcept
+// {
+//     kstd::CharBuffer result;
+//     result += getDate();
+//     result.push_back(aDelimiter);
+//     result += getTime();
 
-    result += getDate();
-    result.push_back(aDelimiter);
-    result += getTime();
-
-    return result;
-}
+//     return result;
+// }

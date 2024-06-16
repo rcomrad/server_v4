@@ -34,74 +34,72 @@ public:
     File() noexcept = delete;
 
     // TODO: add tamplate (factory, for file read and string read)
-    static str::String getAllData(const str::String& aFileName,
+    static str::String getAllData(const char* aFileName,
                                   FileType aFileType = FileType::File) noexcept;
-    static str::String getAllData(const str::String& aFolderName,
-                                  const str::String& aFileName,
+    static str::String getAllData(const char* aFolderName,
+                                  const char* aFileName,
                                   FileType aFileType = FileType::File) noexcept;
 
     static std::vector<str::String> getLines(
-        const str::String& aFileName,
+        const char* aFileName,
         FileType aFileType = FileType::File) noexcept;
     static std::vector<str::String> getLines(
-        const str::String& aFolderName,
-        const str::String& aFileName,
+        const char* aFolderName,
+        const char* aFileName,
         FileType aFileType = FileType::File) noexcept;
 
     static std::vector<std::vector<str::String>> getWords(
-        const str::String& aFileName,
+        const char* aFileName,
         FileType aFileType             = FileType::File,
         std::function<bool(char)> funk = &file::File::isSeparator) noexcept;
     static std::vector<std::vector<str::String>> getWords(
-        const str::String& aFolderName,
-        const str::String& aFileName,
+        const char* aFolderName,
+        const char* aFileName,
         FileType aFileType             = FileType::File,
         std::function<bool(char)> funk = &file::File::isSeparator) noexcept;
 
     static std::unordered_map<str::String, str::String> getWordsMap(
-        const str::String& aFileName,
+        const char* aFileName,
         FileType aFileType             = FileType::File,
         std::function<bool(char)> funk = &file::File::isSeparator) noexcept;
     static std::unordered_map<str::String, str::String> getWordsMap(
-        const str::String& aFolderName,
-        const str::String& aFileName,
+        const char* aFolderName,
+        const char* aFileName,
         FileType aFileType             = FileType::File,
         std::function<bool(char)> funk = &file::File::isSeparator) noexcept;
 
     static std::unordered_set<str::String> getWordsSet(
-        const str::String& aFileName,
+        const char* aFileName,
         FileType aFileType             = FileType::File,
         std::function<bool(char)> funk = &file::File::isSeparator) noexcept;
     static std::unordered_set<str::String> getWordsSet(
-        const str::String& aFolderName,
-        const str::String& aFileName,
+        const char* aFolderName,
+        const char* aFileName,
         FileType aFileType             = FileType::File,
         std::function<bool(char)> funk = &file::File::isSeparator) noexcept;
 
     static std::vector<std::unordered_map<str::String, str::String>> getTable(
-        const str::String& aFileName,
+        const char* aFileName,
         FileType aFileType             = FileType::File,
         std::function<bool(char)> funk = &file::File::isSeparator) noexcept;
     static std::vector<std::unordered_map<str::String, str::String>> getTable(
-        const str::String& aFolderName,
-        const str::String& aFileName,
+        const char* aFolderName,
+        const char* aFileName,
         FileType aFileType             = FileType::File,
         std::function<bool(char)> funk = &file::File::isSeparator) noexcept;
 
-    static bool writeData(const str::String& aFileName,
-                          const str::String& aData) noexcept;
-    static std::optional<str::String> writeData(
-        const str::String& aFolderName,
-        const str::String& aFileName,
-        const str::String& aData) noexcept;
+    static bool writeData(const char* aFileName, const char* aData) noexcept;
+    static std::optional<str::String> writeData(const char* aFolderName,
+                                                const char* aFileName,
+                                                const char* aData) noexcept;
 
 private:
     static bool isSeparator(char c) noexcept;
 
     template <typename T, typename... Args>
     static auto pathUnpack(T aFuncPtr,
-                           const str::String& aFolderName,
-                           const str::String& aFileName,
+                           const char* aFolderName,
+                           const char* aFileName,
                            Args&&... args) noexcept
     {
         auto path = core::Path::getPath(aFolderName, aFileName);

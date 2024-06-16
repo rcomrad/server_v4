@@ -1,7 +1,7 @@
 #include "string_algorithms.hpp"
 
 str::String
-code::StringAlgorithms::normalizeName(const str::String& aName,
+code::StringAlgorithms::normalizeName(const char* aName,
                                       bool aIsFirstCapital,
                                       bool aIsIdCapital) noexcept
 {

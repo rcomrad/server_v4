@@ -204,7 +204,7 @@ proc::PipeLinuxProcess::IORedirection() noexcept
 //--------------------------------------------------------------------------------
 #    include <poll.h>
 void
-proc::PipeLinuxProcess::readData(str::String& result) noexcept
+proc::PipeLinuxProcess::readData(char* result) noexcept
 {
     // result.clear();
     // char buf[1024];
@@ -266,7 +266,7 @@ proc::PipeLinuxProcess::readData(str::String& result) noexcept
 //--------------------------------------------------------------------------------
 
 void
-proc::PipeLinuxProcess::writeData(const str::String& aMessage) noexcept
+proc::PipeLinuxProcess::writeData(const char* aMessage) noexcept
 {
     write(mPipeA[1], aMessage.c_str(), aMessage.size());
 }

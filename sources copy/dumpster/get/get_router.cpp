@@ -108,7 +108,7 @@ std::unordered_map<str::String, std::vector<str::String>>
 };
 
 std::vector<str::String>&
-get::GetRouter::columnNamesRouter(const str::String& aName)
+get::GetRouter::columnNamesRouter(const char* aName)
 {
     auto it = mColumnNamesRouter.find(aName);
     if (it == mColumnNamesRouter.end()) it = mColumnNamesRouter.find("dummy");

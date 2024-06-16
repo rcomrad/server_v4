@@ -1,6 +1,6 @@
 #pragma once
 
-namespace str
+namespace kstd
 {
 
 class Separator
@@ -12,4 +12,4 @@ public:
     static bool space(char c) noexcept;
 };
 
-} // namespace str
+} // namespace kstd

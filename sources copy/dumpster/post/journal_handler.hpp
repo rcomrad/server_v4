@@ -22,8 +22,8 @@ public:
     // static void headerParser(data::RawData& aData,
     //                          const crow::multipart::message& msg) noexcept;
     static void remakeSchedule(data::JournalTable& aJournal,
-                               const str::String& fromID,
-                               const str::String& toVal) noexcept;
+                               const char* fromID,
+                               const char* toVal) noexcept;
 
 private:
     static void makeSchedule(data::JournalTable& aJournal) noexcept;

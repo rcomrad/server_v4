@@ -25,9 +25,8 @@ std::unordered_map<str::String, test::Compiler::Language>
 //--------------------------------------------------------------------------------
 
 std::vector<str::String>
-test::Compiler::getExecutableCommand(
-    const str::String& aFileName,
-    const str::String& aOutputFileName) noexcept
+test::Compiler::getExecutableCommand(const char* aFileName,
+                                     const char* aOutputFileName) noexcept
 {
     int num = aFileName.size() - 1;
     while (num >= 1 && aFileName[num] != '.') num--;
@@ -60,9 +59,8 @@ test::Compiler::getExecutableCommand(
 //--------------------------------------------------------------------------------
 
 std::vector<str::String>
-test::Compiler::prepareCommandForCPP(
-    const str::String& aFileName,
-    const str::String& aOutputFileName) noexcept
+test::Compiler::prepareCommandForCPP(const char* aFileName,
+                                     const char* aOutputFileName) noexcept
 {
     std::vector<str::String> compileCommand;
 
@@ -102,7 +100,7 @@ test::Compiler::prepareCommandForCPP(
 //--------------------------------------------------------------------------------
 
 std::vector<str::String>
-test::Compiler::prepareCommandForPython(const str::String& aFileName) noexcept
+test::Compiler::prepareCommandForPython(const char* aFileName) noexcept
 {
     std::vector<str::String> result;
     result.emplace_back("python3");
@@ -111,7 +109,7 @@ test::Compiler::prepareCommandForPython(const str::String& aFileName) noexcept
 }
 
 std::vector<str::String>
-test::Compiler::prepareCommandForPascal(const str::String& aFileName) noexcept
+test::Compiler::prepareCommandForPascal(const char* aFileName) noexcept
 {
     str::String temp;
     temp = aFileName;

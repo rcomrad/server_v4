@@ -12,11 +12,10 @@ core::CommandHandler::scanCommand() noexcept
 {
     while (true)
     {
-        str::String inp;
-        std::getline(std::cin, inp);
-        if (!inp.empty())
+        auto& command = requestCommandCell();
+        while ('\0' != command.buffer[0]) // TODO: check if neaded
         {
-            pushCommand(Command(inp));
+            std::cin.getline(command.buffer, Command::COMMAND_MAX_SIZE);
         }
     }
 }
@@ -36,18 +35,20 @@ core::CommandHandler::getInstance() noexcept
 
 //--------------------------------------------------------------------------------
 
-void
-core::CommandHandler::pushCommand(Command&& aCommand) noexcept
+core::Command&
+core::CommandHandler::requestCommandCell() noexcept
 {
-    getInstance().pushCommandNonstatic(std::move(aCommand));
+    getInstance().requestCommandCellNonstatic();
 }
 
-void
-core::CommandHandler::pushCommandNonstatic(Command&& aCommand) noexcept
+core::Command&
+core::CommandHandler::requestCommandCellNonstatic() noexcept
 {
     queue_lock.lock();
-    mCommandQueue.push(std::move(aCommand));
+    mCommandQueue.emplace();
+    Command& result = mCommandQueue.front();
     queue_lock.unlock();
+    return result;
 }
 
 //--------------------------------------------------------------------------------
@@ -74,7 +75,7 @@ core::CommandHandler::handlCommandNonstatic() noexcept
     queue_lock.unlock();
 
     auto comm_it = command_map.find(command.value);
-    if (command_map == command_map.end())
+    if (comm_it == command_map.end())
     {
         ((void (*)(const Command&))comm_it->second)(command);
         LOG_INFO("Command applyed: ", command.value);

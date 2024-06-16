@@ -9,20 +9,20 @@ namespace code
 class CodeFunction
 {
 public:
-    CodeFunction(const str::String& aName = "foo") noexcept;
+    CodeFunction(const char* aName = "foo") noexcept;
 
-    void setNamespace(const str::String& aNamespace) noexcept;
-    void setClass(const str::String& aClass) noexcept;
+    void setNamespace(const char* aNamespace) noexcept;
+    void setClass(const char* aClass) noexcept;
 
     void makeStatic() noexcept;
     void makeFunctor() noexcept;
     void makeVariadic() noexcept;
 
-    void setTemplate(const str::String& aTemplate) noexcept;
-    void setReturnType(const str::String& aType) noexcept;
-    void setName(const str::String& aName) noexcept;
-    void setArguments(const str::String& aArguments) noexcept;
-    void setBody(const str::String& aBody) noexcept;
+    void setTemplate(const char* aTemplate) noexcept;
+    void setReturnType(const char* aType) noexcept;
+    void setName(const char* aName) noexcept;
+    void setArguments(const char* aArguments) noexcept;
+    void setBody(const char* aBody) noexcept;
 
     void outputToHpp(std::ofstream& aOut) const noexcept;
     void outputToCpp(std::ofstream& aOut) const noexcept;

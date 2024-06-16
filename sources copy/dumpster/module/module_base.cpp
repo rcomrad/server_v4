@@ -2,9 +2,7 @@
 
 #include "module_handler.hpp"
 
-mod::ModuleBase::Command::Command(int a,
-                                  const str::String& b,
-                                  const str::String& c)
+mod::ModuleBase::Command::Command(int a, const char* b, const char* c)
     : num(a), value(b), argument(c)
 {
 }

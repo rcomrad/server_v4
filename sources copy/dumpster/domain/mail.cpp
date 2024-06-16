@@ -8,8 +8,7 @@
 
 #include "file_data/file.hpp"
 
-dom::Mail::Mail(const str::String& aLogin,
-                const str::String& aPassword) noexcept
+dom::Mail::Mail(const char* aLogin, const char* aPassword) noexcept
     : mLogin(aLogin), mPassword(aPassword)
 {
     if (aLogin.find("adtspb") != str::String::npos)
@@ -54,9 +53,9 @@ dom::Mail::academtalantTls() noexcept
 }
 
 bool
-dom::Mail::send(const str::String& aEmailName,
-                const str::String& aTheme,
-                const str::String& aText) const noexcept
+dom::Mail::send(const char* aEmailName,
+                const char* aTheme,
+                const char* aText) const noexcept
 {
     bool result = true;
 

@@ -16,13 +16,12 @@ public:
         ALL    = 3
     };
 
-    CodeFile(const str::String& aClassName,
-             const str::String& aNamespace) noexcept;
-    CodeClass& makeClass(const str::String& aClassName = "") noexcept;
+    CodeFile(const char* aClassName, const char* aNamespace) noexcept;
+    CodeClass& makeClass(const char* aClassName = "") noexcept;
     void generate(FileType aType) const noexcept;
 
-    void addHeaderToCpp(const str::String& aName, bool aIsStdHeader) noexcept;
-    void addHeaderToHpp(const str::String& aName, bool aIsStdHeader) noexcept;
+    void addHeaderToCpp(const char* aName, bool aIsStdHeader) noexcept;
+    void addHeaderToHpp(const char* aName, bool aIsStdHeader) noexcept;
 
 private:
     static std::unordered_map<str::String, str::String> globalPaths;
@@ -36,13 +35,13 @@ private:
 
     std::vector<CodeClass> mClasses;
 
-    void generateCPP(const str::String& aPath) const noexcept;
-    void generateHPP(const str::String& aPath) const noexcept;
+    void generateCPP(const char* aPath) const noexcept;
+    void generateHPP(const char* aPath) const noexcept;
 
-    static str::String normalizeName(const str::String& aName) noexcept;
-    static str::String normalizeDefine(const str::String& aName) noexcept;
+    static str::String normalizeName(const char* aName) noexcept;
+    static str::String normalizeDefine(const char* aName) noexcept;
 
-    static str::String makeHeader(const str::String& aName,
+    static str::String makeHeader(const char* aName,
                                   bool aIsStdHeader) noexcept;
 };
 

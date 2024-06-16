@@ -36,7 +36,7 @@ private:
 
     void addRouter(
         code::CodeClass& aClass,
-        const str::String& aName,
+        const char* aName,
         std::unordered_map<str::String, str::String> aNameMap) const noexcept;
 
     std::array<str::String, 2> makeRouterFunction(

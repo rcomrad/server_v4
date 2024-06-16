@@ -27,19 +27,19 @@ public:
     str::String printToFile() noexcept;
 
     template <typename T>
-    void setVariable(const str::String& aName, T&& aVariable) noexcept
+    void setVariable(const char* aName, T&& aVariable) noexcept
     {
         mVariables[aName] = std::forward<T>(aVariable);
         std::reverse(mVariables[aName].begin(), mVariables[aName].end());
     }
 
-    str::String makeFromFIle(const str::String& aFileName) noexcept;
+    str::String makeFromFIle(const char* aFileName) noexcept;
 
 private:
     str::String mData;
     std::unordered_map<str::String, std::vector<str::String>> mVariables;
 
-    void addFile(const str::String& aFileName) noexcept;
+    void addFile(const char* aFileName) noexcept;
 };
 
 }; // namespace tex

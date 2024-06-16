@@ -89,9 +89,9 @@ public:
 
     static crow::json::wvalue uploadFromFile(
         std::unordered_map<str::String, str::String>&& aHeader,
-        const str::String& aFileName) noexcept;
+        const char* aFileName) noexcept;
     static crow::json::wvalue uploadFromFileRequest(
-        const str::String& aType,
+        const char* aType,
         const crow::request& aReq) noexcept;
 
     template <typename T>
@@ -140,8 +140,8 @@ public:
 
     static str::String uploadFile(
         crow::multipart::message& aMsg,
-        const str::String& aFileKey     = "file",
-        const str::String& aFilenameKey = "filename") noexcept;
+        const char* aFileKey     = "file",
+        const char* aFilenameKey = "filename") noexcept;
 
 protected:
     template <typename T>
@@ -180,15 +180,15 @@ protected:
 private:
     static crow::json::wvalue manyToMany(
         int aID,
-        const str::String& aTableName,
+        const char* aTableName,
         ManyToMany& aType,
         std::unordered_map<str::String, crow::json::rvalue>
             aLeftovers) noexcept;
 
     static void setRawData(std::vector<std::vector<str::String>>& aData,
                            int aNum,
-                           const str::String& aTableName,
-                           const str::String& aColumnName) noexcept;
+                           const char* aTableName,
+                           const char* aColumnName) noexcept;
 };
 
 } // namespace post

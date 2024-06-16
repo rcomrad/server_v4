@@ -45,7 +45,7 @@ dom::DateAndTime::getCurentTimeSafe() noexcept
 }
 
 boost::gregorian::date
-dom::DateAndTime::getDate(const str::String& aDate) noexcept
+dom::DateAndTime::getDate(const char* aDate) noexcept
 {
     uint16_t year  = uint16_t(std::stoi(aDate.substr(0, 4)));
     uint16_t month = uint8_t(std::stoi(aDate.substr(5, 2)));
@@ -56,7 +56,7 @@ dom::DateAndTime::getDate(const str::String& aDate) noexcept
 }
 
 boost::posix_time::ptime
-dom::DateAndTime::getTime(const str::String& aTime) noexcept
+dom::DateAndTime::getTime(const char* aTime) noexcept
 {
     // 2023-04-03 12:00:00
 
@@ -108,7 +108,7 @@ dom::DateAndTime::toStr(const boost::posix_time::ptime& aTime) noexcept
 
 bool
 dom::DateAndTime::curentTimeAssert(
-    const str::String& aTime,
+    const char* aTime,
     const boost::posix_time::time_duration& aDuration) noexcept
 {
     return curentTimeAssert(getTime(aTime), aDuration);
@@ -126,7 +126,7 @@ dom::DateAndTime::curentTimeAssert(
 }
 
 bool
-dom::DateAndTime::isPassed(const str::String& aTime) noexcept
+dom::DateAndTime::isPassed(const char* aTime) noexcept
 {
     boost::posix_time::ptime timeLocal =
         boost::posix_time::second_clock::local_time();

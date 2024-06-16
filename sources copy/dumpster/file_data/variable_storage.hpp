@@ -22,22 +22,18 @@ public:
     HOLY_TRINITY_SINGLE(VariableStorage);
     static VariableStorage& getInstance() noexcept;
 
-    std::optional<bool> getFlag(const str::String& aName) const noexcept;
-    std::optional<int> getInt(const str::String& aName) const noexcept;
-    boost::optional<const str::String&> getWord(
-        const str::String& aName) const noexcept;
+    std::optional<bool> getFlag(const char* aName) const noexcept;
+    std::optional<int> getInt(const char* aName) const noexcept;
+    boost::optional<const char*> getWord(const char* aName) const noexcept;
 
-    bool getFlagUnsafe(const str::String& aName,
-                       bool aDefault = false) const noexcept;
-    int getIntUnsafe(const str::String& aName, int aDefault = 0) const noexcept;
-    const str::String& getWordUnsafe(
-        const str::String& aName,
-        const str::String& aDefault = "") const noexcept;
+    bool getFlagUnsafe(const char* aName, bool aDefault = false) const noexcept;
+    int getIntUnsafe(const char* aName, int aDefault = 0) const noexcept;
+    const char* getWordUnsafe(const char* aName,
+                              const char* aDefault = "") const noexcept;
 
-    void setVariable(const str::String& aName, bool aValue) noexcept;
-    void setVariable(const str::String& aName, int aValue) noexcept;
-    void setVariable(const str::String& aName,
-                     const str::String& aValue) noexcept;
+    void setVariable(const char* aName, bool aValue) noexcept;
+    void setVariable(const char* aName, int aValue) noexcept;
+    void setVariable(const char* aName, const char* aValue) noexcept;
 
 private:
     VariableStorage() noexcept;

@@ -154,8 +154,8 @@ post::JournalHandler::makeSchedule(data::JournalTable& aJournal) noexcept
 
 void
 post::JournalHandler::remakeSchedule(data::JournalTable& aJournal,
-                                     const str::String& fromID,
-                                     const str::String& toVal) noexcept
+                                     const char* fromID,
+                                     const char* toVal) noexcept
 {
     auto connection = data::ConnectionManager::getUserConnection();
 

@@ -3,9 +3,8 @@
 //--------------------------------------------------------------------------------
 
 #include <thread>
-#include <unordered_map>
 
-#include "string/kus_string.hpp"
+#include "kus_standard/hash_map_by_str.hpp"
 
 #include "holy_trinity.hpp"
 
@@ -30,7 +29,8 @@ private:
 
     void scanCommand() noexcept;
 
-    std::unordered_map<str::String, std::thread> mApps;
+    inline static const char CORE_APP_STORAGE_NAME[] = "CoreStorage";
+    kstd::HashMapByStr<CORE_APP_STORAGE_NAME, 200, std::thread> m_apps;
 };
 } // namespace core
 

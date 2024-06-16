@@ -1,19 +1,19 @@
 #include "separators.hpp"
 
 bool
-str::Separator::newLine(char c) noexcept
+kstd::Separator::newLine(char c) noexcept
 {
     return c == '\n' || c == '\r' || c == '\0';
 }
 
 bool
-str::Separator::newWord(char c) noexcept
+kstd::Separator::newWord(char c) noexcept
 {
     return c == '\t' || c == ' ' || c == ';' || c == '\0';
 }
 
 bool
-str::Separator::variable(char c) noexcept
+kstd::Separator::variable(char c) noexcept
 {
     static bool commentFlag = false;
     if (c == '#')
@@ -34,7 +34,7 @@ str::Separator::variable(char c) noexcept
 }
 
 bool
-str::Separator::space(char c) noexcept
+kstd::Separator::space(char c) noexcept
 {
     return c == ' ';
 }

@@ -1,6 +1,6 @@
 #include "code_function.hpp"
 
-code::CodeFunction::CodeFunction(const str::String& aName) noexcept
+code::CodeFunction::CodeFunction(const char* aName) noexcept
 {
     mIsStatic   = false;
     mIsFunctor  = false;
@@ -10,13 +10,13 @@ code::CodeFunction::CodeFunction(const str::String& aName) noexcept
 }
 
 void
-code::CodeFunction::setNamespace(const str::String& aNamespace) noexcept
+code::CodeFunction::setNamespace(const char* aNamespace) noexcept
 {
     mNamespace = aNamespace;
 }
 
 void
-code::CodeFunction::setClass(const str::String& aClass) noexcept
+code::CodeFunction::setClass(const char* aClass) noexcept
 {
     mClass = aClass;
 }
@@ -42,31 +42,31 @@ code::CodeFunction::makeVariadic() noexcept
 }
 
 void
-code::CodeFunction::setTemplate(const str::String& aTemplate) noexcept
+code::CodeFunction::setTemplate(const char* aTemplate) noexcept
 {
     mTemplate = aTemplate;
 }
 
 void
-code::CodeFunction::setReturnType(const str::String& aType) noexcept
+code::CodeFunction::setReturnType(const char* aType) noexcept
 {
     mType = aType;
 }
 
 void
-code::CodeFunction::setName(const str::String& aName) noexcept
+code::CodeFunction::setName(const char* aName) noexcept
 {
     mName = aName;
 }
 
 void
-code::CodeFunction::setArguments(const str::String& aArguments) noexcept
+code::CodeFunction::setArguments(const char* aArguments) noexcept
 {
     mArguments = aArguments;
 }
 
 void
-code::CodeFunction::setBody(const str::String& aBody) noexcept
+code::CodeFunction::setBody(const char* aBody) noexcept
 {
     mBody = aBody;
 }
@@ -114,7 +114,7 @@ code::CodeFunction::outputToCpp(std::ofstream& aOut) const noexcept
 void
 code::CodeFunction::makeRouter(str::String aMapName) noexcept
 {
-    mArguments = "const str::String& aName";
+    mArguments = "const char* aName";
     mMapName   = aMapName;
 }
 

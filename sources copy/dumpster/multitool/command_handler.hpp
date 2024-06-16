@@ -19,12 +19,12 @@ class CommandHandler
 {
 public:
     static str::String process(const crow::request& aReq) noexcept;
-    static str::String process(const str::String& aCommand,
-                               const str::String& aArgument = "") noexcept;
-    // static str::String info(const str::String& aCommand,
-    //                            const str::String& aArgument = "") noexcept;
-    // static str::String proga(const str::String& aCommand,
-    //                            const str::String& aArgument = "") noexcept;
+    static str::String process(const char* aCommand,
+                               const char* aArgument = "") noexcept;
+    // static str::String info(const char* aCommand,
+    //                            const char* aArgument = "") noexcept;
+    // static str::String proga(const char* aCommand,
+    //                            const char* aArgument = "") noexcept;
 };
 } // namespace mult
 

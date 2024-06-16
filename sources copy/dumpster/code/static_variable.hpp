@@ -9,12 +9,12 @@ namespace code
 class StaticVariable
 {
 public:
-    void setNamespace(const str::String& aNamespace) noexcept;
-    void setClass(const str::String& aClass) noexcept;
+    void setNamespace(const char* aNamespace) noexcept;
+    void setClass(const char* aClass) noexcept;
 
-    void setType(const str::String& aType) noexcept;
-    void setName(const str::String& aName) noexcept;
-    void setInitialisation(const str::String& aInitialisation) noexcept;
+    void setType(const char* aType) noexcept;
+    void setName(const char* aName) noexcept;
+    void setInitialisation(const char* aInitialisation) noexcept;
 
     void outputToHpp(std::ofstream& aOut) const noexcept;
     void outputToCpp(std::ofstream& aOut) const noexcept;

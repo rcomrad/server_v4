@@ -122,7 +122,7 @@ public:
         setWithCount(aData, aType, aTo - aFrom, aColumnBorders);
     }
 
-    void add(const str::String& aData) noexcept;
+    void add(const char* aData) noexcept;
     void newLine(int aFrom = 1, int aTo = 0) noexcept;
     void finish() noexcept;
 

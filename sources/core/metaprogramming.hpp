@@ -5,8 +5,6 @@
 #include <string>
 #include <type_traits>
 
-#include "string/kus_string.hpp"
-
 //--------------------------------------------------------------------------------
 
 using namespace std::literals;
@@ -38,14 +36,14 @@ template <typename Base, typename Derived>
 using enableIfDerivedOf =
     typename std::enable_if_t<core::isDerivedOf<Base, Derived>::value>;
 
-template <class T>
-using isSTDString = isOneOf<T, str::String>;
+// template <class T>
+// using isSTDString = isOneOf<T, str::String>;
 
-template <class T>
-using isString = isOneOf<T, str::String, char*, const char*>;
+// template <class T>
+// using isString = isOneOf<T, str::String, char*, const char*>;
 
-template <class T>
-using isNotString = isNotOneOf<T, str::String, char*, const char*>;
+// template <class T>
+// using isNotString = isNotOneOf<T, str::String, char*, const char*>;
 
 } // namespace core
 

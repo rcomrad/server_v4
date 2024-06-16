@@ -3,7 +3,7 @@
 #include "string_algorithms.hpp"
 
 // void
-// code::CodeClass::setName(const str::String& aName) noexcept
+// code::CodeClass::setName(const char* aName) noexcept
 // {
 //     mName = normalizeName(aName, true);
 
@@ -11,29 +11,29 @@
 // }
 
 // void
-// code::CodeClass::setNamespace(const str::String& aNamespace) noexcept
+// code::CodeClass::setNamespace(const char* aNamespace) noexcept
 // {
 //     mNamespace = aNamespace;
 //     reloadName();
 // }
 
-code::CodeClass::CodeClass(const str::String& aCodeClassName,
-                           const str::String& aNamespace) noexcept
+code::CodeClass::CodeClass(const char* aCodeClassName,
+                           const char* aNamespace) noexcept
     : mIsStruct(false), mNamespace(aNamespace)
 {
     mClassName = StringAlgorithms::normalizeName(aCodeClassName, true);
 }
 
 void
-code::CodeClass::addParent(const str::String& aName) noexcept
+code::CodeClass::addParent(const char* aName) noexcept
 {
     mParent = aName;
 }
 
 code::CodeFunction&
-code::CodeClass::addRouterFunction(const str::String& aName,
-                                   const str::String& aType,
-                                   const str::String& aBody) noexcept
+code::CodeClass::addRouterFunction(const char* aName,
+                                   const char* aType,
+                                   const char* aBody) noexcept
 {
     str::String variableName = "m" + aName;
     variableName[1]          = std::toupper(variableName[1]);
@@ -53,9 +53,9 @@ code::CodeClass::addRouterFunction(const str::String& aName,
 }
 
 code::CodeFunction&
-code::CodeClass::addFuncRouterForDatabase(const str::String& aName,
-                                          const str::String& aFunction,
-                                          const str::String& aBody) noexcept
+code::CodeClass::addFuncRouterForDatabase(const char* aName,
+                                          const char* aFunction,
+                                          const char* aBody) noexcept
 {
     auto& funk = addRouterFunction(aName, "decltype(" + aFunction + ")", aBody);
     funk.makeVariadic();
@@ -72,18 +72,18 @@ code::CodeClass::addFunction(const CodeFunction& aFunc) noexcept
 };
 
 void
-code::CodeClass::addVariable(const str::String& aName,
-                             const str::String& aType,
-                             const str::String& aValue) noexcept
+code::CodeClass::addVariable(const char* aName,
+                             const char* aType,
+                             const char* aValue) noexcept
 {
     str::String name = StringAlgorithms::normalizeName(aName, false, true);
     mSimpleVariables.push_back({name, aType, aValue});
 };
 
 void
-code::CodeClass::addStaticVariable(const str::String& aVarName,
-                                   const str::String& aType,
-                                   const str::String& aInitialisation) noexcept
+code::CodeClass::addStaticVariable(const char* aVarName,
+                                   const char* aType,
+                                   const char* aInitialisation) noexcept
 {
     mStaticVariables.emplace_back();
     auto& var = mStaticVariables.back();
@@ -160,8 +160,7 @@ code::CodeClass::makeStruct() noexcept
 }
 
 void
-code::CodeClass::addUsing(const str::String& aName,
-                          const str::String& aTemplate) noexcept
+code::CodeClass::addUsing(const char* aName, const char* aTemplate) noexcept
 {
     mUsing = "using " + StringAlgorithms::normalizeName(aName, true) + " = ";
     if (!aTemplate.empty()) mUsing += aTemplate + "<";

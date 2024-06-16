@@ -15,7 +15,7 @@ namespace test
 class TestReader
 {
 public:
-    TestReader(const str::String& aTestPath, int aTestCount) noexcept;
+    TestReader(const char* aTestPath, int aTestCount) noexcept;
     TestLibMessage getTest() noexcept;
     bool hasTest() noexcept;
 

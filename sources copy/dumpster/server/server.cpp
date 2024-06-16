@@ -62,12 +62,12 @@ serv::Server::Server() noexcept
     //     });
 
     CROW_ROUTE(mApp, "/api/command/<string>/<string>")
-    ([](const str::String& aType, const str::String& aValue)
+    ([](const char* aType, const char* aValue)
      { return mult::CommandHandler::process(aType, aValue); });
 
     // CROW_ROUTE(mApp, "/api/multitool/<string>")
     //     .methods("POST"_method)(
-    //         [&](const crow::request& req, const str::String& aArg)
+    //         [&](const crow::request& req, const char* aArg)
     //         {
     //             crow::response res;
     //             res = post::PostHandler::uploadFromFileRequest(aType, req);
@@ -77,27 +77,27 @@ serv::Server::Server() noexcept
     //---------------------------------------------------------------------
 
     CROW_ROUTE(mApp, "/api/print_journal/<string>")
-    ([](const str::String& aIDs) { return post::PrintJournal::process(aIDs); });
+    ([](const char* aIDs) { return post::PrintJournal::process(aIDs); });
 
     //---------------------------------------------------------------------
 
     CROW_ROUTE(mApp, "/api/get/all/<string>")
-    ([&](const str::String& aRequest)
+    ([&](const char* aRequest)
      { return get::GetHandler::multiplelGet(aRequest, ""); });
 
     CROW_ROUTE(mApp, "/api/get/by_id/<string>/<string>")
-    ([&](const str::String& aRequest, const str::String& aID)
+    ([&](const char* aRequest, const char* aID)
      { return get::GetHandler::singlGet(aRequest, "id = " + aID); });
 
     CROW_ROUTE(mApp, "/api/get/if/<string>/<string>")
-    ([&](const str::String& aRequest, str::String aCondition)
+    ([&](const char* aRequest, str::String aCondition)
      { return get::GetHandler::multiplelGet(aRequest, aCondition); });
 
     CROW_ROUTE(mApp, "/api/dump/<string>")
-    ([&](const str::String& aName)
+    ([&](const char* aName)
      { return mult::CommandHandler::process("dump", aName); });
     CROW_ROUTE(mApp, "/api/dump_as_file/<string>")
-    ([&](const str::String& aName)
+    ([&](const char* aName)
      { return mult::CommandHandler::process("dump_as_file", aName); });
 
     CROW_ROUTE(mApp, "/api/get_all_competition/<int>/<int>")
@@ -112,7 +112,7 @@ serv::Server::Server() noexcept
 
     CROW_ROUTE(mApp, "/api/drop/<string>")
         .methods("POST"_method)(
-            [&](const crow::request& req, const str::String& aTableName)
+            [&](const crow::request& req, const char* aTableName)
             {
                 crow::response res;
                 res = post::PostRouter::dropRouter(aTableName, req);
@@ -123,7 +123,7 @@ serv::Server::Server() noexcept
 
     CROW_ROUTE(mApp, "/api/post/<string>")
         .methods("POST"_method)(
-            [&](const crow::request& req, const str::String& aTableName)
+            [&](const crow::request& req, const char* aTableName)
             {
                 crow::response res;
                 res = post::PostRouter::processRouter(aTableName, req);
@@ -132,7 +132,7 @@ serv::Server::Server() noexcept
 
     CROW_ROUTE(mApp, "/api/upload/<string>")
         .methods("POST"_method)(
-            [&](const crow::request& req, const str::String& aType)
+            [&](const crow::request& req, const char* aType)
             {
                 crow::response res;
                 res = post::PostHandler::uploadFromFileRequest(aType, req);
@@ -169,8 +169,7 @@ serv::Server::Server() noexcept
             { return post::UserHandler::registration(req); });
 
     CROW_ROUTE(mApp, "/api/confirm/<string>")
-    ([&](const str::String& aUrl)
-     { return post::UserHandler::confirmation(aUrl); });
+    ([&](const char* aUrl) { return post::UserHandler::confirmation(aUrl); });
 
     mApp.port(18080).multithreaded().run();
 }

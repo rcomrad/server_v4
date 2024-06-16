@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include "string/kus_string.hpp"
+#include "kus_standard/hash_map_by_str.hpp"
 
 #include "callback_register.hpp"
 #include "command.hpp"
@@ -23,14 +23,19 @@
 namespace core
 {
 
-using VariableSettings = std::unordered_map<str::String, FPIntGlobVarToInt>;
+struct VarSetting
+{
+    const char* name;
+    FPIntGlobVarToInt fptr;
+};
 
 class VariableStorage
 {
 public:
     HOLY_TRINITY_SINGLE(VariableStorage);
 
-    static int addSettings(const VariableSettings& aVarSettings) noexcept;
+    static int addSettings(
+        const std::vector<VarSetting>& aVarSettings) noexcept;
     static void reloadSettings() noexcept;
 
     static void set(int aNumber, int aValue) noexcept;
@@ -42,12 +47,13 @@ private:
     static CallbackRegister mCommandHandlerCallback;
 
     std::vector<IntGlobVar> mVariables;
-    std::unordered_map<str::String, int> mVariableNames;
+    HAS_MAP_BY_STR(mVariableNames, Variables, 200, int);
 
     VariableStorage() noexcept;
     static VariableStorage& getInstance() noexcept;
 
-    int addSettingsNonstatic(const VariableSettings& aVarSet) noexcept;
+    int addSettingsNonstatic(
+        const std::vector<VarSetting>& aVarSettings) noexcept;
     void reloadSettingsNonstatic() noexcept;
 
     void setNonstatic(int aNumber, int aValue) noexcept;

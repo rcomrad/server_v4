@@ -31,7 +31,7 @@ private:
         uint64_t value;
     } StringSizeCoder{};
 
-    void makeSize(str::String& aStr, str::String& aSize) noexcept;
+    void makeSize(char* aStr, char* aSize) noexcept;
 };
 
 //--------------------------------------------------------------------------------

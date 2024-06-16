@@ -17,7 +17,7 @@
 crow::json::wvalue
 post::PostHandler::manyToMany(
     int aID,
-    const str::String& aTableName,
+    const char* aTableName,
     ManyToMany& aType,
     std::unordered_map<str::String, crow::json::rvalue> aLeftovers) noexcept
 {
@@ -81,7 +81,7 @@ post::PostHandler::manyToMany(
 crow::json::wvalue
 post::PostHandler::uploadFromFile(
     std::unordered_map<str::String, str::String>&& aHeader,
-    const str::String& aFileName) noexcept
+    const char* aFileName) noexcept
 {
     auto data = core::FileRouter::process(aFileName);
 
@@ -104,7 +104,7 @@ post::PostHandler::uploadFromFile(
 }
 
 crow::json::wvalue
-post::PostHandler::uploadFromFileRequest(const str::String& aType,
+post::PostHandler::uploadFromFileRequest(const char* aType,
                                          const crow::request& aReq) noexcept
 {
     LOG_INFO("Start upload");
@@ -133,8 +133,8 @@ post::PostHandler::uploadFromFileRequest(const str::String& aType,
 // TODO: use file.hpp
 str::String
 post::PostHandler::uploadFile(crow::multipart::message& aMsg,
-                              const str::String& aFileKey,
-                              const str::String& aFilenameKey) noexcept
+                              const char* aFileKey,
+                              const char* aFilenameKey) noexcept
 {
     LOG_INFO("File upload func");
 
@@ -158,8 +158,8 @@ post::PostHandler::uploadFile(crow::multipart::message& aMsg,
 void
 post::PostHandler::setRawData(std::vector<std::vector<str::String>>& aData,
                               int aNum,
-                              const str::String& aTableName,
-                              const str::String& aColumnName) noexcept
+                              const char* aTableName,
+                              const char* aColumnName) noexcept
 {
     auto connection = data::ConnectionManager::getUserConnection();
     for (auto& i : aData)

@@ -20,13 +20,13 @@ str::String::String(const char* s) noexcept : std::string(s)
 //     *this = first + second;
 // }
 
-str::String&
+char*
 str::String::operator=(const char* s) noexcept
 {
     return *this;
 }
 
-// str::String&
+// char*
 // str::String::operator=(std::string&& s) noexcept
 // {
 //     return *this = std::move(s);

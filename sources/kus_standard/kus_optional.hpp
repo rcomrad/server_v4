@@ -1,5 +1,7 @@
 #pragma once
 
+#include <utility>
+
 #include "core/holy_trinity.hpp"
 
 namespace kstd
@@ -35,7 +37,8 @@ public:
     template <typename Arg>
     void set(Arg&& a_data) noexcept
     {
-        m_data      = std::forward<DataT>(a_data);
+        // m_data      = std::forward<Arg>(a_data);
+        m_data      = (DataT)(void*)a_data;
         m_has_value = true;
     }
 

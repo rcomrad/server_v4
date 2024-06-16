@@ -19,15 +19,14 @@ namespace get
 class GetHandler
 {
 public:
-    static crow::json::wvalue singlGet(const str::String& aRequest,
-                                       const str::String& aCondition) noexcept;
+    static crow::json::wvalue singlGet(const char* aRequest,
+                                       const char* aCondition) noexcept;
 
-    static crow::json::wvalue multiplelGet(
-        const str::String& aRequest,
-        const str::String& aCondition) noexcept;
+    static crow::json::wvalue multiplelGet(const char* aRequest,
+                                           const char* aCondition) noexcept;
 
-    static crow::json::wvalue mainGet(const str::String& aRequest,
-                                      const str::String& aCondition) noexcept;
+    static crow::json::wvalue mainGet(const char* aRequest,
+                                      const char* aCondition) noexcept;
 
     template <typename T>
     static crow::json::wvalue process(

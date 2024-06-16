@@ -50,8 +50,7 @@ core::Role::getRoleID(const std::vector<str::String>& aRoleNames) noexcept
 }
 
 int
-core::Role::getRoleID(const str::String& aRoleNames,
-                      const str::String& aDelimiter) noexcept
+core::Role::getRoleID(const char* aRoleNames, const char* aDelimiter) noexcept
 {
     auto roles = file::Parser::slice(
         aRoleNames, (aDelimiter.size() == 0) ? " \t\n,;"s : aDelimiter);

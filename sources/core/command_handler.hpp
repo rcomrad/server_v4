@@ -17,6 +17,7 @@ class CommandHandler
 public:
     HOLY_TRINITY_SINGLE(CommandHandler);
     static void scanCommand() noexcept;
+
     static Command& requestCommandCell() noexcept;
     static void handlCommand() noexcept;
 
@@ -26,7 +27,7 @@ private:
     CommandHandler() noexcept;
     static CommandHandler& getInstance() noexcept;
 
-    void pushCommandNonstatic(Command&& aCommand) noexcept;
+    Command& requestCommandCellNonstatic() noexcept;
     void handlCommandNonstatic() noexcept;
 
     std::mutex queue_lock;

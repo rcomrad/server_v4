@@ -6,8 +6,7 @@
 
 //--------------------------------------------------------------------------------
 
-test::TestReader::TestReader(const str::String& aTestPath,
-                             int aTestCount) noexcept
+test::TestReader::TestReader(const char* aTestPath, int aTestCount) noexcept
     : mTestNum(1), mTestCount(aTestCount), mTestPath(aTestPath)
 {
 }

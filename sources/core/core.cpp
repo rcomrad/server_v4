@@ -47,9 +47,9 @@ core::Core::setupNonstatic() noexcept
         const auto& module_name = i.first;
         Module::FPModuleActions module_callback =
             (Module::FPModuleActions)i.second;
-        mApps[module_name] = std::move(std::thread(module_callback));
+        m_apps[module_name] = std::move(std::thread(module_callback));
     }
-    mApps["command_scanner"] =
+    m_apps["command_scanner"] =
         std::move(std::thread(CommandHandler::scanCommand));
 }
 

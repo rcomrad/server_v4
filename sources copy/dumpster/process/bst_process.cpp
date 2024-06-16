@@ -117,7 +117,7 @@ proc::BoostProcess::IORedirection() noexcept
 //--------------------------------------------------------------------------------
 
 void
-proc::BoostProcess::readData(str::String& result) noexcept
+proc::BoostProcess::readData(char* result) noexcept
 {
     str::String line;
     while (flag && std::getline(in, line) && !line.empty())
@@ -130,7 +130,7 @@ proc::BoostProcess::readData(str::String& result) noexcept
 //--------------------------------------------------------------------------------
 
 void
-proc::BoostProcess::writeData(const str::String& aMessage) noexcept
+proc::BoostProcess::writeData(const char* aMessage) noexcept
 {
     out << aMessage;
 }

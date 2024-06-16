@@ -6,8 +6,7 @@
 #include "request_storage.hpp"
 
 crow::json::wvalue
-get::GetHandler::singlGet(const str::String& aRequest,
-                          const str::String& aCondition) noexcept
+get::GetHandler::singlGet(const char* aRequest, const char* aCondition) noexcept
 {
     crow::json::wvalue result;
 
@@ -22,8 +21,8 @@ get::GetHandler::singlGet(const str::String& aRequest,
 }
 
 crow::json::wvalue
-get::GetHandler::multiplelGet(const str::String& aRequest,
-                              const str::String& aCondition) noexcept
+get::GetHandler::multiplelGet(const char* aRequest,
+                              const char* aCondition) noexcept
 {
     crow::json::wvalue result = {401};
 
@@ -38,8 +37,7 @@ get::GetHandler::multiplelGet(const str::String& aRequest,
 }
 
 crow::json::wvalue
-get::GetHandler::mainGet(const str::String& aRequest,
-                         const str::String& aCondition) noexcept
+get::GetHandler::mainGet(const char* aRequest, const char* aCondition) noexcept
 {
     crow::json::wvalue result;
 

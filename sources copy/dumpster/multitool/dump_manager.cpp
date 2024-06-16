@@ -59,8 +59,7 @@ mult::DumpManager::makeSaveFile() noexcept
 }
 
 str::String
-mult::DumpManager::makeDump(const str::String& aCommand,
-                            const str::String& aArgs) noexcept
+mult::DumpManager::makeDump(const char* aCommand, const char* aArgs) noexcept
 {
     return privateProcess(aCommand, aArgs);
 }
@@ -74,8 +73,8 @@ mult::DumpManager::doAction(const Command& aCommand) noexcept
 }
 
 str::String
-mult::DumpManager::privateProcess(const str::String& aCommand,
-                                  const str::String& aArgs) noexcept
+mult::DumpManager::privateProcess(const char* aCommand,
+                                  const char* aArgs) noexcept
 {
     auto processedArgs = file::Parser::slice(aArgs, ",", "*");
 

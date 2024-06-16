@@ -19,7 +19,9 @@ template <const char* Name, size_t Size, typename ValueType>
 class DoubleMapByStr
 {
 private:
-    using inner_valure = std::unordered_map<std::string_view, ValueType>;
+    using InnerValure = std::unordered_map<std::string_view, ValueType>;
+    using UpperValue  = std::unordered_map<std::string_view, InnerValure>;
+
     class MapNode
     {
     public:
@@ -28,24 +30,23 @@ private:
         ValueType& operator[](const char* a_key) noexcept
         {
             std::string_view key_view(a_key);
-            auto key_it = m_cur_cell->second.find(key_view);
-            if (key_it == m_cur_cell->second.end())
+            auto key_it = m_cur_cell.find(key_view);
+            if (key_it == m_cur_cell.end())
             {
                 key_view = m_this->m_key_buffer.add(a_key);
-                key_it =
-                    m_cur_cell->second.emplace(key_view, ValueType()).first;
+                key_it   = m_cur_cell.emplace(key_view, ValueType()).first;
             }
             return key_it->second;
         }
 
-    private:
-        MapNode(DoubleMapByStr* a_ptr, inner_valure::iterator a_iter)
+        MapNode(DoubleMapByStr* a_ptr, InnerValure& a_iter)
             : m_this(a_ptr), m_cur_cell(a_iter)
         {
         }
 
+    private:
         DoubleMapByStr* m_this;
-        inner_valure::iterator m_cur_cell;
+        InnerValure& m_cur_cell;
     };
 
 public:
@@ -59,38 +60,40 @@ public:
         if (key_it == m_map.end())
         {
             key_view = m_key_buffer.add(a_key);
-            key_it   = m_map.emplace(key_view, {}).first;
+            InnerValure temp; // TODO: remove
+            key_it = m_map.emplace(key_view, std::move(temp)).first;
         }
-        return MapNode(this, key_it);
+
+        return MapNode(this, key_it->second);
     }
 
     auto get(const char* a_key_volume) noexcept
     {
-        return inner_get<DoubleMapByStr*>(this, a_key_volume);
+        return innerGet<DoubleMapByStr*>(this, a_key_volume);
     }
 
     auto get(const char* a_key_volume) const noexcept
     {
-        return inner_get<const DoubleMapByStr*>(this, a_key_volume);
+        return innerGet<const DoubleMapByStr*>(this, a_key_volume);
     }
 
     auto get(const char* a_key_volume, const char* a_key_node) noexcept
     {
-        return inner_get<DoubleMapByStr*>(this, a_key_volume, a_key_node);
+        return innerGet<DoubleMapByStr*>(this, a_key_volume, a_key_node);
     }
 
     auto get(const char* a_key_volume, const char* a_key_node) const noexcept
     {
-        return inner_get<const DoubleMapByStr*>(this, a_key_volume, a_key_node);
+        return innerGet<const DoubleMapByStr*>(this, a_key_volume, a_key_node);
     }
 
 private:
     CharBuffer<Name, Size> m_key_buffer;
-    std::unordered_map<std::string_view, inner_valure> m_map;
+    UpperValue m_map;
 
     template <typename ClassThisType>
-    static auto inner_get(ClassThisType a_this,
-                          const char* a_key_volume) noexcept
+    static auto innerGet(ClassThisType a_this,
+                         const char* a_key_volume) noexcept
     {
         // TODO: move to metaprogramming
         using DefaultResult =
@@ -102,7 +105,7 @@ private:
                              DefaultResult>::type;
 
         // kstd::OptionalPtr<FinalResult> result;
-        kstd::OptionalPtr<inner_valure> result;
+        kstd::OptionalPtr<InnerValure> result;
 
         auto it_volume = a_this->m_map.find(a_key_volume);
         if (a_this->m_map.end() != it_volume)
@@ -118,9 +121,9 @@ private:
     }
 
     template <typename ClassThisType>
-    static auto inner_get(ClassThisType a_this,
-                          const char* a_key_volume,
-                          const char* a_key_node) noexcept
+    static auto innerGet(ClassThisType a_this,
+                         const char* a_key_volume,
+                         const char* a_key_node) noexcept
     {
         // TODO: move to metaprogramming
         // using IsConstResultT = std::is_const<ClassThisType>;
@@ -132,7 +135,7 @@ private:
         // TODO: no value
         kstd::OptionalValue<ValueType> result;
 
-        auto volumeOpt = inner_get<ClassThisType>(a_this, a_key_volume);
+        auto volumeOpt = innerGet<ClassThisType>(a_this, a_key_volume);
         if (volumeOpt)
         {
             auto& volume = *volumeOpt.getPtr();

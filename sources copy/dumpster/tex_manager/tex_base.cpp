@@ -9,7 +9,7 @@ tex::TexBase::TexBase(std::unordered_map<str::String, std::vector<str::String>>*
 }
 
 str::String
-tex::TexBase::getVariable(const str::String& aName) noexcept
+tex::TexBase::getVariable(const char* aName) noexcept
 {
     str::String result;
 

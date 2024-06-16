@@ -69,8 +69,7 @@ serv::TokenHandler::getInstance() noexcept
 //--------------------------------------------------------------------------------
 
 str::String
-serv::TokenHandler::generate(const data::User& aUser,
-                             const str::String& aIP) noexcept
+serv::TokenHandler::generate(const data::User& aUser, const char* aIP) noexcept
 {
     static TokenHandler& instance = getInstance();
     return instance.generateNonstatic(aUser, aIP);
@@ -85,7 +84,7 @@ serv::TokenHandler::process(const crow::request& aReq) noexcept
 
 str::String
 serv::TokenHandler::generateNonstatic(const data::User& aUser,
-                                      const str::String& aIP) noexcept
+                                      const char* aIP) noexcept
 {
     str::String result;
 
@@ -250,9 +249,9 @@ serv::TokenHandler::printAutorisation() const noexcept
 //--------------------------------------------------------------------------------
 
 serv::UserDataPtr
-serv::TokenHandler::check(const str::String& aToken,
-                          const str::String& aURL,
-                          const str::String& aIP) noexcept
+serv::TokenHandler::check(const char* aToken,
+                          const char* aURL,
+                          const char* aIP) noexcept
 {
     serv::UserDataPtr result;
 
@@ -293,8 +292,7 @@ serv::TokenHandler::check(const str::String& aToken,
 }
 
 serv::UserDataPtr
-serv::TokenHandler::apply(const str::String& aToken,
-                          const str::String& aURL) noexcept
+serv::TokenHandler::apply(const char* aToken, const char* aURL) noexcept
 {
     serv::UserDataPtr result;
     auto userOpt = getUserDataByToken(aToken);
@@ -314,7 +312,7 @@ serv::TokenHandler::apply(const str::String& aToken,
 //--------------------------------------------------------------------------------
 
 boost::optional<serv::UserData&>
-serv::TokenHandler::getUserDataByToken(const str::String& aToken) noexcept
+serv::TokenHandler::getUserDataByToken(const char* aToken) noexcept
 {
     boost::optional<UserData&> result;
 
@@ -328,7 +326,7 @@ serv::TokenHandler::getUserDataByToken(const str::String& aToken) noexcept
 }
 
 int
-serv::TokenHandler::getUserNum(const str::String& aToken) noexcept
+serv::TokenHandler::getUserNum(const char* aToken) noexcept
 {
     int result = 0;
 
@@ -347,7 +345,7 @@ serv::TokenHandler::getUserNum(const str::String& aToken) noexcept
 }
 
 str::String
-serv::TokenHandler::urlDedaction(const str::String& aUrl) noexcept
+serv::TokenHandler::urlDedaction(const char* aUrl) noexcept
 {
     str::String result = aUrl;
     while (true)

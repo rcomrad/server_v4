@@ -24,7 +24,7 @@ struct PostRouter
         mRawDataRouter;
 
     template <typename... Args>
-    static auto processRouter(const str::String& aName, Args&&... args)
+    static auto processRouter(const char* aName, Args&&... args)
     {
         decltype(mProcessRouter.begin()->second(
             std::forward<Args>(args)...)) result;
@@ -35,7 +35,7 @@ struct PostRouter
     }
 
     template <typename... Args>
-    static auto dropRouter(const str::String& aName, Args&&... args)
+    static auto dropRouter(const char* aName, Args&&... args)
     {
         decltype(mDropRouter.begin()->second(
             std::forward<Args>(args)...)) result;
@@ -46,7 +46,7 @@ struct PostRouter
     }
 
     template <typename... Args>
-    static auto rawDataRouter(const str::String& aName, Args&&... args)
+    static auto rawDataRouter(const char* aName, Args&&... args)
     {
         decltype(mRawDataRouter.begin()->second(
             std::forward<Args>(args)...)) result;

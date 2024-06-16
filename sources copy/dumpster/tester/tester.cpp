@@ -96,8 +96,8 @@ test::Tester::run(data::Submission&& aSubmission) noexcept
 //--------------------------------------------------------------------------------
 
 std::shared_ptr<proc::Process>
-test::Tester::prepareFile(const str::String& aFileName,
-                          const str::String& aOutputFileName) const noexcept
+test::Tester::prepareFile(const char* aFileName,
+                          const char* aOutputFileName) const noexcept
 {
     std::shared_ptr<proc::Process> result = std::make_shared<proc::Process>();
     auto cmd = test::Compiler::getExecutableCommand(aFileName, aOutputFileName);

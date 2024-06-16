@@ -12,7 +12,7 @@
 #include "file_data/file.hpp"
 
 std::wstring
-foox2(const str::String& aStr)
+foox2(const char* aStr)
 {
     // str::String ansStr = file::Parser::slice(answer.value, "", " \t\n.,;");
     auto wStr = dom::Cyrilic::global.toWString(aStr);
@@ -21,7 +21,7 @@ foox2(const str::String& aStr)
 }
 
 int
-equal(const str::String& aStr1, const str::String& aStr2)
+equal(const char* aStr1, const char* aStr2)
 {
     int result = 1;
     if (foox2(aStr1) != foox2(aStr2))
@@ -31,7 +31,7 @@ equal(const str::String& aStr1, const str::String& aStr2)
     return result;
 }
 int
-partly(const str::String& aStr1, const str::String& aStr2)
+partly(const char* aStr1, const char* aStr2)
 {
     int result = 0;
     auto s1    = foox2(aStr1);

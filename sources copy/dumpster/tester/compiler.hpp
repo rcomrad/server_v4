@@ -37,8 +37,8 @@ public:
         output directory and language information.
     */
     static std::vector<str::String> getExecutableCommand(
-        const str::String& aFileName,
-        const str::String& aOutputFileName) noexcept;
+        const char* aFileName,
+        const char* aOutputFileName) noexcept;
 
 private:
     static std::unordered_map<str::String, Language> mLanguages;
@@ -51,8 +51,8 @@ private:
         exe execution execution.
     */
     static std::vector<str::String> prepareCommandForCPP(
-        const str::String& aFileName,
-        const str::String& aOutputFileName) noexcept;
+        const char* aFileName,
+        const char* aOutputFileName) noexcept;
 
     /*
     \brief Prepare the cmd command for python file interpretation.
@@ -61,10 +61,10 @@ private:
         file einterpretation.
     */
     static std::vector<str::String> prepareCommandForPython(
-        const str::String& aFileName) noexcept;
+        const char* aFileName) noexcept;
 
     static std::vector<str::String> prepareCommandForPascal(
-        const str::String& aFileName) noexcept;
+        const char* aFileName) noexcept;
 };
 } // namespace test
 

@@ -12,14 +12,12 @@ class Attendance
 {
 public:
     Attendance(int aID, int aSize) noexcept;
-    void setMark(int aStudentId,
-                 int aDateNum,
-                 const str::String& aMark) noexcept;
+    void setMark(int aStudentId, int aDateNum, const char* aMark) noexcept;
 
     void newPage(uint8_t aMounth) noexcept;
     void emplaceLesson(uint8_t aDate,
-                       const str::String& aTheme,
-                       const str::String& aTeacher) noexcept;
+                       const char* aTheme,
+                       const char* aTeacher) noexcept;
     void addFiller() noexcept;
 
     std::vector<str::String> getAttendance() noexcept;

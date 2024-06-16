@@ -33,7 +33,7 @@ TestLibMessage::makeOutputSizes() noexcept
 //--------------------------------------------------------------------------------
 
 void
-TestLibMessage::makeSize(str::String& aStr, str::String& aSize) noexcept
+TestLibMessage::makeSize(char* aStr, char* aSize) noexcept
 {
     StringSizeCoder.value = aStr.size();
     for (int i = 0; i < 8; ++i) aSize.push_back(StringSizeCoder.message[i]);

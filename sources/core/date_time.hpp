@@ -2,7 +2,7 @@
 
 //--------------------------------------------------------------------------------
 
-#include "string/kus_string.hpp"
+#include "kus_standard/char_buffer.hpp"
 
 //--------------------------------------------------------------------------------
 
@@ -11,6 +11,15 @@ namespace core
 
 union DateTime
 {
+    // TODO: too agly
+    inline static const char TIME[]        = "Time";
+    inline static const char Date[]        = "Date";
+    inline static const char DateTimeStr[] = "DateTime";
+
+    using DateTimeType = kstd::CharBuffer<TIME, 22>;
+    using DateType     = kstd::CharBuffer<Date, 12>;
+    using TimeType     = kstd::CharBuffer<DateTimeStr, 10>;
+
     enum class Type
     {
         DATE,
@@ -49,9 +58,9 @@ union DateTime
     bool operator<(const DateTime& aOther) const noexcept;
     DateTime operator-(const DateTime& aOther) const noexcept;
 
-    str::String getTime() const noexcept;
-    str::String getDate() const noexcept;
-    str::String getAll(char aDelimiter = '_') const noexcept;
+    // TimeType getTime() const noexcept;
+    // DateType getDate() const noexcept;
+    // DateTimeType getAll(char aDelimiter = '_') const noexcept;
 };
 
 } // namespace core

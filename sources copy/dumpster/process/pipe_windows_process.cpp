@@ -55,7 +55,7 @@ proc::PipeWindowsProcess::IORedirection() noexcept
 //--------------------------------------------------------------------------------
 
 void
-proc::PipeWindowsProcess::readData(str::String& result) noexcept
+proc::PipeWindowsProcess::readData(char* result) noexcept
 {
     const size_t bufSize = 1024;
     char buf[bufSize];
@@ -82,7 +82,7 @@ proc::PipeWindowsProcess::readData(str::String& result) noexcept
 //--------------------------------------------------------------------------------
 
 void
-proc::PipeWindowsProcess::writeData(const str::String& aMessage) noexcept
+proc::PipeWindowsProcess::writeData(const char* aMessage) noexcept
 {
     unsigned long bread;
     WriteFile(mThisSTDOUT, aMessage.c_str(), aMessage.size(), &bread, NULL);

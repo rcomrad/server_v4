@@ -37,7 +37,7 @@ post::Attendance::Attendance(int aID, int aSize) noexcept : size(aSize)
 void
 post::Attendance::setMark(int aStudentId,
                           int aDateNum,
-                          const str::String& aMark) noexcept
+                          const char* aMark) noexcept
 {
     attendance.back()[aStudentId][aDateNum] = aMark;
 }
@@ -67,8 +67,8 @@ post::Attendance::newPage(uint8_t aMounth) noexcept
 
 void
 post::Attendance::emplaceLesson(uint8_t aDate,
-                                const str::String& aTheme,
-                                const str::String& aTeacher) noexcept
+                                const char* aTheme,
+                                const char* aTeacher) noexcept
 {
     str::String date = std::to_string(aDate);
 
@@ -112,8 +112,8 @@ post::Attendance::getAttendance() noexcept
             {
                 if (i.first[0] == ' ' ^ flag) continue;
 
-                int id                  = i.second;
-                const str::String& name = i.first;
+                int id           = i.second;
+                const char* name = i.first;
 
                 cur += dom::toString(cnt) + "& " + name;
                 for (auto& j : attend[id])

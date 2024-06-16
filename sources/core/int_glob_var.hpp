@@ -4,13 +4,11 @@
 
 #include <atomic>
 
-#include "string/kus_string.hpp"
-
 //--------------------------------------------------------------------------------
 namespace core
 {
 
-typedef int (*FPIntGlobVarToInt)(const str::String&);
+typedef int (*FPIntGlobVarToInt)(const char*);
 
 struct IntGlobVar
 {

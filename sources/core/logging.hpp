@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdio.h>
+#include <string_view>
 #include <utility>
 
 #include "holy_trinity.hpp"
@@ -128,6 +129,7 @@ private:
     void writeArg(int arg) noexcept;
     void writeArg(double arg) noexcept;
     void writeArg(const char* arg) noexcept;
+    void writeArg(const std::string_view& arg) noexcept;
 
     void writeEnd() noexcept;
 

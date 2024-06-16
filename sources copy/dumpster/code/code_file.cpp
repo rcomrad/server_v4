@@ -14,15 +14,15 @@ std::unordered_map<str::String, str::String> code::CodeFile::globalPaths = {
 //     {"data", ""}
 // };
 
-code::CodeFile::CodeFile(const str::String& aClassName,
-                         const str::String& aNamespace) noexcept
+code::CodeFile::CodeFile(const char* aClassName,
+                         const char* aNamespace) noexcept
     : mNamespace(aNamespace)
 {
     mFileName = normalizeName(aClassName);
 }
 
 code::CodeClass&
-code::CodeFile::makeClass(const str::String& aClassName) noexcept
+code::CodeFile::makeClass(const char* aClassName) noexcept
 {
     mClasses.emplace_back(
         CodeClass{aClassName.empty() ? mFileName : aClassName, mNamespace});
@@ -39,21 +39,19 @@ code::CodeFile::generate(CodeFile::FileType aType) const noexcept
 }
 
 void
-code::CodeFile::addHeaderToCpp(const str::String& aName,
-                               bool aIsStdHeader) noexcept
+code::CodeFile::addHeaderToCpp(const char* aName, bool aIsStdHeader) noexcept
 {
     mCppHeaders.emplace_back(makeHeader(aName, aIsStdHeader));
 }
 
 void
-code::CodeFile::addHeaderToHpp(const str::String& aName,
-                               bool aIsStdHeader) noexcept
+code::CodeFile::addHeaderToHpp(const char* aName, bool aIsStdHeader) noexcept
 {
     mHppHeaders.emplace_back(makeHeader(aName, aIsStdHeader));
 }
 
 void
-code::CodeFile::generateCPP(const str::String& aPath) const noexcept
+code::CodeFile::generateCPP(const char* aPath) const noexcept
 {
     std::ofstream CodeFile(aPath + ".cpp");
     CodeFile << "#include \"" << mFileName + ".hpp\"\n\n";
@@ -67,7 +65,7 @@ code::CodeFile::generateCPP(const str::String& aPath) const noexcept
 }
 
 void
-code::CodeFile::generateHPP(const str::String& aPath) const noexcept
+code::CodeFile::generateHPP(const char* aPath) const noexcept
 {
     std::ofstream CodeFile(aPath + ".hpp");
     str::String define = normalizeDefine(mFileName) + "_HPP";
@@ -100,7 +98,7 @@ code::CodeFile::generateHPP(const str::String& aPath) const noexcept
 }
 
 str::String
-code::CodeFile::normalizeName(const str::String& aName) noexcept
+code::CodeFile::normalizeName(const char* aName) noexcept
 {
     str::String result = aName;
 
@@ -118,7 +116,7 @@ code::CodeFile::normalizeName(const str::String& aName) noexcept
 }
 
 str::String
-code::CodeFile::normalizeDefine(const str::String& aName) noexcept
+code::CodeFile::normalizeDefine(const char* aName) noexcept
 {
     str::String result = aName;
 
@@ -134,7 +132,7 @@ code::CodeFile::normalizeDefine(const str::String& aName) noexcept
 }
 
 str::String
-code::CodeFile::makeHeader(const str::String& aName, bool aIsStdHeader) noexcept
+code::CodeFile::makeHeader(const char* aName, bool aIsStdHeader) noexcept
 {
     str::String fullName = "#include ";
 

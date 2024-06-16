@@ -32,8 +32,8 @@ public:
     void run(data::Submission&& aSubmission) noexcept;
 
     std::shared_ptr<proc::Process> prepareFile(
-        const str::String& aFileName,
-        const str::String& aOutputFileName) const noexcept;
+        const char* aFileName,
+        const char* aOutputFileName) const noexcept;
 
     void check(TestReader& aTestReader) noexcept;
 

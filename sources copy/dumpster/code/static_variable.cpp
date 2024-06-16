@@ -1,32 +1,31 @@
 #include "static_variable.hpp"
 
 void
-code::StaticVariable::setNamespace(const str::String& aNamespace) noexcept
+code::StaticVariable::setNamespace(const char* aNamespace) noexcept
 {
     mNamespace = aNamespace;
 }
 
 void
-code::StaticVariable::setClass(const str::String& aClass) noexcept
+code::StaticVariable::setClass(const char* aClass) noexcept
 {
     mClass = aClass;
 }
 
 void
-code::StaticVariable::setType(const str::String& aType) noexcept
+code::StaticVariable::setType(const char* aType) noexcept
 {
     mType = aType;
 }
 
 void
-code::StaticVariable::setName(const str::String& aName) noexcept
+code::StaticVariable::setName(const char* aName) noexcept
 {
     mName = aName;
 }
 
 void
-code::StaticVariable::setInitialisation(
-    const str::String& aInitialisation) noexcept
+code::StaticVariable::setInitialisation(const char* aInitialisation) noexcept
 {
     mInitialisation = aInitialisation;
 }

@@ -20,7 +20,7 @@ struct GetRouter
         mColumnNamesRouter;
 
     template <typename... Args>
-    static auto basicRouter(const str::String& aName, Args&&... args)
+    static auto basicRouter(const char* aName, Args&&... args)
     {
         decltype(mBasicRouter.begin()->second(
             std::forward<Args>(args)...)) result;
@@ -31,7 +31,7 @@ struct GetRouter
     }
 
     template <typename... Args>
-    static auto dumpRouter(const str::String& aName, Args&&... args)
+    static auto dumpRouter(const char* aName, Args&&... args)
     {
         decltype(mDumpRouter.begin()->second(
             std::forward<Args>(args)...)) result;
@@ -41,8 +41,7 @@ struct GetRouter
         return result;
     }
 
-    static std::vector<str::String>& columnNamesRouter(
-        const str::String& aName);
+    static std::vector<str::String>& columnNamesRouter(const char* aName);
 };
 
 }; // namespace get

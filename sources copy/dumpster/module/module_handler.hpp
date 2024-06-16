@@ -20,12 +20,11 @@ class ModuleHandler
 {
 public:
     static void run() noexcept;
-    static str::String processCommand(const str::String& aCommand,
-                                      const str::String& aArgument) noexcept;
+    static str::String processCommand(const char* aCommand,
+                                      const char* aArgument) noexcept;
 
-    static void addCommand(const str::String& aCommand,
-                           ModuleBase* aPtr) noexcept;
-    static bool hasCommand(const str::String& aCommand) noexcept;
+    static void addCommand(const char* aCommand, ModuleBase* aPtr) noexcept;
+    static bool hasCommand(const char* aCommand) noexcept;
 
 private:
     ModuleHandler() noexcept = default;
@@ -43,8 +42,8 @@ private:
                         const ModuleBase::Command& aCommand) noexcept;
 
     void runNonstatic() noexcept;
-    str::String processCommandNonstatic(const str::String& aCommand,
-                                        const str::String& aArgument) noexcept;
+    str::String processCommandNonstatic(const char* aCommand,
+                                        const char* aArgument) noexcept;
 };
 } // namespace mod
 

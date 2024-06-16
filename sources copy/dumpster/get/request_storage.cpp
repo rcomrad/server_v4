@@ -1,7 +1,7 @@
 #include "request_storage.hpp"
 
 get::RequestParser::DataRequest&
-get::RequestStorage::getRequest(const str::String& aRequest) noexcept
+get::RequestStorage::getRequest(const char* aRequest) noexcept
 {
     auto& instance = getInstance();
 

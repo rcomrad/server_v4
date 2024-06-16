@@ -324,7 +324,7 @@ post::UserHandler::registration(const crow::request& aReq,
 // }
 
 crow::response
-post::UserHandler::confirmation(const str::String& aUrl) noexcept
+post::UserHandler::confirmation(const char* aUrl) noexcept
 {
     auto resp = crow::response(400);
 

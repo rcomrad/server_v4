@@ -15,18 +15,18 @@ public:
     static str::String getCurentTime() noexcept;
     static str::String getCurentTimeSafe() noexcept;
 
-    static boost::gregorian::date getDate(const str::String& aDate) noexcept;
-    static boost::posix_time::ptime getTime(const str::String& aTime) noexcept;
+    static boost::gregorian::date getDate(const char* aDate) noexcept;
+    static boost::posix_time::ptime getTime(const char* aTime) noexcept;
 
     static str::String getDateStr(const boost::gregorian::date& aDate) noexcept;
     static str::String toStr(const boost::posix_time::ptime& aTime) noexcept;
     static bool curentTimeAssert(
-        const str::String& aTime,
+        const char* aTime,
         const boost::posix_time::time_duration& aDuration) noexcept;
     static bool curentTimeAssert(
         const boost::posix_time::ptime& aTime,
         const boost::posix_time::time_duration& aDuration) noexcept;
-    static bool isPassed(const str::String& aTime) noexcept;
+    static bool isPassed(const char* aTime) noexcept;
 };
 } // namespace dom
 

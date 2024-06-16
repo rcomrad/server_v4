@@ -2,19 +2,14 @@
 
 //--------------------------------------------------------------------------------
 
-#include <functional>
-#include <optional>
-#include <unordered_map>
+#include <string_view>
 #include <vector>
 
 #include "core/holy_trinity.hpp"
 
-#include "kus_string.hpp"
-#include "variable.hpp"
-
 //--------------------------------------------------------------------------------
 
-namespace str
+namespace kstd
 {
 
 class Parser
@@ -22,24 +17,31 @@ class Parser
 public:
     HOLY_TRINITY_NO_OBJECT(Parser);
 
-    std::vector<std::string_view> operator()(const char* buffer,
-                                             const char* aDelimiters,
-                                             const char* aErase = "") noexcept;
+    static std::vector<std::string_view> slice(
+        const char* buffer,
+        const char* aDelimiters) noexcept;
+    static std::vector<std::string_view> slice(
+        std::string_view,
+        const char* aDelimiters) noexcept;
+
+    // std::vector<std::string_view> operator()(char* buffer,
+    //                                          const char* aDelimiters,
+    //                                          const char* aErase) noexcept;
 
     // Parser() noexcept = delete;
 
     // static std::optional<Variable> makeVariable(
-    //     const str::String& aStr) noexcept;
+    //     const char* aStr) noexcept;
     // static std::vector<Variable> getVariablesFromFile(
     //     const str::String aFilename) noexcept;
     // static std::vector<Variable> getVariablesFromFile(
-    //     const str::String& aFolderName, const str::String aFilename)
+    //     const char* aFolderName, const str::String aFilename)
     //     noexcept;
 
     // static std::vector<str::String> slice(
-    //     const str::String& aStr,
-    //     const str::String& aDelimiters,
-    //     const str::String& aErase = "") noexcept;
+    //     const char* aStr,
+    //     const char* aDelimiters,
+    //     const char* aErase = "") noexcept;
 
     // enum class Type
     // {
@@ -47,11 +49,11 @@ public:
     //     Upper,
     //     Lower
     // };
-    // static void normalize(str::String& aStr, Type aType) noexcept;
-    // static str::String normalize(const str::String& aStr, Type aType)
+    // static void normalize(char* aStr, Type aType) noexcept;
+    // static str::String normalize(const char* aStr, Type aType)
     // noexcept;
 };
 
-} // namespace str
+} // namespace kstd
 
 //--------------------------------------------------------------------------------

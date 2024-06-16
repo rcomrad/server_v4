@@ -25,21 +25,20 @@ dom::UrlWrapper::getInstance() noexcept
 }
 
 str::String
-dom::UrlWrapper::toHTMLHref(const str::String& aData,
-                            const str::String& aName) noexcept
+dom::UrlWrapper::toHTMLHref(const char* aData, const char* aName) noexcept
 {
     return " <a href=\"" + getInstance().mUrl + aData + "\"/>" + aName +
            "</a> <br>";
 }
 
 str::String
-dom::UrlWrapper::toHTMLSrc(const str::String& aStr) noexcept
+dom::UrlWrapper::toHTMLSrc(const char* aStr) noexcept
 {
     return " <img src=\"" + getInstance().mUrl + aStr + "\"/><br>";
 }
 
 str::String
-dom::UrlWrapper::toSite(const str::String& aStr) noexcept
+dom::UrlWrapper::toSite(const char* aStr) noexcept
 {
     return getInstance().mUrl + aStr;
 }

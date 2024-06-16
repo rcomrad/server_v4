@@ -156,6 +156,12 @@ core::Logging::writeArg(const char* arg) noexcept
 }
 
 void
+core::Logging::writeArg(const std::string_view& arg) noexcept
+{
+    std::fprintf(mStream, "%*s ", arg.length(), arg.data());
+}
+
+void
 core::Logging::writeEnd() noexcept
 {
     std::fprintf(mStream, "\n");
