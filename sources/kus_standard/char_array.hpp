@@ -81,6 +81,7 @@ private:
     class CharVectorRef
     {
     public:
+        ~CharVectorRef();
         operator std::string&() noexcept;
 
     private:
@@ -92,7 +93,7 @@ public:
     HOLY_TRINITY_SINGLE(CharBuffer);
     CharVector() noexcept = default;
 
-    getString() noexcept;
+    CharVectorRef getString() noexcept;
 
 private:
     std::string m_str;

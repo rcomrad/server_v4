@@ -23,7 +23,7 @@ private:
 
     inline static const char PathName[] = "Path";
 
-    using PathData = kstd::CharBuffer<PathName, MAX_PATH_LENGTH>;
+    using PathData = kstd::CharVector;
     using PathMap =
         kstd::HashMapByStr<PathName, MAX_FILE_NAME_LENGTH, PathData>;
 
