@@ -42,7 +42,7 @@ sudo -H -u $2 printf "$4" > url.pass
 sudo -H -u $2 printf "$6  $7" > mail.pass
 
 cd ../devops/setup/scripts
-sudo cp ../data/pg_hba.conf /etc/postgresql/12/main/pg_hba.conf
+sudo cp ../data/pg_hba.conf /etc/postgresql/14/main/pg_hba.conf
 sudo -u postgres psql -c "ALTER USER postgres password '$1';"
 
 # TODO: add journal_user and database from start

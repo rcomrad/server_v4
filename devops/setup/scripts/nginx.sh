@@ -1,3 +1,8 @@
+# https://medium.com/@emusyoka759/fixing-403-forbidden-in-nginx-54b50688025a
+# change user!
+
+
+
 sudo -S apt install curl gnupg2 ca-certificates lsb-release ubuntu-keyring -y
 curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor | sudo tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null
 gpg --dry-run --quiet --no-keyring --import --import-options import-show /usr/share/keyrings/nginx-archive-keyring.gpg

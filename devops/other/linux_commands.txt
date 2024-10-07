@@ -17,7 +17,7 @@ sudo certbot install --cert-name kusmirror.ru
 /etc/nginx/nginx.conf user  rcomrad;
 
 # postgres
-sudo psql -U journal_user -h localhost -d journal_db 
+sudo psql -U rcomrad -h localhost -d journal_db 
 sudo psql -U postgres -h localhost -d postgres 
 sudo -u postgres psql -c "CREATE USER journal_user;"
 sudo -u postgres psql -c "ALTER USER journal_user password '$1';"
@@ -37,7 +37,7 @@ sudo systemctl status KusManager
 sudo systemctl daemon-reload
 
 sudo journalctl -u KusManager
-sudo journalctl -u KusManager --since "2023-03-30 15:34:40"
+sudo journalctl -u KusManager --since "2024-10-07 20:37:00"
 scp root@194.87.206.68:/home/root/logs D:/logs
 
 # proceses
