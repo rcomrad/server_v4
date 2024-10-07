@@ -24,10 +24,10 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Libraries include
-find_package(mailio CONFIG REQUIRED)
 find_package(libpqxx CONFIG REQUIRED)
 find_package(Crow CONFIG REQUIRED)
-find_package(Boost 1.64.0 REQUIRED system filesystem)
+find_package(Boost 1.64.0 REQUIRED system filesystem date_time)
+find_package(mailio CONFIG REQUIRED)
 
 # Sources include
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake_scripts/cmake_scripts.cmake)

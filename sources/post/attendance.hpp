@@ -1,6 +1,7 @@
 #ifndef ATTENDANCE_HPP
 #define ATTENDANCE_HPP
 
+#include <cstdint>
 #include <map>
 #include <string>
 #include <unordered_map>

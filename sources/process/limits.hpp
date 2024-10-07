@@ -1,6 +1,8 @@
 #ifndef LIMITS_HPP
 #define LIMITS_HPP
 
+#include <cstdint>
+
 namespace proc
 {
 struct Limits

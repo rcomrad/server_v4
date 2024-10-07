@@ -1,5 +1,6 @@
 #include "cyrillic.hpp"
 
+#include <cstdint>
 #include <cwctype>
 #include <unordered_map>
 #include <vector>

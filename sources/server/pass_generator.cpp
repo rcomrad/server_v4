@@ -1,5 +1,7 @@
 #include "pass_generator.hpp"
 
+#include <ctime>
+
 //--------------------------------------------------------------------------------
 
 serv::PassGenerator::PassGenerator() noexcept
@@ -9,7 +11,7 @@ serv::PassGenerator::PassGenerator() noexcept
                 "abcdefghijklmnopqrstuvwxyz"
                 "!#$%&()*+,./:<>?@[\\]^_`{|}~";
 
-    mRandGenerator.seed(time(NULL));
+    mRandGenerator.seed(std::time(nullptr));
     mDistribution = std::move(
         std::uniform_int_distribution<uint32_t>(0, mAlphabet.size() - 1));
 }
