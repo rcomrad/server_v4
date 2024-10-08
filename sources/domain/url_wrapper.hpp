@@ -15,6 +15,7 @@ public:
     static std::string toHTMLHref(const std::string& aData,
                                   const std::string& aName = "Файлик") noexcept;
     static std::string toHTMLSrc(const std::string& aStr) noexcept;
+    static std::string toHTMLAudio(const std::string& aStr) noexcept;
 
     static std::string toSite(const std::string& aStr) noexcept;
 

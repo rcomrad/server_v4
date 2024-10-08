@@ -110,7 +110,7 @@ TABLE submission
 	source_name character varying(100) NOT NULL
 
 TABLE question
-	name character varying(20) NOT NULL
+	name character varying(50) NOT NULL
 	nickname character varying(20) NOT NULL
 	type character varying(5) NOT NULL
 	weight real NOT NULL

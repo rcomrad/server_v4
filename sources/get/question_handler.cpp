@@ -137,6 +137,11 @@ get::QuestionHandler::loadQuestion(int aQuestionID) const noexcept
                 legend += dom::UrlWrapper::toHTMLSrc(
                     "question/" + question.nickname + "/" + i.first);
             }
+            else if (i.first.find(".mp3") != -1)
+            {
+                legend += dom::UrlWrapper::toHTMLAudio(
+                    "question/" + question.nickname + "/" + i.first);
+            }
             else
             {
                 legend += dom::UrlWrapper::toHTMLHref(

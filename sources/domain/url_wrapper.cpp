@@ -39,6 +39,13 @@ dom::UrlWrapper::toHTMLSrc(const std::string& aStr) noexcept
 }
 
 std::string
+dom::UrlWrapper::toHTMLAudio(const std::string& aStr) noexcept
+{
+    return " <audio controls> <source src=\"" + getInstance().mUrl + aStr +
+           "\"  type=\"audio/mp3\"/> </audio> <br>";
+}
+
+std::string
 dom::UrlWrapper::toSite(const std::string& aStr) noexcept
 {
     return getInstance().mUrl + aStr;
