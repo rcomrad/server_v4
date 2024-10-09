@@ -74,75 +74,75 @@ serv::Middleware::before_handle(crow::request& req,
     // https://kussystem.ru/api/get/if/competition_user[competition_id[]]/user_id=2
     // if (parts[parts.size() - 2] == "user_competition[competition_id[id;name;start_time]]")
     // if (parts[parts.size() - 2] == "competition_user[competition_id[]]")
-    if (parts[parts.size() - 2] == "competition_user[competition_id[]]")
-    {
-        crow::json::wvalue::list ls;
+    // if (parts[parts.size() - 2] == "competition_user[competition_id[]]")
+    // {
+    //     crow::json::wvalue::list ls;
 
-        crow::json::wvalue comp;
-        comp["end_time"] = "2024-10-10 16:00:00";
-        comp["start_time"] = "2024-10-10 15:00:00";
-        comp["name"] = "ФИНСКИЙ ЯЗЫК(неуглубленный) 5–6 классы";
-        comp["id"] = 1;
+    //     crow::json::wvalue comp;
+    //     comp["end_time"] = "2024-10-10 16:00:00";
+    //     comp["start_time"] = "2024-10-10 15:00:00";
+    //     comp["name"] = "ФИНСКИЙ ЯЗЫК(неуглубленный) 5–6 классы";
+    //     comp["id"] = 1;
 
-        crow::json::wvalue comp2;
-        comp2["competition"] = std::move(comp);
-        ls.push_back(std::move(comp2));
+    //     crow::json::wvalue comp2;
+    //     comp2["competition"] = std::move(comp);
+    //     ls.push_back(std::move(comp2));
 
-        comp["end_time"] = "2024-10-10 16:00:00";
-        comp["start_time"] = "2024-10-10 15:00:00";
-        comp["name"] = "ФИНСКИЙ ЯЗЫК(неуглубленный) 7–8 классы";
-        comp["id"] = 2;
-        comp2["competition"] = std::move(comp);
-        ls.push_back(std::move(comp2));
+    //     comp["end_time"] = "2024-10-10 16:00:00";
+    //     comp["start_time"] = "2024-10-10 15:00:00";
+    //     comp["name"] = "ФИНСКИЙ ЯЗЫК(неуглубленный) 7–8 классы";
+    //     comp["id"] = 2;
+    //     comp2["competition"] = std::move(comp);
+    //     ls.push_back(std::move(comp2));
 
-        comp["end_time"] = "2024-10-10 16:00:00";
-        comp["start_time"] = "2024-10-10 15:00:00";
-        comp["name"] = "ФИНСКИЙ ЯЗЫК(неуглубленный) 9–11 классы";
-        comp["id"] = 3;
-        comp2["competition"] = std::move(comp);
-        ls.push_back(std::move(comp2));
+    //     comp["end_time"] = "2024-10-10 16:00:00";
+    //     comp["start_time"] = "2024-10-10 15:00:00";
+    //     comp["name"] = "ФИНСКИЙ ЯЗЫК(неуглубленный) 9–11 классы";
+    //     comp["id"] = 3;
+    //     comp2["competition"] = std::move(comp);
+    //     ls.push_back(std::move(comp2));
 
-        comp["end_time"] = "2024-10-10 16:00:00";
-        comp["start_time"] = "2024-10-10 15:00:00";
-        comp["name"] = "ФИНСКИЙ ЯЗЫК(углубленный) 5–6 классы";
-        comp["id"] = 4;
-        comp2["competition"] = std::move(comp);
-        ls.push_back(std::move(comp2));
+    //     comp["end_time"] = "2024-10-10 16:00:00";
+    //     comp["start_time"] = "2024-10-10 15:00:00";
+    //     comp["name"] = "ФИНСКИЙ ЯЗЫК(углубленный) 5–6 классы";
+    //     comp["id"] = 4;
+    //     comp2["competition"] = std::move(comp);
+    //     ls.push_back(std::move(comp2));
 
-        comp["end_time"] = "2024-10-10 16:00:00";
-        comp["start_time"] = "2024-10-10 15:00:00";
-        comp["name"] = "ФИНСКИЙ ЯЗЫК(углубленный) 7–8 классы";
-        comp["id"] = 5;
-        comp2["competition"] = std::move(comp);
-        ls.push_back(std::move(comp2));
+    //     comp["end_time"] = "2024-10-10 16:00:00";
+    //     comp["start_time"] = "2024-10-10 15:00:00";
+    //     comp["name"] = "ФИНСКИЙ ЯЗЫК(углубленный) 7–8 классы";
+    //     comp["id"] = 5;
+    //     comp2["competition"] = std::move(comp);
+    //     ls.push_back(std::move(comp2));
 
-        comp["end_time"] = "2024-10-10 16:00:00";
-        comp["start_time"] = "2024-10-10 15:00:00";
-        comp["name"] = "ФИНСКИЙ ЯЗЫК(углубленный) 9–11 классы";
-        comp["id"] = 6;
-        comp2["competition"] = std::move(comp);
-        ls.push_back(std::move(comp2));
+    //     comp["end_time"] = "2024-10-10 16:00:00";
+    //     comp["start_time"] = "2024-10-10 15:00:00";
+    //     comp["name"] = "ФИНСКИЙ ЯЗЫК(углубленный) 9–11 классы";
+    //     comp["id"] = 6;
+    //     comp2["competition"] = std::move(comp);
+    //     ls.push_back(std::move(comp2));
 
-        comp["end_time"] = "2024-10-10 16:00:00";
-        comp["start_time"] = "2024-10-10 15:00:00";
-        comp["name"] = "Гиды-переводчики 7–8 классы";
-        comp["id"] = 7;
-        comp2["competition"] = std::move(comp);
-        ls.push_back(std::move(comp2));
+    //     comp["end_time"] = "2024-10-10 16:00:00";
+    //     comp["start_time"] = "2024-10-10 15:00:00";
+    //     comp["name"] = "Гиды-переводчики 7–8 классы";
+    //     comp["id"] = 7;
+    //     comp2["competition"] = std::move(comp);
+    //     ls.push_back(std::move(comp2));
 
-        comp["end_time"] = "2024-10-10 16:00:00";
-        comp["start_time"] = "2024-10-10 15:00:00";
-        comp["name"] = "Гиды-переводчики 9–11 классы";
-        comp["id"] = 8;
-        comp2["competition"] = std::move(comp);
-        ls.push_back(std::move(comp2)); 
+    //     comp["end_time"] = "2024-10-10 16:00:00";
+    //     comp["start_time"] = "2024-10-10 15:00:00";
+    //     comp["name"] = "Гиды-переводчики 9–11 классы";
+    //     comp["id"] = 8;
+    //     comp2["competition"] = std::move(comp);
+    //     ls.push_back(std::move(comp2)); 
 
-        crow::json::wvalue result;
-        result["competition_users"] = std::move(ls);
+    //     crow::json::wvalue result;
+    //     result["competition_users"] = std::move(ls);
 
-        res                            = std::move(result);
-        res.end();
-    }
+    //     res                            = std::move(result);
+    //     res.end();
+    // }
 
     //     if (parts[parts.size() - 2] == "competition_user[competition_id[]]")
     // {
