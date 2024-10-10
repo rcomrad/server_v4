@@ -42,10 +42,10 @@ post::AnswerHandler::process(post::PostRequest<data::Answer>& aReq) noexcept
             "question_id=" + data::safeWrap(answer.questionID));
     }
     if (oldAnswer.id) answer.id = oldAnswer.id;
-    if (answer.value.size() > 200)
+    if (answer.value.size() > 255)
     {
         dom::writeError("Can't write full answer!", answer.value);
-        answer.value.resize(200);
+        answer.value.resize(255);
     }
 
     for (auto i : answer.value)

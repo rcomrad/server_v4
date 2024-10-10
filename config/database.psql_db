@@ -127,7 +127,7 @@ TABLE answer
 	time timestamp NOT NULL
 	verdict character varying(1) NOT NULL
 	weight real NOT NULL
-	value character varying(200) NOT NULL
+	value character varying(255) NOT NULL
 
 TABLE form
 	module character varying(20) NOT NULL
