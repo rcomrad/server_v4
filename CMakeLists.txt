@@ -12,18 +12,23 @@ endif()
 include(${CONFIG_FILE})
 
 set(TARGET_SWITCH cmake_target_switch.cmake)
-if(NOT EXISTS ${TARGET_SWITCH})
-    get_subdirectory_list(SUBDIRS /sources)
+# if(NOT EXISTS ${TARGET_SWITCH})
+    get_subdirectory_list(SUBDIRS sources)
+
+    file(WRITE ${TARGET_SWITCH} 
+        "if(FALSE)\n"
+    )
+
     foreach(DIR ${SUBDIRS})
+        get_filename_component(DIR_NAME ${DIR} NAME) 
         file(APPEND ${TARGET_SWITCH} 
-            "set(CMAKE_CURRENT_SOURCE_DIR ~/vcpkg)\n"
-            "set(TASK all)\n"
+            "elseif (\$\{TASK\} MATCHES \"${DIR_NAME}\" OR \$\{TASK\} MATCHES \"all\")\n"
         )
     endforeach()
-
-
-
-endif()
+    file(APPEND ${TARGET_SWITCH} 
+        "endif()\n"
+    )
+# endif()
 include(${CONFIG_FILE})
 
 set(CMAKE_TOOLCHAIN_FILE "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")

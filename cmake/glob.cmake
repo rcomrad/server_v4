@@ -12,12 +12,15 @@ macro(collect_src)
     target_sources(${TARGET} PRIVATE ${project_sources})
 endmacro()
 
-macro(get_subdirectory_list RESULT DIR)
+macro(get_subdirectory_list RESULT_VAR DIR)
+    file(GLOB OBJ_LIST LIST_DIRECTORIES true ${DIR}/*)
+
     set(RESULT "")
-    file(GLOB OBJ_LIST RELATIVE ${DIR} ${DIR}/*)
     foreach(OBJ ${OBJ_LIST})
         if(IS_DIRECTORY ${curdir}/${OBJ})
             list(APPEND RESULT ${OBJ})
         endif()
     endforeach()
+
+    set(${RESULT_VAR} ${RESULT})
 endmacro()

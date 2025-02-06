@@ -18,6 +18,7 @@
 **.dmprar
 **.out
 cmake_config.cmake
+cmake_target_switch.cmake
 
 id_rsa
 id_rsa.pub
