@@ -23,6 +23,7 @@ set(TARGET_SWITCH cmake_target_switch.cmake)
         get_filename_component(DIR_NAME ${DIR} NAME) 
         file(APPEND ${TARGET_SWITCH} 
             "elseif (\$\{TASK\} MATCHES \"${DIR_NAME}\" OR \$\{TASK\} MATCHES \"all\")\n"
+            "    include(${DIR}/_setup.cmake)\n"
         )
     endforeach()
     file(APPEND ${TARGET_SWITCH} 
